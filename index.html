@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Epidemic Engine: Disease Detectives Mastery Guide (2026)</title>
+    <!-- <link rel="manifest" href="manifest.json"> -->
+    <script>
+        if (window.location.protocol !== 'file:') {
+            const link = document.createElement('link');
+            link.rel = 'manifest';
+            link.href = 'manifest.json';
+            document.head.appendChild(link);
+        }
+    </script>
+    <meta name="theme-color" content="#ff5c00">
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <script src="js/vendor/phosphor-icons.js"></script>
+    <!--
+      Use legacy styling files for the Epidemic Engine. The modern
+      modular theme has been replaced with the original CSS to
+      preserve the full UI and layout while implementing Phase‑2
+      improvements. These styles define colours, typography and
+      structural classes consistent with the original application.
+    -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/epidemic-engine.css">
+    <link rel="stylesheet" href="css/mobile-overrides.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <div class="sidebar-overlay" onclick="toggleMobileMenu()"></div>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="brand" style="display: flex; align-items: center; gap: 0.75rem;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style="height: 32px; width: 32px;">
+                        <circle cx="50" cy="50" r="45" fill="url(#logoGrad)" stroke="#000" stroke-width="2" />
+                        <defs>
+                            <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#003d6b" />
+                                <stop offset="100%" stop-color="#007acc" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M50 15 L50 45 L75 60 L25 60 L50 45" fill="#ff5c00" stroke="#fff" stroke-width="2" />
+                        <circle cx="50" cy="50" r="10" fill="#fff" />
+                    </svg>
+                    Epidemic Engine
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-chapter="home">
+                    <i class="ph ph-house"></i> Home
+                </button>
+                <div class="nav-group">
+                    <div class="nav-label">Part I: The Foundation</div>
+                    <button class="nav-item" data-chapter="ch1">1. Frameworks & Mindset</button>
+                    <button class="nav-item" data-chapter="ch2">2. History & Heroes</button>
+                    <button class="nav-item" data-chapter="ch3">3. The Triad & Chain</button>
+                    <button class="nav-item" data-chapter="ch4">4. Measures of Freq.</button>
+                    <button class="nav-item" data-chapter="ch5">5. Surveillance Sys.</button>
+                    <button class="nav-item" data-chapter="ch6">6. Natural History</button>
+                    <button class="nav-item" data-chapter="quiz_part1">
+                        <i class="ph ph-exam"></i> Part I Quiz
+                    </button>
+                </div>
+                <div class="nav-group">
+                    <div class="nav-label">Part II: Investigation & Analysis</div>
+                    <button class="nav-item" data-chapter="ch7">7. Invest. Roadmap</button>
+                    <button class="nav-item" data-chapter="ch8">8. Case Definitions</button>
+                    <button class="nav-item" data-chapter="ch9">9. Line Lists & Data</button>
+                    <button class="nav-item" data-chapter="ch10">10. Curves & Timing</button>
+                    <button class="nav-item" data-chapter="ch11">11. Outbreak Math I</button>
+                    <button class="nav-item" data-chapter="ch12">12. Outbreak Math II</button>
+                    <button class="nav-item" data-chapter="ch13">13. Hypothesis Test</button>
+                    <button class="nav-item" data-chapter="quiz_part2">
+                        <i class="ph ph-exam"></i> Part II Quiz
+                    </button>
+                </div>
+                <div class="nav-group">
+                    <div class="nav-label">Part III: Control & Prevention</div>
+                    <button class="nav-item" data-chapter="ch14">14. Data Synthesis</button>
+                    <button class="nav-item" data-chapter="ch15">15. Prevention Levels</button>
+                    <button class="nav-item" data-chapter="ch16">16. Control Measures</button>
+                    <button class="nav-item" data-chapter="ch17">17. Isolation & Ethics</button>
+                    <button class="nav-item" data-chapter="ch18">18. Pop. Dynamics</button>
+                    <button class="nav-item" data-chapter="ch19">19. Advanced Eval</button>
+                    <button class="nav-item" data-chapter="ch20">20. Case Studies</button>
+                    <button class="nav-item" data-chapter="quiz_part3">
+                        <i class="ph ph-exam"></i> Part III Quiz
+                    </button>
+                </div>
+                <div class="nav-group">
+                    <button class="nav-item coach-only" data-chapter="coach_resources" style="display: none;">
+                        <i class="ph ph-chalkboard-teacher"></i> Coach Resources
+                    </button>
+                </div>
+                <div class="nav-group">
+                    <div class="nav-label">Tools & Appendices</div>
+                    <button class="nav-item" data-chapter="drills">
+                        <i class="ph ph-wrench"></i> Interactive Drills
+                    </button>
+                    <button class="nav-item" data-chapter="simulation">
+                        <i class="ph ph-clock"></i> Simulation Exams
+                    </button>
+                    <button class="nav-item" data-chapter="case_library">
+                        <i class="ph ph-files"></i> Case Library
+                    </button>
+                    <button class="nav-item" data-chapter="interactive_scenarios">
+                        <i class="ph ph-game-controller"></i> Interactive Scenarios
+                    </button>
+                    <button class="nav-item" data-chapter="appendix">
+                        <i class="ph ph-books"></i> Appendix & Resources
+                    </button>
+                    <button class="nav-item" data-chapter="about">
+                        <i class="ph ph-info"></i> About & Credits
+                    </button>
+                </div>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <button id="mobile-menu-toggle" class="neo-btn small hidden-desktop" aria-label="Toggle Navigation"
+                aria-expanded="false">
+                <i class="ph ph-list"></i> Menu
+            </button>
+            <div id="content-container">
+                <!-- Content loaded dynamically -->
+            </div>
+
+            <footer class="site-footer"
+                style="margin-top: 4rem; padding: 2rem 0; border-top: 2px solid var(--border-color); text-align: center; color: var(--text-color); font-family: 'Space Grotesk', sans-serif; opacity: 0.8;">
+                <p style="margin-bottom: 0.5rem;">
+                    <strong>The Epidemic Engine</strong> v2.5.0 • © 2026 Science Olympiad Mastery Guide<br>
+                    <span
+                        style="display: block; margin-top: 0.4rem; font-size: 0.95rem; color: var(--navy-primary);">Designed,
+                        Created, & Conceived by <strong>Naveen Minumula, MD</strong></span>
+                </p>
+                <p style="font-size: 0.85rem; margin-bottom: 0;">Content based on CDC/WHO principles. For educational
+                    use only.</p>
+                <p style="font-size: 0.85rem; margin-top: 0.5rem;"><a href="#"
+                        onclick="loadChapter('about'); return false;" style="color: var(--text-muted);">About Epidemic
+                        Engine</a></p>
+            </footer>
+
+        </main>
+    </div>
+
+    <!--
+      Load the legacy monolithic scripts. These scripts power the
+      entire Epidemic Engine, including content, tools, quizzes and
+      simulation exams. Phase‑2 additions (quiz_phase2_additions.js)
+      extend the quiz bank with new advanced questions and should be
+      loaded after quiz_bank_enhanced.js.
+    -->
+    <!-- Bundled JS: data first, then core engine -->
+    <script src="dist/epi-data.bundle.js"></script>
+    <script src="dist/epi-core.bundle.js"></script>
+    <script>
+        if ('serviceWorker' in navigator && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW Registered!', reg.scope))
+                    .catch(err => console.log('SW Failure:', err));
+            });
+        } else if (window.location.protocol === 'file:') {
+            console.log('Service Workers are not supported on the file:// protocol. Run via a local server to test offline features.');
+        }
+    </script>
+</body>
+
+</html>
