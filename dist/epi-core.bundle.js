@@ -115,10 +115,21 @@ class AnalyticsManager {
 
     getChapterStats() {
         const views = this.data.chapterViews || {};
-        const viewedCount = Object.keys(views).length;
+
+        // Only count views for chapters that exist in the sidebar
+        const navItems = Array.from(document.querySelectorAll('.nav-item'));
+        const validChapterIds = new Set(navItems.map(item => item.getAttribute('data-chapter')).filter(Boolean));
+
+        let viewedCount = 0;
+        Object.keys(views).forEach(id => {
+            if (validChapterIds.has(id)) viewedCount++;
+        });
+
+        const totalPossible = validChapterIds.size || 20;
+
         return {
             viewed: viewedCount,
-            total: 20,
+            total: totalPossible,
             details: views
         };
     }
@@ -144,6 +155,15 @@ class AnalyticsManager {
     reset() {
         this.data = { attempts: [], chapterViews: {}, missedQuestions: {} };
         this._save();
+
+        // Also clear active quiz/sim progress
+        if (this.storageAvailable) {
+            Object.keys(localStorage).forEach(key => {
+                if (key.startsWith('quiz_progress_')) {
+                    localStorage.removeItem(key);
+                }
+            });
+        }
     }
 
     /**
@@ -497,28 +517,73 @@ if (typeof module !== 'undefined' && module.exports) {
 window.TOOLS_MANAGER = {
     init: function () {
         // console.log("[TOOLS] Initializing Tools Manager...");
+        // Check if we are actually in the tools interface
+        if (!document.querySelector('.tools-container')) {
+            // console.log("[TOOLS] Not in tools chapter, skipping init.");
+            return;
+        }
+
         // Small delay to ensure DOM is ready if called immediately
         setTimeout(() => {
+            // Phase 15: Inject Herd Immunity Tab dynamically if missing
+            const firstTab = document.querySelector('.tool-tab');
+            if (firstTab && !document.querySelector('[data-tool="herd"]')) {
+                // Add Tab
+                const newTab = document.createElement('button');
+                newTab.className = 'tool-tab';
+                newTab.setAttribute('data-tool', 'herd');
+                newTab.innerHTML = '<i class="ph-bold ph-users-three"></i> Herd Immunity';
+                firstTab.parentNode.appendChild(newTab);
+
+                // Add Container
+                const firstContent = document.querySelector('.tool-content');
+                if (firstContent) {
+                    const newContent = document.createElement('div');
+                    newContent.id = 'tool-container-herd';
+                    newContent.className = 'tool-content';
+                    firstContent.parentNode.appendChild(newContent);
+                }
+            }
+
+            // Phase 16: Inject Infinite Outbreak Tab
+            if (firstTab && !document.querySelector('[data-tool="infinite"]')) {
+                const infTab = document.createElement('button');
+                infTab.className = 'tool-tab';
+                infTab.setAttribute('data-tool', 'infinite');
+                infTab.innerHTML = '<i class="ph-bold ph-infinity"></i> Infinite';
+                firstTab.parentNode.appendChild(infTab);
+
+                const firstContent = document.querySelector('.tool-content');
+                if (firstContent) {
+                    const infContent = document.createElement('div');
+                    infContent.id = 'tool-container-infinite';
+                    infContent.className = 'tool-content';
+                    firstContent.parentNode.appendChild(infContent);
+                }
+            }
+
             this.setupTabs();
             // Initialize default tool (2x2)
-            if (typeof Calculator2x2 !== 'undefined') {
+            if (typeof Calculator2x2 !== 'undefined' && document.getElementById('tool-container-2x2')) {
                 // console.log("[TOOLS] Initializing default 2x2 calculator");
                 calc2x2 = new Calculator2x2('tool-container-2x2');
-            } else {
-                console.warn("[TOOLS] Calculator2x2 is undefined");
             }
         }, 50);
     },
 
+    retryCount: 0,
     setupTabs: function () {
         const tabs = document.querySelectorAll('.tool-tab');
-        // console.log(`[TOOLS] Found ${tabs.length} tabs`);
 
         if (tabs.length === 0) {
-            console.warn("[TOOLS] No tabs found! Retrying in 100ms...");
-            setTimeout(() => this.setupTabs(), 100);
+            if (this.retryCount < 10) {
+                this.retryCount++;
+                // console.warn("[TOOLS] No tabs found! Retrying in 100ms...");
+                setTimeout(() => this.setupTabs(), 100);
+            }
             return;
         }
+        this.retryCount = 0; // Reset on success
 
         tabs.forEach(tab => {
             // Remove old listeners by cloning (simple way to clear events without named functions)
@@ -586,6 +651,16 @@ window.TOOLS_MANAGER = {
                         window.flashDrillsInstance = new FlashDrills('tool-container-drills');
                     }
                     break;
+                case 'herd':
+                    if (typeof HerdImmunityCalculator !== 'undefined') {
+                        new HerdImmunityCalculator('tool-container-herd');
+                    }
+                    break;
+                case 'infinite':
+                    if (typeof OutbreakGenerator !== 'undefined') {
+                        OutbreakGenerator.renderTo('tool-container-infinite');
+                    }
+                    break;
             }
         } catch (err) {
             console.error("[TOOLS] Error loading tool:", err);
@@ -605,6 +680,7 @@ function onToolsChapterLoaded() {
 class Calculator2x2 {
     constructor(containerId) {
         this.container = document.getElementById(containerId);
+        if (!this.container) return; // Silent return if container doesn't exist
         this.values = { a: 0, b: 0, c: 0, d: 0 };
         this.mode = 'unmatched';
         this.render();
@@ -625,6 +701,7 @@ class Calculator2x2 {
                                 <option value="unmatched">Standard (Unmatched / Cohort)</option>
                                 <option value="matched">Matched Case-Control</option>
                                 <option value="pt">Incidence Density (Person-Time)</option>
+                                <option value="stratified">Stratified (Mantel-Haenszel)</option>
                             </select>
                         </div>
                         <div class="national-toggle" style="display: flex; align-items: center; margin-top: 1.5rem;">
@@ -898,6 +975,68 @@ Attributable Risk: ${rd}
             this.interpretValue('or-interp', or, 'odds');
             document.getElementById('rr-interp').textContent = "Not used in Matched";
 
+            this.interpretValue('or-interp', or, 'odds');
+            document.getElementById('rr-interp').textContent = "Not used in Matched";
+
+        } else if (mode === 'stratified') {
+            // We need a second table for this... 
+            // For simplicity in this tool, we will assume Strata 1 is the user input A-D, 
+            // and we will prompt or look for hidden inputs for Strata 2.
+            // BUT simpler: Just show a "Work in Progress" message or minimal UI for now,
+            // or render input fields for Stratum 2 dynamically.
+
+            // Dynamic injection of Stratum 2 inputs if missing
+            const stratum2 = document.getElementById('stratum-2-container');
+            if (!stratum2) {
+                this.injectStratum2();
+                return; // Re-render triggers calc again
+            }
+
+            // Get Stratum 2 values
+            const a2 = Number(document.getElementById('cell-a2').value) || 0;
+            const b2 = Number(document.getElementById('cell-b2').value) || 0;
+            const c2 = Number(document.getElementById('cell-c2').value) || 0;
+            const d2 = Number(document.getElementById('cell-d2').value) || 0;
+
+            // Calculate MH OR
+            // OR_MH = Sum( (ad)/N ) / Sum( (bc)/N )
+            const n1 = a + b + c + d || 1;
+            const n2 = a2 + b2 + c2 + d2 || 1;
+
+            const num1 = (a * d) / n1;
+            const denom1 = (b * c) / n1;
+
+            const num2 = (a2 * d2) / n2;
+            const denom2 = (b2 * c2) / n2;
+
+            const orMH = (num1 + num2) / (denom1 + denom2) || 0;
+
+            // Crude OR (Total)
+            const A = a + a2, B = b + b2, C = c + c2, D = d + d2;
+            const orCrude = (A * D) / (B * C) || 0;
+
+            document.getElementById('or-value').textContent = this.formatNumber(orMH);
+            document.getElementById('rr-value').textContent = "use OR"; // MH RR is harder
+
+            // Display Logic
+            if (stepsContainer) {
+                const diff = Math.abs(orCrude - orMH) / orMH;
+                const isConfounded = diff > 0.1; // 10% rule
+
+                stepsContainer.innerHTML = `
+                    <div><strong>Stratum 1 (Above):</strong> OR1 = ${(a * d) / (b * c) ? ((a * d) / (b * c)).toFixed(2) : 0}</div>
+                    <div><strong>Stratum 2 (Below):</strong> OR2 = ${(a2 * d2) / (b2 * c2) ? ((a2 * d2) / (b2 * c2)).toFixed(2) : 0}</div>
+                    <hr>
+                    <div><strong>Crude OR:</strong> ${orCrude.toFixed(2)}</div>
+                    <div><strong>Adjusted OR (Mantel-Haenszel):</strong> ${orMH.toFixed(2)}</div>
+                    <div style="margin-top:0.5rem; color: ${isConfounded ? 'red' : 'green'}; font-weight:bold;">
+                        ${isConfounded ? 'Change > 10% → Confounding Present!' : 'Change < 10% → No Major Confounding.'}
+                    </div>
+                 `;
+            }
+
+            this.interpretValue('or-interp', orMH, 'odds');
+
         } else if (mode === 'pt') {
             arExposed = b > 0 ? a / b : 0;
             arUnexposed = d > 0 ? c / d : 0;
@@ -1011,6 +1150,13 @@ Attributable Risk: ${rd}
             if (thHealthy) thHealthy.innerHTML = "Person-Time";
             if (rowExp) rowExp.innerHTML = "<strong>Exposed</strong>";
             if (rowUnexp) rowUnexp.innerHTML = "<strong>Unexposed</strong>";
+        } else if (mode === 'stratified') {
+            if (guidance) guidance.innerHTML = "<strong>Mantel-Haenszel Analysis:</strong> Check for Confounding. Enter Stratum 1 above, Stratum 2 below.";
+            if (thDisease) thDisease.innerHTML = "Disease +";
+            if (thHealthy) thHealthy.innerHTML = "Disease -";
+
+            // Show Strata 2
+            this.injectStratum2();
         } else {
             if (guidance) guidance.textContent = "Standard 2x2 analysis for Cohort and Case-Control studies. Enter counts of individuals.";
             if (thDisease) thDisease.innerHTML = "Disease + (Ill)";
@@ -1181,7 +1327,7 @@ Attributable Risk: ${rd}
         }
 
         if (expIdx === -1 || illIdx === -1) {
-            errorEl.textContent = "Cannot find Exposure/Ill columns. Use headers 'Exp' and 'Ill'.";
+            errorEl.innerHTML = "<strong>Format Error:</strong> Could not identify columns.<br>Please ensure your top row has headers like 'Exposure' and 'Ill'.<br><em>Example: ID, Exposure, Ill</em>";
             return;
         }
 
@@ -1234,6 +1380,37 @@ Attributable Risk: ${rd}
         if (['y', 'yes', '1', 'pos', '+', 'true'].some(x => val.startsWith(x))) return true;
         if (['n', 'no', '0', 'neg', '-', 'false'].some(x => val.startsWith(x))) return false;
         return null;
+    }
+
+    injectStratum2() {
+        if (document.getElementById('stratum-2-container')) {
+            document.getElementById('stratum-2-container').style.display = 'block';
+            return;
+        }
+
+        const div = document.createElement('div');
+        div.id = 'stratum-2-container';
+        div.style.cssText = 'margin-top: 1rem; border-top: 2px dashed #ccc; padding-top: 1rem; background: #fffbe6; padding:1rem; border-radius:8px;';
+
+        div.innerHTML = `
+            <h4>Stratum 2 (e.g. Different Age Group)</h4>
+            <table class="w-100">
+                <tr>
+                    <td>Exposed +</td>
+                    <td><input type="number" id="cell-a2" value="0" class="cell-input" oninput="calc2x2.calculate()"></td>
+                    <td><input type="number" id="cell-b2" value="0" class="cell-input" oninput="calc2x2.calculate()"></td>
+                </tr>
+                 <tr>
+                    <td>Exposed -</td>
+                    <td><input type="number" id="cell-c2" value="0" class="cell-input" oninput="calc2x2.calculate()"></td>
+                    <td><input type="number" id="cell-d2" value="0" class="cell-input" oninput="calc2x2.calculate()"></td>
+                </tr>
+            </table>
+        `;
+
+        // Insert after first table
+        const t1 = this.container.querySelector('.table-2x2');
+        if (t1) t1.insertAdjacentElement('afterend', div);
     }
 }
 
@@ -1511,7 +1688,7 @@ class EpiCurve {
 
         // Draw bars
         const barWidth = chartWidth / data.length;
-        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--color-primary') || '#21808d';
+        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--navy-primary') || '#003d6b';
 
         data.forEach((value, index) => {
             const barHeight = (value / maxCases) * chartHeight;
@@ -1983,6 +2160,9 @@ class ExposureCalculator {
         const viewEnd = new Date(onset.getTime() + (padHours / 2) * 3600 * 1000);
         const totalMs = viewEnd.getTime() - viewStart.getTime();
 
+        // Store state for listeners
+        this.graphState = { viewStart, totalMs, onset };
+
         const getPercent = (dt) => {
             let pct = ((dt.getTime() - viewStart.getTime()) / totalMs) * 100;
             return Math.max(0, Math.min(100, pct));
@@ -2048,13 +2228,19 @@ class ExposureCalculator {
         `;
 
         // Attach interactive listeners
-        this.attachGraphListeners(graph, windowObj, viewStart, totalMs);
+        this.attachGraphListeners(graph, windowObj);
     }
 
-    attachGraphListeners(container, windowObj, viewStart, totalMs) {
+    attachGraphListeners(container, windowObj) {
+        const visContainer = container.querySelector('.exposure-vis-container');
         const minHandle = container.querySelector('.min-handle');
         const maxHandle = container.querySelector('.max-handle');
-        const width = container.querySelector('.exposure-vis-container').offsetWidth;
+        const windowZone = container.querySelector('.exp-window-zone');
+
+        if (!visContainer || !this.graphState) return;
+
+        const { viewStart, totalMs, onset } = this.graphState;
+        const width = visContainer.offsetWidth;
 
         // Calc conversion factor: Pixels -> Hours
         // totalMs maps to width (px)
@@ -2064,50 +2250,74 @@ class ExposureCalculator {
             return ms / (3600 * 1000);
         };
 
-        const setupDrag = (element, isMin) => {
+        // Helper to update UI without re-render
+        const updateVisuals = (newMin, newMax) => {
+            // Update inputs
+            const minInput = document.getElementById('exposure-min');
+            const maxInput = document.getElementById('exposure-max');
+            if (minInput) minInput.value = Math.round(newMin);
+            if (maxInput) maxInput.value = Math.round(newMax);
+
+            // Update Window Zone
+            // Calculate new Percentages
+            // Earliest (Max Incubation) -> Left Side
+            // Latest (Min Incubation) -> Right Side
+
+            const earliestTime = onset.getTime() - newMax * 3600000;
+            const latestTime = onset.getTime() - newMin * 3600000;
+
+            const getPercent = (t) => ((t - viewStart.getTime()) / totalMs) * 100;
+
+            const leftPct = Math.max(0, getPercent(earliestTime));
+            const rightPct = Math.min(100, getPercent(latestTime));
+            const zoneWidth = Math.max(0.5, rightPct - leftPct);
+
+            if (windowZone) {
+                windowZone.style.left = `${leftPct}%`;
+                windowZone.style.width = `${zoneWidth}%`;
+            }
+
+            // Update Handle Titles
+            if (minHandle) minHandle.title = `Min Incubation: ${Math.round(newMin)}h`;
+            if (maxHandle) maxHandle.title = `Max Incubation: ${Math.round(newMax)}h`;
+        };
+
+        // --- HANDLE DRAG ---
+        const setupHandleDrag = (element, isMin) => {
             element.addEventListener('mousedown', (e) => {
                 e.preventDefault();
+                e.stopPropagation(); // Prevent background drag
                 const startX = e.clientX;
                 const startVal = isMin ? windowObj.minH : windowObj.maxH;
 
                 const onMove = (moveEvent) => {
                     const deltaPx = moveEvent.clientX - startX;
-                    const deltaH = pxToHours(deltaPx); // Positive delta means moving Right (towards onset)
+                    const deltaH = pxToHours(deltaPx);
 
-                    // Logic:
-                    // Timeline goes Left (Past) <--------- [Max] --- [Min] ---> Right (Onset, Future)
-                    // Earliest exposure is at "Onset - Max". Latest is "Onset - Min".
-                    // The Graph X-axis is Time. Left is earlier.
-                    // Moving Right (Positive px) means Time increases (Later date).
-                    // "Min Handle" is at "Onset - Min". If it moves Right (Later), "Onset - Min" increases -> Min decreases.
-                    // "Max Handle" is at "Onset - Max". If it moves Right (Later), "Onset - Max" increases -> Max decreases.
-                    // So for both handles: Moving Right (Positive Delta) DECREASES the incubation hours.
-
+                    // Moving Right (Positive) -> Time Later -> Incubation Smaller
                     let newVal = startVal - deltaH;
 
                     // Constraints
                     if (newVal < 0) newVal = 0;
+
+                    let currentMin = isMin ? newVal : parseFloat(document.getElementById('exposure-min')?.value || windowObj.minH);
+                    let currentMax = isMin ? parseFloat(document.getElementById('exposure-max')?.value || windowObj.maxH) : newVal;
+
                     if (isMin) {
-                        // Min cannot exceed Max
-                        if (newVal > windowObj.maxH) newVal = windowObj.maxH;
+                        if (newVal > currentMax) newVal = currentMax; // Clamp to Max
+                        currentMin = newVal;
                     } else {
-                        // Max cannot be less than Min
-                        if (newVal < windowObj.minH) newVal = windowObj.minH;
+                        if (newVal < currentMin) newVal = currentMin; // Clamp to Min
+                        currentMax = newVal;
                     }
 
-                    // Update Input
-                    const inputId = isMin ? 'exposure-min' : 'exposure-max';
-                    const input = document.getElementById(inputId);
-                    if (input) {
-                        input.value = Math.round(newVal); // Snap to integer hours for stability
-                        // input.value = newVal.toFixed(1); // Or allow decimals
-                    }
+                    updateVisuals(currentMin, currentMax);
                 };
 
                 const onUp = () => {
                     document.removeEventListener('mousemove', onMove);
                     document.removeEventListener('mouseup', onUp);
-                    this.calculate(); // Re-calc and re-render on drop
+                    this.calculate(); // Re-calc final state
                 };
 
                 document.addEventListener('mousemove', onMove);
@@ -2115,8 +2325,54 @@ class ExposureCalculator {
             });
         };
 
-        if (minHandle) setupDrag(minHandle, true);
-        if (maxHandle) setupDrag(maxHandle, false);
+        // --- BACKGROUND DRAG (HIGHLIGHT) ---
+        visContainer.addEventListener('mousedown', (e) => {
+            if (e.target.closest('.drag-handle')) return; // Ignore handles
+            e.preventDefault();
+
+            const rect = visContainer.getBoundingClientRect();
+            const startX = e.clientX - rect.left;
+
+            // Initial click defines one edge. Drag defines the other.
+
+            const onMove = (moveEvent) => {
+                const currentX = moveEvent.clientX - rect.left;
+
+                // Define range in pixels relative to container
+                const p1 = Math.min(startX, currentX);
+                const p2 = Math.max(startX, currentX);
+
+                // Convert pixels to Time
+                // px / width = timeOffset / totalMs
+                const timeStart = viewStart.getTime() + (p1 / width) * totalMs;
+                const timeEnd = viewStart.getTime() + (p2 / width) * totalMs;
+
+                // Convert Time to Incubation Hours (Time = Onset - Incubation)
+                // Incubation = (Onset - Time) / 3600000
+                // Earlier time (timeStart) = Higher Incubation (Max)
+                // Later time (timeEnd) = Lower Incubation (Min)
+
+                let curMax = (onset.getTime() - timeStart) / 3600000;
+                let curMin = (onset.getTime() - timeEnd) / 3600000;
+
+                updateVisuals(Math.max(0, curMin), Math.max(0, curMax));
+            };
+
+            const onUp = () => {
+                document.removeEventListener('mousemove', onMove);
+                document.removeEventListener('mouseup', onUp);
+                this.calculate();
+            };
+
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', onUp);
+        });
+
+        if (minHandle) setupHandleDrag(minHandle, true);
+        if (maxHandle) setupHandleDrag(maxHandle, false);
+
+        // Add cursor hint to container
+        visContainer.style.cursor = 'crosshair';
     }
 
     renderGridLines(start, end) {
@@ -2400,23 +2656,30 @@ const NotesheetGenerator = {
             
             <style>
                 @media print {
-                    body * { visibility: hidden; }
-                    .notesheet-preview, .notesheet-preview * { visibility: visible; }
+                    /* Orientation specific to Notesheet */
+                    @page { size: landscape; margin: 0.25in; }
+
                     .notesheet-preview {
-                        position: absolute; left: 0; top: 0; width: 100%;
-                        margin: 0; padding: 0.5in; border: none; box-shadow: none;
+                        width: 100% !important;
+                        margin: 0 !important;
+                        padding: 0 !important;
+                        border: none !important;
                         font-size: 10px !important;
                     }
-                    .no-print { display: none !important; }
-                    /* Make textarea look like static text */
+                    
+                    /* Ensure textarea expands to show all text */
                     #notesheet-memo {
                         border: 1px solid #ccc !important;
                         resize: none !important;
                         overflow: visible !important;
                         height: auto !important;
+                        display: block !important;
                         color: black !important;
+                        background: transparent !important;
                     }
-                    @page { size: landscape; margin: 0.25in; }
+
+                    /* Utility to hide specific elements like the print button */
+                    .no-print { display: none !important; }
                 }
             </style>
         `;
@@ -2629,9 +2892,15 @@ class QuizEngine {
         const doExit = () => {
             // Clear global state to prevent double confirmation
             window.currentQuizEngine = null;
-            if (this.returnChapter && typeof window.loadChapter === 'function') {
-                window.loadChapter(this.returnChapter);
-            } else {
+            try {
+                if (this.returnChapter && typeof window.loadChapter === 'function') {
+                    // console.log("Exiting to: " + this.returnChapter);
+                    window.loadChapter(this.returnChapter);
+                } else {
+                    location.reload();
+                }
+            } catch (e) {
+                console.error("Exit failed, forcing reload", e);
                 location.reload();
             }
         };
@@ -2733,11 +3002,11 @@ class QuizEngine {
         container.innerHTML = `
             <div class="quiz-container-v2">
                 <div class="quiz-header-v2">
-                    <button class="btn btn-outline small" onclick="window.currentQuizEngine.confirmExit()">
-                        <i class="ph-bold ph-gear"></i> Options
+                    <button class="btn btn-outline small" onclick="window.currentQuizEngine.confirmExit()" title="Exit Quiz">
+                        <i class="ph-bold ph-sign-out"></i> Exit
                     </button>
                     <!-- Pause moved to footer -->
-                    <button class="btn btn-outline small" onclick="window.currentQuizEngine.printView()" title="Print Exam" style="margin-left: 0.5rem;">
+                    <button class="btn btn-outline small" onclick="window.currentQuizEngine.printView()" title="Print Exam" aria-label="Print Exam" style="margin-left: 0.5rem;">
                         <i class="ph-bold ph-printer"></i>
                     </button>
                     <div class="header-center">
@@ -2787,7 +3056,9 @@ class QuizEngine {
         // Coach Mode or Instant Feedback Logic
         const urlParams = new URLSearchParams(window.location.search);
         const isCoach = urlParams.get('coach') === '1';
-        const showFeedback = (this.enableInstantFeedback || isCoach) && userAns !== undefined;
+        const isProctor = localStorage.getItem('dd_proctor_mode') === 'true';
+        // Feedback is hidden in Proctor Mode even if normally enabled
+        const showFeedback = !isProctor && (this.enableInstantFeedback || isCoach) && userAns !== undefined;
 
         // Render Options
         let optionsHtml = '';
@@ -2873,10 +3144,10 @@ class QuizEngine {
 
         container.innerHTML = `
             <div class="footer-left">
-                <button class="neo-btn icon-only ${isFlagged ? 'active-flag' : ''}" onclick="window.currentQuizEngine.toggleFlag()">
+                <button class="neo-btn icon-only ${isFlagged ? 'active-flag' : ''}" onclick="window.currentQuizEngine.toggleFlag()" aria-label="Flag Question for Review" title="Flag Question">
                     <i class="ph-fill ph-flag"></i>
                 </button>
-                <button class="neo-btn icon-only" onclick="window.currentQuizEngine.pauseQuiz()" title="Pause Quiz" style="margin-left: 0.5rem;">
+                <button class="neo-btn icon-only" onclick="window.currentQuizEngine.pauseQuiz()" title="Pause Quiz" aria-label="Pause Quiz" style="margin-left: 0.5rem;">
                     <i class="ph-bold ph-pause"></i>
                 </button>
                 <div class="progress-mini">
@@ -3274,14 +3545,14 @@ QuizEngine.generateSimulation = function (difficulty = 'balanced') {
         return selected.sort(() => Math.random() - 0.5);
     };
 
-    // Blueprint: 50 Questions Total
-    // Part I (Foundations): 10 Qs
-    // Part II (Investigation/Math): 25 Qs
-    // Part III (Control/Studies): 15 Qs
+    // Blueprint: 50 Questions Total (Updated Phase 2)
+    // Part I (Foundations): 8 Qs (16%)
+    // Part II (Investigation/Math): 30 Qs (60%)
+    // Part III (Control/Studies): 12 Qs (24%)
 
-    const part1Qs = selectBalanced('part1', 10, difficulty);
-    const part2Qs = selectBalanced('part2', 25, difficulty);
-    const part3Qs = selectBalanced('part3', 15, difficulty);
+    const part1Qs = selectBalanced('part1', 8, difficulty);
+    const part2Qs = selectBalanced('part2', 30, difficulty);
+    const part3Qs = selectBalanced('part3', 12, difficulty);
 
     const finalQuestions = [...part1Qs, ...part2Qs, ...part3Qs];
 
@@ -3452,7 +3723,21 @@ class AppendixEngine {
         if (!frontEl || !backEl) return;
 
         this.isFlipped = false;
-        if (flashcardEl) flashcardEl.classList.remove('is-flipped');
+        if (flashcardEl) {
+            flashcardEl.classList.remove('is-flipped');
+
+            // SNAP BACK: Disable transition to instantly show front of NEW card
+            // preventing the user from seeing the new answer (back) during rotation
+            const originalTransition = flashcardEl.style.transition;
+            flashcardEl.style.transition = 'none';
+            flashcardEl.style.transform = 'rotateY(0deg)';
+
+            // Force reflow to apply the change
+            void flashcardEl.offsetWidth;
+
+            // Restore transition
+            flashcardEl.style.transition = originalTransition || 'transform 0.6s';
+        }
 
         // Reset ARIA
         if (faceFront) faceFront.setAttribute('aria-hidden', 'false');
@@ -4174,13 +4459,14 @@ window.VisualComponents = {
  * Handles sidebar navigation and dynamic content loading
  */
 
-const APP_VERSION = 'v2.4.0';
+const APP_VERSION = 'v3.0.0';
 
 document.addEventListener('DOMContentLoaded', () => {
     // console.log(`[EPIDEMIC ENGINE] Initializing ${APP_VERSION}...`);
 
     // Setup navigation
     setupNavigation();
+    setupProtection(); // Content Protection
 
     // History API Integration: Handle initial load based on URL hash
     const hash = window.location.hash.slice(1); // Remove '#'
@@ -4298,6 +4584,9 @@ function loadChapter(chapterId, updateHistory = true) {
     if (chapterId === 'home') chapterId = 'welcome';
 
     // console.log('[EPIDEMIC ENGINE] Loading chapter:', chapterId);
+
+    // Set context for CSS (e.g. print styles)
+    document.body.setAttribute('data-chapter', chapterId);
 
     // History API Integration: Update URL and History Stack
     if (updateHistory) {
@@ -4567,6 +4856,55 @@ function loadChapter(chapterId, updateHistory = true) {
                                 <div style="background: #fff; border: 1px solid #eee; padding: 0.5rem; border-radius: 4px; border-left: 2px solid #ef4444; margin-top:0.25rem;">${c.spot_map}</div>
                             </div>` : ''}
 
+                            ${c.lineList ? `
+                            <div style="margin-bottom: 1rem;">
+                                <strong style="color:var(--navy-primary);"><i class="ph-bold ph-table"></i> Investigation Data (Line List):</strong>
+                                <div style="margin-top:0.5rem; overflow-x:auto; max-height:300px; border:1px solid #ddd;">
+                                    <table style="width:100%; border-collapse:collapse; font-size:0.8rem;">
+                                        <thead style="position:sticky; top:0; background:#f1f5f9;">
+                                            <tr>
+                                                ${Object.keys(c.lineList[0]).map(k => `<th style="padding:6px; text-transform:capitalize; border:1px solid #ddd;">${k.replace(/_/g, ' ')}</th>`).join('')}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ${c.lineList.map((row, i) => `
+                                                <tr style="background:${i % 2 === 0 ? '#fff' : '#f9fafb'};">
+                                                    ${Object.values(row).map(v => `<td style="padding:6px; border:1px solid #ddd; text-align:center;">${v}</td>`).join('')}
+                                                </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>` : ''}
+
+                            ${c.twoByTwo ? `
+                            <div style="margin-bottom: 1rem;">
+                                <strong style="color:var(--navy-primary);"><i class="ph-bold ph-grid-four"></i> Investigation Data (2x2 Table):</strong>
+                                <div style="margin-top:0.5rem; display:flex; justify-content:center;">
+                                    <table style="border-collapse:collapse; border:1px solid #ddd; background:#fff; font-size:0.9rem;">
+                                        <thead>
+                                            <tr style="background:#f1f5f9;">
+                                                <th style="padding:8px; border:1px solid #ddd;">${c.twoByTwo.exposure}</th>
+                                                <th style="padding:8px; border:1px solid #ddd;">Ill (Cases)</th>
+                                                <th style="padding:8px; border:1px solid #ddd;">Well (Controls)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th style="padding:8px; border:1px solid #ddd; text-align:left; background:#f9fafb;">Exposed</th>
+                                                <td style="padding:8px; border:1px solid #ddd; text-align:center; font-weight:bold; color:#ef4444;">${c.twoByTwo.a}</td>
+                                                <td style="padding:8px; border:1px solid #ddd; text-align:center;">${c.twoByTwo.b}</td>
+                                            </tr>
+                                            <tr>
+                                                <th style="padding:8px; border:1px solid #ddd; text-align:left; background:#f9fafb;">Unexposed</th>
+                                                <td style="padding:8px; border:1px solid #ddd; text-align:center;">${c.twoByTwo.c}</td>
+                                                <td style="padding:8px; border:1px solid #ddd; text-align:center;">${c.twoByTwo.d}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>` : ''}
+
                             ${c.counterfactual ? `
                             <div style="margin-bottom: 1rem; font-size: 0.9rem;">
                                 <strong style="color:var(--navy-primary);"><i class="ph-bold ph-arrows-merge"></i> Counterfactual ("What If"):</strong>
@@ -4575,11 +4913,23 @@ function loadChapter(chapterId, updateHistory = true) {
 
                              ${c.questions ? `
                             <div style="margin-top: 1rem;">
-                                <strong><i class="ph-bold ph-question"></i> Discussion:</strong>
+                                <strong><i class="ph-bold ph-question"></i> Discussion & Analysis:</strong>
                                 ${c.questions.map(q => `
-                                    <div style="margin-top: 0.5rem; font-size: 0.9rem; border-bottom:1px dotted #eee; padding-bottom:0.5rem;">
-                                        <div style="font-weight:600; color:#333;">Q: ${q.q}</div>
+                                    <div style="margin-top: 0.75rem; font-size: 0.9rem; border-bottom:1px dotted #eee; padding-bottom:0.75rem;">
+                                        <div style="font-weight:600; color:#333; margin-bottom:0.25rem;">Q: ${q.q}</div>
+                                        ${q.hint ? `<div style="font-style:italic; color:#666; font-size:0.85rem; margin-bottom:0.25rem;">ℹ️ Hint: ${q.hint}</div>` : ''}
+                                        
+                                        ${c.isMegaCase ? `
+                                        <details>
+                                            <summary style="cursor:pointer; color:var(--accent-blue); font-size:0.85rem; font-weight:600;">Show Solution</summary>
+                                            <div style="margin-top: 0.5rem; background:#f0fdf4; padding:0.5rem; border-radius:4px; border:1px solid #bbf7d0;">
+                                                <div style="font-weight:bold; color:var(--accent-green);">A: ${q.a}</div>
+                                                ${q.explanation ? `<div style="margin-top:0.25rem; font-size:0.85rem; color:#333; line-height:1.4;">${q.explanation}</div>` : ''}
+                                            </div>
+                                        </details>
+                                        ` : `
                                         <div style="color: var(--accent-green); margin-top: 0.25rem;">A: ${q.a}</div>
+                                        `}
                                     </div>
                                 `).join('')}
                             </div>` : ''}
@@ -4670,17 +5020,13 @@ function loadChapter(chapterId, updateHistory = true) {
                 `}).join('');
             }
 
-            // Initialize Glossary and Flashcards if engine exists
+            // Initialize all Appendix Subtabs if engine exists
             if (window.appendixEngine) {
-                if (chapterId === 'appendix') {
+                if (chapterId === 'appendix' || chapterId === 'appendix-g' || chapterId === 'appendix-f') {
                     window.appendixEngine.initGlossary('glossary-root');
                     window.appendixEngine.initFlashcards('flashcard-root');
-                }
-                if (chapterId === 'appendix-g') {
-                    window.appendixEngine.initGlossary('glossary-root');
-                }
-                if (chapterId === 'appendix-f') {
-                    window.appendixEngine.initFlashcards('flashcard-root');
+                    window.appendixEngine.initFormulas('formulas-root');
+                    window.appendixEngine.initTables('tables-root');
                 }
             }
 
@@ -4714,60 +5060,13 @@ function loadChapter(chapterId, updateHistory = true) {
                 `).join('');
             }
 
-            // Define showTab globally if not already
-            window.showTab = function (tabId) {
-                // console.log('[SHOWTAB] Called with tabId:', tabId);
+            // setupDiagnosticRendering() is now called via window.renderDiagnosticHub()
+            if (typeof window.renderDiagnosticHub === 'function') {
+                window.renderDiagnosticHub();
+            }
 
-                document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
-                const tabContent = document.getElementById(tabId);
-                if (tabContent) {
-                    tabContent.style.display = 'block';
-                }
 
-                document.querySelectorAll('.neo-btn.small').forEach(el => el.classList.remove('active'));
-                if (event && event.target && event.target.classList.contains('neo-btn')) {
-                    event.target.classList.add('active');
-                }
 
-                // Initialize flashcards when flashcards tab is clicked
-                if (tabId === 'flashcards' && window.appendixEngine) {
-                    // console.log('[SHOWTAB] Initializing flashcards...');
-                    setTimeout(() => {
-                        window.appendixEngine.initFlashcards('flashcard-root');
-                    }, 50);
-                }
-
-                // Initialize glossary when glossary tab is clicked
-                if (tabId === 'glossary' && window.appendixEngine) {
-                    // console.log('[SHOWTAB] Initializing glossary...');
-                    setTimeout(() => {
-                        window.appendixEngine.initGlossary('glossary-root');
-                    }, 50);
-                }
-
-                // Initialize formulas when formulas tab is clicked
-                if (tabId === 'formulas' && window.appendixEngine) {
-                    // console.log('[SHOWTAB] Initializing formulas...');
-                    setTimeout(() => {
-                        window.appendixEngine.initFormulas('formulas-root');
-                    }, 50);
-                }
-
-                // Initialize tables when tables tab is clicked
-                if (tabId === 'tables' && window.appendixEngine) {
-                    // console.log('[SHOWTAB] Initializing tables...');
-                    setTimeout(() => {
-                        window.appendixEngine.initTables('tables-root');
-                    }, 50);
-                }
-
-                // Initialize logic when logic tab is clicked
-                if (tabId === 'logic' && window.appendixEngine) {
-                    setTimeout(() => {
-                        window.appendixEngine.initLogic('logic-root');
-                    }, 50);
-                }
-            };
         }, 100);
     }
 
@@ -4816,6 +5115,40 @@ function loadChapter(chapterId, updateHistory = true) {
     if (mainContent) {
         mainContent.scrollTop = 0;
     }
+
+    // Render Next Chapter Navigation
+    renderChapterNav(chapterId);
+}
+
+/**
+ * Renders a navigation footer with 'Next Chapter' button
+ */
+function renderChapterNav(currentId) {
+    const navItems = Array.from(document.querySelectorAll('.nav-item'));
+    const currentIndex = navItems.findIndex(item => item.getAttribute('data-chapter') === currentId);
+
+    if (currentIndex === -1 || currentIndex >= navItems.length - 1) return;
+
+    const nextItem = navItems[currentIndex + 1];
+    const nextId = nextItem.getAttribute('data-chapter');
+    const nextTitle = nextItem.innerText.replace(/^[0-9A-Z.]+\s/, ''); // Clean title
+
+    const container = document.getElementById('content-container');
+    if (!container) return;
+
+    const navHtml = `
+        <div class="chapter-footer-nav" style="margin-top: 4rem; padding: 2rem; border: 2px solid black; border-radius: 12px; background: white; box-shadow: 4px 4px 0 black; display: flex; justify-content: space-between; align-items: center;">
+            <div style="text-align: left;">
+                <span style="font-size: 0.8rem; text-transform: uppercase; font-weight: 800; color: #64748b; letter-spacing: 0.1em;">Up Next</span>
+                <h4 style="margin: 0.25rem 0 0; color: var(--navy-primary);">${nextTitle}</h4>
+            </div>
+            <button class="neo-btn primary" onclick="loadChapter('${nextId}')" style="display: flex; align-items: center; gap: 0.5rem;">
+                Continue <i class="ph-bold ph-arrow-right"></i>
+            </button>
+        </div>
+    `;
+
+    container.insertAdjacentHTML('beforeend', navHtml);
 }
 
 function getChapterContent(chapterId) {
@@ -5031,6 +5364,148 @@ document.addEventListener('DOMContentLoaded', () => {
         menuBtn.addEventListener('click', window.toggleMobileMenu);
     }
 });
+
+/* ================= CONTENT PROTECTION ================= */
+function setupProtection() {
+    // 1. Disable Right Click
+    document.addEventListener('contextmenu', e => {
+        // Allow right click on inputs for accessibility? Usually no custom menu there either if protected.
+        if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+            e.preventDefault();
+        }
+    });
+
+    // 2. Disable Shortcuts
+    document.addEventListener('keydown', e => {
+        // Block Ctrl+S (Save), Ctrl+U (Source), Ctrl+C (Copy)
+        // Allow Ctrl+P (Print) as we have specific print styles
+        if ((e.ctrlKey || e.metaKey) && ['s', 'u', 'c'].includes(e.key.toLowerCase())) {
+            e.preventDefault();
+            if (window.UI && window.UI.toast) window.UI.toast('Content Protected', 'warning');
+        }
+        // Block F12 (DevTools)
+        if (e.key === 'F12') {
+            e.preventDefault();
+        }
+        // Block Ctrl+Shift+I (DevTools)
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'i') {
+            e.preventDefault();
+        }
+    });
+
+    // 3. Inject CSS for Selection and Dragging
+    const style = document.createElement('style');
+    style.id = 'protection-styles';
+    style.textContent = `
+        body { 
+            -webkit-user-select: none; 
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none; 
+        }
+        /* Allow selection in key interactive areas */
+        input, textarea, [contenteditable], .selectable { 
+            -webkit-user-select: text; 
+            user-select: text; 
+        }
+        img { 
+            -webkit-user-drag: none; 
+            user-drag: none; 
+            pointer-events: none; /* Prevent drag/context on images */
+        }
+    `;
+    document.head.appendChild(style);
+
+    // console.log('[EPIDEMIC ENGINE] Content Protection Active');
+}
+
+// Global Tab Visibility Controller
+window.showTab = function (tabId) {
+    // console.log("[EPIDEMIC ENGINE] Showing tab:", tabId);
+
+    // Hide all tab contents
+    document.querySelectorAll(".tab-content").forEach(el => {
+        el.style.display = "none";
+    });
+
+    // Show target content
+    const tabContent = document.getElementById(tabId);
+    if (tabContent) {
+        tabContent.style.display = "block";
+    }
+
+    // Update tab buttons
+    document.querySelectorAll(".tabs .neo-btn.small").forEach(el => el.classList.remove("active"));
+
+    // Set active button
+    if (typeof event !== "undefined" && event && event.target && event.target.classList.contains("neo-btn")) {
+        event.target.classList.add("active");
+    } else {
+        const btn = document.querySelector(`.tabs button[onclick*="'${tabId}'"]`);
+        if (btn) btn.classList.add("active");
+    }
+
+    // Specialized Initializations
+    if (tabId === "diagnostic") {
+        if (typeof window.renderDiagnosticHub === 'function') {
+            window.renderDiagnosticHub();
+        }
+    }
+
+    if (window.appendixEngine) {
+        if (tabId === "flashcards") {
+            setTimeout(() => window.appendixEngine.initFlashcards("flashcard-root"), 50);
+        }
+        if (tabId === "glossary") {
+            setTimeout(() => window.appendixEngine.initGlossary("glossary-root"), 50);
+        }
+        if (tabId === "formulas") {
+            setTimeout(() => window.appendixEngine.initFormulas("formulas-root"), 50);
+        }
+        if (tabId === "tables") {
+            setTimeout(() => window.appendixEngine.initTables("tables-root"), 50);
+        }
+    }
+};
+
+// Global Diagnostic Engine
+window.renderDiagnosticHub = function () {
+    const diagContainer = document.getElementById("diagnostic-container");
+    if (!diagContainer) return;
+
+    if (!window.APPENDIX_DATA || !window.APPENDIX_DATA.DIAGNOSTIC) {
+        console.warn("[EPIDEMIC ENGINE] Diagnostic data missing from APPENDIX_DATA.");
+        diagContainer.innerHTML = "<div class='neo-card' style='border-left:4px solid #ef4444;'>Error: Diagnostic data not loaded.</div>";
+        return;
+    }
+
+    let html = `<div class="neo-card small" style="background: #f8fafc; border-left: 4px solid var(--accent-blue); padding: 1.5rem; margin-bottom: 2rem;">
+        <h4 style="margin-top:0;">Key Metrics</h4>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">`;
+
+    window.APPENDIX_DATA.DIAGNOSTIC.metrics.forEach(m => {
+        html += `<div style="background: white; padding: 0.75rem; border-radius: 6px; border: 1px solid #e2e8f0;">
+            <strong style="color: var(--accent-blue);">${m.name}</strong>
+            <div style="font-family: monospace; font-size: 0.9rem; margin: 0.25rem 0; color: #334155;">${m.calc}</div>
+            <div style="font-size: 0.8rem; color: #64748b;">${m.desc}</div>
+        </div>`;
+    });
+
+    html += `</div></div> <h4 style="margin-top:2rem;">Mastery Checklist</h4>`;
+
+    window.APPENDIX_DATA.DIAGNOSTIC.checklist.forEach(c => {
+        html += `<div class="neo-card small" style="margin-top: 1rem;">
+            <strong style="display:block; margin-bottom: 0.5rem; border-bottom: 1px solid #eee;">${c.category}</strong>
+            ${c.items.map(item => `
+                <label class="neo-check" style="display:block; margin: 0.25rem 0;">
+                    <input type="checkbox"> <span>${item}</span>
+                </label>
+            `).join("")}
+        </div>`;
+    });
+
+    diagContainer.innerHTML = html;
+};
 
 const INTERACTIVE_CASES_DATA = [
 
@@ -5944,8 +6419,11 @@ class HomeDashboard {
                             <img src="${svgLogo}" class="logo-glow" alt="Logo" style="width: 64px; height: 64px; border-radius: 50%;">
                             Epidemic Engine
                         </h1>
-                        <p style="font-size: 1.25rem; opacity: 1; margin-bottom: 1.5rem; color: #334155; font-weight: 500;">
-                            Navigate outbreaks, analyze data, and master the art of Disease Detectives.
+                        <p style="font-size: 1.25rem; opacity: 1; margin-bottom: 0.5rem; color: #334155; font-weight: 500;">
+                            Navigate outbreaks, visualize patterns, and master Disease Detectives (v2.5.0).
+                        </p>
+                        <p style="font-size: 0.9rem; margin-bottom: 1.5rem; color: #475569;">
+                            Designed, Created, & Conceived by <strong style="color: var(--navy-primary);">Naveen Minumula, MD</strong>
                         </p>
                         <div style="display: flex; gap: 1rem;">
                             <button class="neo-btn primary" onclick="loadChapter('ch1')">Start Learning</button>
@@ -6003,17 +6481,22 @@ class HomeDashboard {
                     <div class="action-card" onclick="loadChapter('simulation')">
                         <i class="ph-bold ph-clock" style="font-size: 2rem; color: var(--accent-orange); margin-bottom: 0.5rem;"></i>
                         <h3 style="margin: 0; font-size: 1.25rem;">Timed Exam</h3>
-                        <p style="margin: 0.5rem 0 0; font-size: 0.9rem; color: #64748b;">Full 50-minute simulation with random questions.</p>
+                        <p style="margin: 0.5rem 0 0; font-size: 0.9rem; color: #64748b;">Full 50-minute simulation.</p>
                     </div>
                      <div class="action-card" onclick="loadChapter('case_library')">
                         <i class="ph-bold ph-files" style="font-size: 2rem; color: var(--success); margin-bottom: 0.5rem;"></i>
                         <h3 style="margin: 0; font-size: 1.25rem;">Case Library</h3>
-                        <p style="margin: 0.5rem 0 0; font-size: 0.9rem; color: #64748b;">Review 16+ outbreak scenarios and solutions.</p>
+                        <p style="margin: 0.5rem 0 0; font-size: 0.9rem; color: #64748b;">16+ Outbreak Scenarios.</p>
                     </div>
                      <div class="action-card" onclick="loadChapter('drills')">
                         <i class="ph-bold ph-wrench" style="font-size: 2rem; color: var(--accent-purple); margin-bottom: 0.5rem;"></i>
-                        <h3 style="margin: 0; font-size: 1.25rem;">Tools & Drills</h3>
-                        <p style="margin: 0.5rem 0 0; font-size: 0.9rem; color: #64748b;">2x2 Calculator, Epi Curves, and more.</p>
+                        <h3 style="margin: 0; font-size: 1.25rem;">Calculators</h3>
+                        <p style="margin: 0.5rem 0 0; font-size: 0.9rem; color: #64748b;">2x2, Curves, Exposure.</p>
+                    </div>
+                    <div class="action-card" onclick="loadChapter('ch12')">
+                        <i class="ph-bold ph-eye" style="font-size: 2rem; color: var(--navy-primary); margin-bottom: 0.5rem;"></i>
+                        <h3 style="margin: 0; font-size: 1.25rem;">Visual Guides</h3>
+                        <p style="margin: 0.5rem 0 0; font-size: 0.9rem; color: #64748b;">Flowcharts & Infographics.</p>
                     </div>
                 </div>
         `);
@@ -6208,7 +6691,7 @@ class HomeDashboard {
         // 3. Search Cases (if available)
         if (window.CASE_LIBRARY) {
             window.CASE_LIBRARY.forEach((c, idx) => {
-                if (c.title.toLowerCase().includes(q) || c.disease.toLowerCase().includes(q)) {
+                if (c.title.toLowerCase().includes(q) || (c.disease && c.disease.toLowerCase().includes(q))) {
                     matches.push({
                         type: 'Case Study',
                         label: c.title,
@@ -6218,6 +6701,24 @@ class HomeDashboard {
                             setTimeout(() => {
                                 if (window.toggleCaseDetails) window.toggleCaseDetails(idx);
                             }, 300);
+                        }
+                    });
+                }
+            });
+        }
+
+        // 4. Search Interactive Scenarios (Tier 2 Content)
+        if (window.SCENARIO_DB) {
+            Object.values(window.SCENARIO_DB).forEach(s => {
+                const title = s.title || '';
+                const desc = s.description || '';
+                if (title.toLowerCase().includes(q) || desc.toLowerCase().includes(q)) {
+                    matches.push({
+                        type: 'Simulation',
+                        label: title,
+                        sub: (s.difficulty || 'Normal') + ' Mode',
+                        action: () => {
+                            loadChapter('interactive_scenarios');
                         }
                     });
                 }
@@ -6930,20 +7431,22 @@ class ScenarioEngine {
         const container = document.getElementById(this.containerId);
         if (!container) return; // Not on the right page
 
-
-
         // Group by category
         const categories = {
-            'investigation': { title: 'Field Invest', icon: 'ph-magnifying-glass' },
-            'calc': { title: 'Epi Math', icon: 'ph-calculator' },
-            'linelist': { title: 'Data Detective', icon: 'ph-table' },
-            'graph': { title: 'Visual Analytics', icon: 'ph-chart-line' }
+            'investigation': { title: 'Field Investigation', icon: 'ph-magnifying-glass', color: 'var(--navy-primary)' },
+            'intervention': { title: 'Control & Prevention', icon: 'ph-shield-check', color: '#059669' },
+            'calc': { title: 'Calculations & Math', icon: 'ph-calculator', color: '#7c3aed' },
+            'linelist': { title: 'Data Interpretation', icon: 'ph-table', color: '#ea580c' },
+            'graph': { title: 'Visual Analytics', icon: 'ph-chart-line', color: '#2563eb' }
         };
 
         const grouped = {};
         Object.keys(this.scenarios).forEach(key => {
             const s = this.scenarios[key];
-            const cat = s.category || 'investigation';
+            let cat = s.category || 'investigation';
+            // Safety fallback for unknown categories
+            if (!categories[cat]) cat = 'investigation';
+
             if (!grouped[cat]) grouped[cat] = [];
             grouped[cat].push({ key, ...s });
         });
@@ -6958,36 +7461,44 @@ class ScenarioEngine {
         Object.keys(categories).forEach(catId => {
             const items = grouped[catId];
             if (!items || items.length === 0) return;
+            const catConfig = categories[catId];
 
             html += `
-                <div class="category-section" style="margin-bottom: 2rem;">
-                    <h3 style="border-bottom: 2px solid var(--accent-orange); padding-bottom: 0.5rem; display: inline-block;">
-                        <i class="ph-bold ${categories[catId].icon}"></i> ${categories[catId].title}
-                    </h3>
-                    <div class="grid" style="gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 1rem;">
+                <div class="category-section" style="margin-bottom: 3rem;">
+                    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; border-bottom: 2px solid #eee; padding-bottom: 0.5rem;">
+                        <div style="background: ${catConfig.color}; color: white; width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center;">
+                            <i class="ph-bold ${catConfig.icon}"></i>
+                        </div>
+                        <h3 style="margin: 0; color: #333;">${catConfig.title}</h3>
+                    </div>
+                    <div class="grid" style="gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
             `;
 
             items.forEach(s => {
-                const diffColor = s.difficulty === 'Hard' || s.difficulty === 'Advanced' ? '#ef4444' : (s.difficulty === 'Medium' || s.difficulty === 'Intermediate' ? '#f59e0b' : '#22c55e');
-                const diffBg = s.difficulty === 'Hard' || s.difficulty === 'Advanced' ? '#fef2f2' : (s.difficulty === 'Medium' || s.difficulty === 'Intermediate' ? '#fffbeb' : '#f0fdf4');
+                const diffColor = s.difficulty === 'Expert' ? '#dc2626' : (s.difficulty === 'Advanced' ? '#ea580c' : (s.difficulty === 'Intermediate' ? '#d97706' : '#16a34a'));
+                const diffBg = s.difficulty === 'Expert' ? '#fef2f2' : (s.difficulty === 'Advanced' ? '#fff7ed' : (s.difficulty === 'Intermediate' ? '#fffbeb' : '#f0fdf4'));
 
                 html += `
-                    <button class="neo-card interactive-card" style="display: flex; flex-direction: column; height: 100%; border: 1px solid #ddd; transition: all 0.2s ease; cursor: pointer; width: 100%; text-align: left; background: white;" onclick="window.ScenarioEngine.startScenario('${s.key}')">
-                        <div style="flex: 1;">
+                    <button class="neo-card interactive-card" style="display: flex; flex-direction: column; height: 100%; border: 1px solid #e2e8f0; transition: all 0.2s ease; cursor: pointer; width: 100%; text-align: left; background: white; padding: 0; overflow: hidden; position: relative;" onclick="window.ScenarioEngine.startScenario('${s.key}')">
+                        <div style="height: 6px; width: 100%; background: ${catConfig.color};"></div>
+                        <div style="padding: 1.5rem; flex: 1; display: flex; flex-direction: column;">
                             <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.75rem;">
-                                <h4 style="margin: 0; color: var(--navy-primary); font-size: 1.15rem; font-weight: 700;">${s.title}</h4>
-                                <span class="neo-badge small" style="background: ${diffBg}; color: ${diffColor}; border: 1px solid ${diffColor}; font-size: 0.75rem; white-space: nowrap;">${s.difficulty}</span>
+                                <h4 style="margin: 0; color: #1e293b; font-size: 1.15rem; font-weight: 700;">${s.title}</h4>
                             </div>
                             
-                            <p style="font-size: 0.95rem; color: #555; line-height: 1.5; margin-bottom: 1.5rem;">
+                            <div style="margin-bottom: 1rem;">
+                                <span class="neo-badge small" style="background: ${diffBg}; color: ${diffColor}; border: 1px solid ${diffColor}20;">${s.difficulty || 'Normal'}</span>
+                            </div>
+
+                            <p style="font-size: 0.95rem; color: #64748b; line-height: 1.5; margin-bottom: 1.5rem; flex: 1;">
                                 ${s.description}
                             </p>
-                        </div>
 
-                        <div style="margin-top: auto;">
-                            <span class="neo-btn primary full-width" style="display: block; text-align: center;">
-                                <i class="ph-bold ph-play-circle" style="vertical-align: middle; margin-right: 6px;"></i> Start Simulation
-                            </span>
+                            <div style="margin-top: auto;">
+                                <span class="neo-btn primary full-width" style="display: flex; align-items: center; justify-content: center; width: 100%;">
+                                    <i class="ph-bold ph-play" style="margin-right: 8px;"></i> Start
+                                </span>
+                            </div>
                         </div>
                     </button>
                 `;
@@ -6999,8 +7510,6 @@ class ScenarioEngine {
         html += `</div>`;
         container.innerHTML = html;
         return;
-
-
     }
 
     startScenario(id) {
@@ -7348,8 +7857,15 @@ class FlashDrills {
 
         enhanceChapter: function (chapterId) {
             switch (chapterId) {
+                case 'ch3':
+                    this.addTriad();
+                    this.addChainOfInfection();
+                    break;
                 case 'ch6':
                     this.addIncubationLatencyVisual();
+                    break;
+                case 'ch7':
+                    this.addInvestigationRoadmap();
                     break;
                 case 'ch10':
                     this.addEpiCurveComparison();
@@ -7360,7 +7876,362 @@ class FlashDrills {
                 case 'ch12':
                     this.addStudyDesignTree();
                     break;
+                case 'ch16':
+                    this.addStopTheOutbreakGame();
+                    break;
             }
+        },
+
+        // Visual 0: Investigation Roadmap (Chapter 7)
+        addInvestigationRoadmap: function () {
+            const container = document.getElementById('content-container');
+            if (!container || document.getElementById('visual-investigation-roadmap')) return;
+
+            // Find the header "The 13 Steps (In Order)"
+            const headers = container.querySelectorAll('h2');
+            const targetHeader = Array.from(headers).find(h => h.textContent.includes('13 Steps') || h.textContent.includes('In Order'));
+
+            // Should replace the existing placeholder div or insert after header if div is empty
+            // In the content file, there is a hardcoded SVG. We will target it to REPLACE it or ENHANCE it.
+            // Best approach for "Refactor": If the hardcoded SVG exists, remove it or assume it was removed from content.js
+            // But to be safe and "Enhance", let's look for a marker. 
+            // In a true refactor, we would delete the SVG from content.js. 
+            // For now, let's look for the header and insert our dynamic one, assuming we will clean content.js next.
+
+            if (!targetHeader) return;
+
+            // Check if there's already an SVG immediately after?
+            const nextEl = targetHeader.nextElementSibling;
+            if (nextEl && nextEl.querySelector('svg')) {
+                // It's likely the hardcoded one. We can replace it or leave it. 
+                // If the goal is to centralize, we should replace it.
+                nextEl.remove();
+            }
+
+            const visualDiv = document.createElement('div');
+            visualDiv.id = 'visual-investigation-roadmap';
+            visualDiv.style.cssText = 'text-align: center; margin: 2rem 0;';
+            visualDiv.innerHTML = `
+                <svg width="600" height="900" viewBox="0 0 400 900" class="responsive-svg" role="img" aria-label="13-Step Outbreak Investigation Roadmap Flowchart" style="max-width: 100%; height: auto; background: #fafafa; border-radius: 8px; border: 1px solid #eee;">
+                    <title>13-Step Outbreak Investigation Roadmap</title>
+                    <defs>
+                         <marker id="arrowdown" markerWidth="10" markerHeight="7" refX="5" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+                        </marker>
+                    </defs>
+
+                    <!-- Step 1 -->
+                    <rect x="50" y="20" width="300" height="40" rx="5" fill="#eef2ff" stroke="var(--navy-primary)" stroke-width="4"/>
+                    <text x="200" y="47" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">1. Prepare for Fieldwork</text>
+                    <line x1="200" y1="60" x2="200" y2="80" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
+
+                    <!-- Step 2 -->
+                    <rect x="50" y="80" width="300" height="40" rx="5" fill="#eef2ff" stroke="var(--navy-primary)" stroke-width="4"/>
+                    <text x="200" y="107" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">2. Verify Diagnosis</text>
+                    <line x1="200" y1="120" x2="200" y2="140" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
+
+                    <!-- Step 3 -->
+                    <rect x="50" y="140" width="300" height="40" rx="5" fill="#eef2ff" stroke="var(--navy-primary)" stroke-width="4"/>
+                    <text x="200" y="167" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">3. Establish Existence</text>
+                    <line x1="200" y1="180" x2="200" y2="200" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
+
+                    <!-- Step 4 -->
+                    <rect x="50" y="200" width="300" height="40" rx="5" fill="#e0f7fa" stroke="var(--teal-accent)" stroke-width="4"/>
+                    <text x="200" y="227" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">4. Defined Case</text>
+                    <line x1="200" y1="240" x2="200" y2="260" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
+
+                    <!-- Step 5 -->
+                    <rect x="50" y="260" width="300" height="40" rx="5" fill="#e0f7fa" stroke="var(--teal-accent)" stroke-width="4"/>
+                    <text x="200" y="287" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">5. Find Cases & Record</text>
+                    <line x1="200" y1="300" x2="200" y2="320" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
+
+                    <!-- Step 6 -->
+                    <rect x="50" y="320" width="300" height="40" rx="5" fill="#e0f7fa" stroke="var(--teal-accent)" stroke-width="4"/>
+                    <text x="200" y="347" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">6. Descriptive Epi (PPT)</text>
+                    <line x1="200" y1="360" x2="200" y2="380" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
+
+                    <!-- Step 7 -->
+                    <rect x="50" y="380" width="300" height="40" rx="5" fill="#fff3e0" stroke="#f59e0b" stroke-width="4"/>
+                    <text x="200" y="407" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">7. Develop Hypotheses</text>
+                    <line x1="200" y1="420" x2="200" y2="440" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
+
+                    <!-- Step 8 -->
+                    <rect x="50" y="440" width="300" height="40" rx="5" fill="#fff3e0" stroke="#f59e0b" stroke-width="4"/>
+                    <text x="200" y="467" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">8. Evaluate Hypotheses</text>
+                    <line x1="200" y1="480" x2="200" y2="500" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
+
+                    <!-- Step 9 -->
+                    <rect x="50" y="500" width="300" height="40" rx="5" fill="#fff3e0" stroke="#f59e0b" stroke-width="4"/>
+                    <text x="200" y="527" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">9. Reconsider / Refine</text>
+                    <line x1="200" y1="540" x2="200" y2="560" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
+
+                    <!-- Step 10 -->
+                    <rect x="50" y="560" width="300" height="40" rx="5" fill="#f3e5f5" stroke="#9c27b0" stroke-width="4"/>
+                    <text x="200" y="587" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">10. Compare with Lab/Env</text>
+                    <line x1="200" y1="600" x2="200" y2="620" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
+
+                    <!-- Step 11 -->
+                    <rect x="50" y="620" width="300" height="40" rx="5" fill="#fce4ec" stroke="#e91e63" stroke-width="4"/>
+                    <text x="200" y="647" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">11. Implement Control</text>
+                    <line x1="200" y1="660" x2="200" y2="680" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
+
+                    <!-- Step 12 -->
+                    <rect x="50" y="680" width="300" height="40" rx="5" fill="#fce4ec" stroke="#e91e63" stroke-width="4"/>
+                    <text x="200" y="707" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">12. Maintain Surveillance</text>
+                    <line x1="200" y1="720" x2="200" y2="740" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
+
+                     <!-- Step 13 -->
+                    <rect x="50" y="740" width="300" height="40" rx="5" fill="#fce4ec" stroke="#e91e63" stroke-width="4"/>
+                    <text x="200" y="767" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">13. Communicate Findings</text>
+                    
+                    <!-- Side note for Control Measures -->
+                    <path d="M370,640 Q390,640 390,400 Q390,100 360,100" fill="none" stroke="#e91e63" stroke-width="4" stroke-dasharray="8,5"/>
+                    <text x="395" y="380" transform="rotate(90 395,380)" font-size="13" font-weight="bold" fill="#e91e63">Control can happen ANY time!</text>
+                </svg>
+            `;
+
+            targetHeader.insertAdjacentElement('afterend', visualDiv);
+        },
+
+        // Visual 6: Epidemiologic Triad (Chapter 3)
+        addTriad: function () {
+            const container = document.getElementById('content-container');
+            if (!container || document.getElementById('visual-triad')) return;
+
+            // Find header "The Epidemiologic Triad"
+            const headers = container.querySelectorAll('h2');
+            const targetHeader = Array.from(headers).find(h => h.textContent.includes('Triad') || h.textContent.includes('Triangle'));
+
+            if (!targetHeader) return;
+
+            const visualDiv = document.createElement('div');
+            visualDiv.id = 'visual-triad';
+            visualDiv.style.cssText = 'margin: 2rem 0; padding: 1rem; text-align:center;';
+
+            // Dynamic Triad SVG
+            visualDiv.innerHTML = `
+                <div class="interactive-triad-container" style="max-width: 600px; margin: 0 auto; background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 2px solid var(--navy-primary);">
+                    <h3 style="color: var(--navy-primary); margin-bottom: 2rem; margin-top:0;">
+                        <i class="ph-bold ph-triangle"></i> The Epidemiological Triad
+                    </h3>
+                    <p style="margin-bottom: 2rem; font-size: 0.9rem; color: #666;">Hover over each corner to see examples.</p>
+                    
+                    <svg width="100%" height="400" viewBox="0 0 500 400" class="responsive-svg" role="img" aria-label="Epidemiologic Triad">
+                        <style>
+                            .triad-node { cursor: pointer; transition: all 0.3s ease; }
+                            .triad-node:hover { transform: scale(1.05); filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2)); }
+                            .triad-node text { font-family: 'Space Grotesk', sans-serif; }
+                            .triad-example { opacity: 0; transition: opacity 0.3s; pointer-events: none;}
+                            .triad-node:hover ~ .triad-info .triad-default { opacity: 0; }
+                            #node-agent:hover ~ .triad-info #info-agent { opacity: 1; }
+                            #node-host:hover ~ .triad-info #info-host { opacity: 1; }
+                            #node-env:hover ~ .triad-info #info-env { opacity: 1; }
+                            #node-vector:hover ~ .triad-info #info-vector { opacity: 1; }
+                        </style>
+
+                        <defs>
+                             <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="3" result="blur" />
+                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                             </filter>
+                        </defs>
+                        
+                        <!-- Triangle Lines -->
+                        <path d="M250,50 L50,350 L450,350 Z" fill="none" stroke="#ddd" stroke-width="4" stroke-dasharray="8,4" />
+                        
+                        <!-- Center: Vector (Optional but often included) -->
+                        <g id="node-vector" class="triad-node">
+                            <circle cx="250" cy="230" r="40" fill="#f3e8ff" stroke="#9333ea" stroke-width="3" />
+                            <text x="250" y="235" text-anchor="middle" font-weight="bold" fill="#7e22ce" font-size="12">VECTOR</text>
+                        </g>
+
+                        <!-- Top: Agent -->
+                        <g id="node-agent" class="triad-node" transform-origin="250 50">
+                            <circle cx="250" cy="50" r="50" fill="#fee2e2" stroke="#dc2626" stroke-width="4" />
+                            <text x="250" y="55" text-anchor="middle" font-weight="bold" fill="#991b1b" font-size="14">AGENT</text>
+                            <text x="250" y="75" text-anchor="middle" font-size="10" fill="#991b1b" font-weight="bold">(The "What")</text>
+                        </g>
+                        
+                        <!-- Left: Host -->
+                        <g id="node-host" class="triad-node" transform-origin="50 350">
+                            <circle cx="50" cy="350" r="50" fill="#dbeafe" stroke="#2563eb" stroke-width="4" />
+                            <text x="50" y="355" text-anchor="middle" font-weight="bold" fill="#1e40af" font-size="14">HOST</text>
+                            <text x="50" y="375" text-anchor="middle" font-size="10" fill="#1e40af" font-weight="bold">(The "Who")</text>
+                        </g>
+
+                        <!-- Right: Environment -->
+                        <g id="node-env" class="triad-node" transform-origin="450 350">
+                            <circle cx="450" cy="350" r="50" fill="#d1fae5" stroke="#059669" stroke-width="4" />
+                            <text x="450" y="355" text-anchor="middle" font-weight="bold" fill="#065f46" font-size="12">ENVIRONMENT</text>
+                            <text x="450" y="375" text-anchor="middle" font-size="10" fill="#065f46" font-weight="bold">(The "Where")</text>
+                        </g>
+
+                        <!-- Info Area (Center Bottom or Overlay) -->
+                        <g class="triad-info" transform="translate(250, 430)"> <!-- Actually outside viewbox? No, expand viewbox or put text inside -->
+                             <!-- We'll put text in the middle area or below -->
+                        </g>
+                    </svg>
+                    
+                    <div class="triad-info" style="min-height: 80px; margin-top: 1rem; padding: 1rem; background: #f8fafc; border-radius: 8px; border-left: 4px solid var(--navy-primary);">
+                        <div id="info-agent" class="triad-example" style="display:none;">
+                            <strong><i class="ph-bold ph-bug"></i> Agent Examples:</strong> Bacteria, Virus, Fungi, Parasite. <br><em>Key Feature: Virulence, Infectivity.</em>
+                        </div>
+                        <div id="info-host" class="triad-example" style="display:none;">
+                            <strong><i class="ph-bold ph-user"></i> Host Examples:</strong> Age, Sex, Genetics, Immune Status. <br><em>Key Question: Who is susceptible?</em>
+                        </div>
+                        <div id="info-env" class="triad-example" style="display:none;">
+                            <strong><i class="ph-bold ph-plant"></i> Environment Examples:</strong> Crowding, Sanitation, Temperature. <br><em>Key Question: What creates the opportunity?</em>
+                        </div>
+                        <div id="info-vector" class="triad-example" style="display:none;">
+                            <strong><i class="ph-bold ph-butterfly"></i> Vector Examples:</strong> Mosquitoes, Ticks, Fleas. <br><em>Role: The carrier (optional center of triad).</em>
+                        </div>
+                         <div class="triad-default">
+                            <strong>Interactive Guide:</strong> Hover over a circle above to see details.
+                        </div>
+                    </div>
+                    
+                    <script>
+                        // Simple script to handle hover if CSS fails or for better control
+                        // (CSS solution used above for simplicity: adjacent sibling selector)
+                        // But DOM structure is: SVG then DIV. SVG nodes hover cannot affect DIV easily without JS.
+                        // So let's use a tiny inline script to handle mouseover.
+                        
+                        document.querySelectorAll('.triad-node').forEach(node => {
+                            node.addEventListener('mouseenter', function() {
+                                document.querySelectorAll('.triad-example').forEach(el => el.style.display = 'none');
+                                document.querySelector('.triad-default').style.display = 'none';
+                                const id = this.id.replace('node-', 'info-');
+                                document.getElementById(id).style.display = 'block';
+                            });
+                            node.addEventListener('mouseleave', function() {
+                                // Optional: reset on leave? Or keep last selection?
+                                // Let's keep last selection or revert to default?
+                                // Revert looks cleaner.
+                                document.querySelectorAll('.triad-example').forEach(el => el.style.display = 'none');
+                                document.querySelector('.triad-default').style.display = 'block';
+                            });
+                        });
+                    </script>
+                </div>
+             `;
+
+            targetHeader.insertAdjacentElement('afterend', visualDiv);
+
+            // Re-bind the script because innerHTML tags don't run automatically
+            setTimeout(() => {
+                const container = document.getElementById('visual-triad');
+                if (!container) return;
+                const nodes = container.querySelectorAll('.triad-node');
+                const infos = container.querySelectorAll('.triad-example');
+                const def = container.querySelector('.triad-default');
+
+                nodes.forEach(node => {
+                    node.addEventListener('mouseenter', function () {
+                        infos.forEach(el => el.style.display = 'none');
+                        if (def) def.style.display = 'none';
+                        const id = this.id.replace('node-', 'info-');
+                        const target = container.querySelector('#' + id);
+                        if (target) target.style.display = 'block';
+                    });
+                    node.addEventListener('mouseleave', function () {
+                        infos.forEach(el => el.style.display = 'none');
+                        if (def) def.style.display = 'block';
+                    });
+                });
+            }, 100);
+        },
+
+        // Visual 5: Chain of Infection (Chapter 3)
+        addChainOfInfection: function () {
+            const container = document.getElementById('content-container');
+            if (!container || document.getElementById('visual-chain-infection')) return;
+
+            // Find header with "Chain of Infection"
+            const headers = container.querySelectorAll('h2, h3');
+            const targetHeader = Array.from(headers).find(h => h.textContent.includes('Chain') || h.textContent.includes('Infection'));
+
+            if (!targetHeader) return;
+
+            const visualDiv = document.createElement('div');
+            visualDiv.id = 'visual-chain-infection';
+            visualDiv.style.cssText = 'margin: 2rem 0; padding: 1rem;';
+            visualDiv.innerHTML = `
+                <div style="background: white; border: 3px solid var(--navy-primary); border-radius: 50%; padding: 2rem; max-width: 600px; margin: 0 auto; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+                    <h3 style="text-align: center; color: var(--navy-primary); margin-top: 0; margin-bottom: 2rem;">
+                        <i class="ph-bold ph-link"></i> The Chain of Infection
+                    </h3>
+                    <svg width="100%" height="450" viewBox="0 0 500 500" class="responsive-svg" role="img" aria-label="The Chain of Infection: A 6-link circular diagram showing Pathogen, Reservoir, Exit, Transmission, Entry, and Host">
+                        <title>The Chain of Infection Diagram</title>
+                        <defs>
+                            <marker id="arrowChain" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L9,3 z" fill="#333" />
+                            </marker>
+                        </defs>
+                        
+                        <!-- Center: Germ -->
+                        <circle cx="250" cy="250" r="60" fill="#fef3c7" stroke="#d97706" stroke-width="3"/>
+                        <text x="250" y="245" text-anchor="middle" font-weight="bold" fill="#b45309" font-size="14">PATHOGEN</text>
+                        <text x="250" y="265" text-anchor="middle" font-size="11" fill="#b45309">(Agent)</text>
+
+                        <!-- Link 1: Reservoir (Top) -->
+                        <circle cx="250" cy="80" r="50" fill="#e0f2fe" stroke="#0284c7" stroke-width="3"/>
+                        <text x="250" y="75" text-anchor="middle" font-weight="bold" font-size="12" fill="#0369a1">1. RESERVOIR</text>
+                        <text x="250" y="90" text-anchor="middle" font-size="10" fill="#0369a1">Where it lives</text>
+                        
+                        <!-- Arrow 1 -> 2 -->
+                        <path d="M295,95 Q340,110 370,140" fill="none" stroke="#333" stroke-width="2" marker-end="url(#arrowChain)"/>
+
+                        <!-- Link 2: Portal of Exit (Top Right) -->
+                        <circle cx="410" cy="180" r="50" fill="#e0f2fe" stroke="#0284c7" stroke-width="3"/>
+                        <text x="410" y="175" text-anchor="middle" font-weight="bold" font-size="12" fill="#0369a1">2. EXIT</text>
+                        <text x="410" y="190" text-anchor="middle" font-size="10" fill="#0369a1">How it leaves</text>
+
+                         <!-- Arrow 2 -> 3 -->
+                        <path d="M410,230 Q400,280 370,320" fill="none" stroke="#333" stroke-width="2" marker-end="url(#arrowChain)"/>
+
+                        <!-- Link 3: Mode of Transmission (Bottom Right) -->
+                        <circle cx="340" cy="380" r="50" fill="#e0f2fe" stroke="#0284c7" stroke-width="3"/>
+                        <text x="340" y="375" text-anchor="middle" font-weight="bold" font-size="12" fill="#0369a1">3. TRANSMIT</text>
+                        <text x="340" y="390" text-anchor="middle" font-size="10" fill="#0369a1">How it moves</text>
+                        
+                         <!-- Arrow 3 -> 4 -->
+                        <path d="M290,390 Q250,400 210,390" fill="none" stroke="#333" stroke-width="2" marker-end="url(#arrowChain)"/>
+
+                        <!-- Link 4: Portal of Entry (Bottom Left) -->
+                        <circle cx="160" cy="380" r="50" fill="#e0f2fe" stroke="#0284c7" stroke-width="3"/>
+                        <text x="160" y="375" text-anchor="middle" font-weight="bold" font-size="12" fill="#0369a1">4. ENTRY</text>
+                        <text x="160" y="390" text-anchor="middle" font-size="10" fill="#0369a1">How it gets in</text>
+                        
+                         <!-- Arrow 4 -> 5 -->
+                        <path d="M120,350 Q100,300 100,240" fill="none" stroke="#333" stroke-width="2" marker-end="url(#arrowChain)"/>
+
+                        <!-- Link 5: Susceptible Host (Top Left) -->
+                        <circle cx="90" cy="180" r="50" fill="#e0f2fe" stroke="#0284c7" stroke-width="3"/>
+                        <text x="90" y="175" text-anchor="middle" font-weight="bold" font-size="12" fill="#0369a1">5. HOST</text>
+                        <text x="90" y="190" text-anchor="middle" font-size="10" fill="#0369a1">Next victim</text>
+                        
+                        <!-- Arrow 5 -> 1 -->
+                        <path d="M130,150 Q170,110 210,95" fill="none" stroke="#333" stroke-width="2" marker-end="url(#arrowChain)"/>
+
+                        <!-- Breaking the Chain Labels -->
+                        <rect x="235" y="130" width="30" height="30" fill="white" stroke="#ef4444" stroke-width="2" transform="rotate(45 250 145)"/>
+                        <text x="250" y="150" text-anchor="middle" fill="#ef4444" font-weight="bold" font-size="14">X</text>
+                        
+                        <rect x="360" y="270" width="30" height="30" fill="white" stroke="#ef4444" stroke-width="2" transform="rotate(45 375 285)"/>
+                        <text x="375" y="290" text-anchor="middle" fill="#ef4444" font-weight="bold" font-size="14">X</text>
+                        
+                        <rect x="130" y="270" width="30" height="30" fill="white" stroke="#ef4444" stroke-width="2" transform="rotate(45 145 285)"/>
+                        <text x="145" y="290" text-anchor="middle" fill="#ef4444" font-weight="bold" font-size="14">X</text>
+                    </svg>
+                    <div style="text-align: center; margin-top: 1rem;">
+                        <span style="background: #fee2e2; color: #b91c1c; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.9rem; font-weight: bold;">
+                            <i class="ph-bold ph-scissors"></i> BREAK THE CHAIN to stop the outbreak!
+                        </span>
+                    </div>
+                </div>
+            `;
+
+            targetHeader.insertAdjacentElement('afterend', visualDiv);
         },
 
         // Visual 1: Incubation vs Latency Timeline (Chapter 6)
@@ -7383,7 +8254,8 @@ class FlashDrills {
             visualDiv.id = 'visual-incubation-latency';
             visualDiv.style.cssText = 'text-align: center; margin: 2rem 0;';
             visualDiv.innerHTML = `
-                <svg width="500" height="280" viewBox="0 0 500 280" class="responsive-svg" style="max-width: 100%; height: auto; background: white; border: 2px solid var(--navy-primary); border-radius: 8px; padding: 1rem;">
+                <svg width="500" height="280" viewBox="0 0 500 280" class="responsive-svg" role="img" aria-label="Timeline comparing Incubation Period (days) versus Latency Period (years)" style="max-width: 100%; height: auto; background: white; border: 2px solid var(--navy-primary); border-radius: 8px; padding: 1rem;">
+                    <title>Incubation vs Latency Timeline</title>
                     <text x="250" y="25" text-anchor="middle" font-weight="bold" font-size="16" fill="var(--navy-primary)">Incubation vs Latency</text>
                     
                     <!-- Incubation Period (Top) -->
@@ -7448,7 +8320,7 @@ class FlashDrills {
                     <!-- Point Source -->
                     <div class="neo-card" style="padding: 1rem;">
                         <h4 style="color: #dc2626; margin-top: 0;">Point Source</h4>
-                        <svg width="100%" height="120" viewBox="0 0 200 120">
+                        <svg width="100%" height="120" viewBox="0 0 200 120" role="img" aria-label="Point Source Curve: Single peak, rapid decline">
                             <path d="M10,100 L40,100 L60,40 L80,30 L100,20 L120,40 L140,70 L160,90 L190,100" 
                                   fill="none" stroke="#dc2626" stroke-width="3"/>
                             <text x="100" y="115" text-anchor="middle" font-size="11" fill="#666">Time →</text>
@@ -7460,7 +8332,7 @@ class FlashDrills {
                     <!-- Continuous Source -->
                     <div class="neo-card" style="padding: 1rem;">
                         <h4 style="color: #ea580c; margin-top: 0;">Continuous Source</h4>
-                        <svg width="100%" height="120" viewBox="0 0 200 120">
+                        <svg width="100%" height="120" viewBox="0 0 200 120" role="img" aria-label="Continuous Source Curve: Plateau shape">
                             <rect x="40" y="40" width="120" height="45" fill="#fed7aa" opacity="0.6"/>
                             <path d="M10,100 L40,45 L160,45 L190,100" 
                                   fill="none" stroke="#ea580c" stroke-width="3"/>
@@ -7473,7 +8345,7 @@ class FlashDrills {
                     <!-- Propagated -->
                     <div class="neo-card" style="padding: 1rem;">
                         <h4 style="color: #16a34a; margin-top: 0;">Propagated</h4>
-                        <svg width="100%" height="120" viewBox="0 0 200 120">
+                        <svg width="100%" height="120" viewBox="0 0 200 120" role="img" aria-label="Propagated Curve: Multiple progressive peaks">
                             <path d="M10,100 L30,80 L50,40 L70,70 L90,35 L110,60 L130,30 L150,55 L170,45 L190,65" 
                                   fill="none" stroke="#16a34a" stroke-width="3"/>
                             <text x="100" y="115" text-anchor="middle" font-size="11" fill="#666">Time →</text>
@@ -7485,7 +8357,7 @@ class FlashDrills {
                     <!-- Intermittent -->
                     <div class="neo-card" style="padding: 1rem;">
                         <h4 style="color: #7c3aed; margin-top: 0;">Intermittent</h4>
-                        <svg width="100%" height="120" viewBox="0 0 200 120">
+                        <svg width="100%" height="120" viewBox="0 0 200 120" role="img" aria-label="Intermittent Source Curve: Irregular spikes">
                             <path d="M10,100 L30,95 L50,40 L70,95 L90,94 L110,35 L130,96 L150,93 L170,45 L190,97" 
                                   fill="none" stroke="#7c3aed" stroke-width="3"/>
                             <text x="100" y="115" text-anchor="middle" font-size="11" fill="#666">Time →</text>
@@ -7598,7 +8470,8 @@ class FlashDrills {
                     <h3 style="text-align: center; color: var(--navy-primary); margin-bottom: 1.5rem;">
                         <i class="ph-bold ph-tree-structure"></i> Study Design Selection Flowchart
                     </h3>
-                    <svg width="100%" height="500" viewBox="0 0 600 500" style="max-width: 100%; height: auto;">
+                    <svg width="100%" height="500" viewBox="0 0 600 500" style="max-width: 100%; height: auto;" role="img" aria-label="Study Design Decision Tree Flowchart">
+                        <title>Study Design Selection Flowchart</title>
                         <defs>
                             <marker id="arrowTree" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
                                 <path d="M0,0 L0,6 L9,3 z" fill="#333" />
@@ -7676,6 +8549,162 @@ class FlashDrills {
             `;
 
             targetHeader.insertAdjacentElement('afterend', visualDiv);
+        },
+
+        // Visual 7: Stop the Outbreak Mini-Game (Chapter 16)
+        addStopTheOutbreakGame: function () {
+            const container = document.getElementById('content-container');
+            if (!container || document.getElementById('visual-outbreak-sim')) return;
+
+            const headers = container.querySelectorAll('h2, h3');
+            // Look for "Control Measures" or similar
+            const targetHeader = Array.from(headers).find(h =>
+                h.textContent.includes('Control') || h.textContent.includes('Intervention') || h.textContent.includes('16.')
+            );
+
+            if (!targetHeader) return;
+
+            const visualDiv = document.createElement('div');
+            visualDiv.id = 'visual-outbreak-sim';
+            visualDiv.style.cssText = 'margin: 2rem 0;';
+
+            visualDiv.innerHTML = `
+                <div class="neo-card" style="border: 3px solid var(--navy-primary); padding: 0; overflow: hidden;">
+                    <div style="background: var(--navy-primary); color: white; padding: 1rem; text-align: center;">
+                        <h3 style="margin:0; color:white;"><i class="ph-fill ph-shield-check"></i> Simulation: Stop the Outbreak</h3>
+                        <p style="margin: 0.5rem 0 0; opacity: 0.9;">Apply control measures to flatten the curve!</p>
+                    </div>
+                    
+                    <div style="padding: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start;">
+                        <!-- Controls -->
+                        <div>
+                            <div class="sim-stat" style="margin-bottom: 1.5rem; text-align: center;">
+                                <div style="font-size: 0.9rem; color: #666;">Effective R (Rt)</div>
+                                <div id="sim-r-value" style="font-size: 2.5rem; font-weight: bold; color: #dc2626;">4.0</div>
+                                <div id="sim-status" style="font-weight: bold; color: #dc2626;">EXPONENTIAL GROWTH</div>
+                            </div>
+
+                            <h4 style="border-bottom: 2px solid #eee; padding-bottom: 0.5rem;">Select Interventions:</h4>
+                            <div class="sim-controls">
+                                <label class="neo-check" style="display: flex; align-items: center; padding: 0.75rem; border: 1px solid #eee; border-radius: 8px; margin-bottom: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox" data-reduce="0.5" onchange="window.VisualEnhancements.updateSim()">
+                                    <span style="margin-left: 0.75rem; font-weight: bold;">Mask Mandate</span>
+                                    <span style="margin-left: auto; color: #22c55e; font-size: 0.9rem;">-0.5 R</span>
+                                </label>
+                                <label class="neo-check" style="display: flex; align-items: center; padding: 0.75rem; border: 1px solid #eee; border-radius: 8px; margin-bottom: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox" data-reduce="1.2" onchange="window.VisualEnhancements.updateSim()">
+                                    <span style="margin-left: 0.75rem; font-weight: bold;">School Closure</span>
+                                    <span style="margin-left: auto; color: #22c55e; font-size: 0.9rem;">-1.2 R</span>
+                                </label>
+                                <label class="neo-check" style="display: flex; align-items: center; padding: 0.75rem; border: 1px solid #eee; border-radius: 8px; margin-bottom: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox" data-reduce="1.5" onchange="window.VisualEnhancements.updateSim()">
+                                    <span style="margin-left: 0.75rem; font-weight: bold;">Mass Vaccination</span>
+                                    <span style="margin-left: auto; color: #22c55e; font-size: 0.9rem;">-1.5 R</span>
+                                </label>
+                                <label class="neo-check" style="display: flex; align-items: center; padding: 0.75rem; border: 1px solid #eee; border-radius: 8px; margin-bottom: 0.5rem; cursor: pointer;">
+                                    <input type="checkbox" data-reduce="0.3" onchange="window.VisualEnhancements.updateSim()">
+                                    <span style="margin-left: 0.75rem; font-weight: bold;">Hand Washing</span>
+                                    <span style="margin-left: auto; color: #22c55e; font-size: 0.9rem;">-0.3 R</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Graph -->
+                        <div style="background: #f8fafc; border-radius: 12px; padding: 1rem; border: 1px solid #e2e8f0;">
+                            <svg id="sim-graph" width="100%" height="250" viewBox="0 0 300 200" preserveAspectRatio="none">
+                                <!-- Axes -->
+                                <line x1="20" y1="180" x2="290" y2="180" stroke="#94a3b8" stroke-width="2" />
+                                <line x1="20" y1="180" x2="20" y2="20" stroke="#94a3b8" stroke-width="2" />
+                                <text x="150" y="195" text-anchor="middle" font-size="10" fill="#64748b">Time (Weeks)</text>
+                                <text x="10" y="100" text-anchor="middle" transform="rotate(-90 10 100)" font-size="10" fill="#64748b">Cases</text>
+                                
+                                <!-- Baseline Curve (Ghost) -->
+                                <path d="M20,180 Q100,20 180,180" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4,4" />
+                                <text x="185" y="175" font-size="9" fill="#94a3b8">Uncontrolled</text>
+
+                                <!-- Active Curve -->
+                                <path id="sim-curve" d="M20,180 Q100,20 180,180" fill="rgba(220, 38, 38, 0.2)" stroke="#dc2626" stroke-width="3" />
+                                
+                                <!-- Threshold Line -->
+                                <line x1="20" y1="100" x2="290" y2="100" stroke="#ef4444" stroke-width="1" stroke-dasharray="2,2" />
+                                <text x="290" y="95" text-anchor="end" font-size="9" fill="#ef4444">Hospital Capacity</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+             `;
+
+            targetHeader.insertAdjacentElement('afterend', visualDiv);
+
+            // Attach Logic
+            this.updateSim = function () {
+                const inputs = document.querySelectorAll('#visual-outbreak-sim input[type="checkbox"]');
+                let R = 4.0; // Base R0
+                inputs.forEach(input => {
+                    if (input.checked) R -= parseFloat(input.dataset.reduce);
+                });
+
+                if (R < 0.5) R = 0.5; // Min floor
+
+                // Update Display
+                const rDisplay = document.getElementById('sim-r-value');
+                const status = document.getElementById('sim-status');
+                const curve = document.getElementById('sim-curve');
+
+                if (!rDisplay) return;
+
+                rDisplay.textContent = R.toFixed(1);
+
+                if (R < 1.0) {
+                    rDisplay.style.color = '#16a34a'; // Green
+                    status.textContent = "OUTBREAK CONTROLLED";
+                    status.style.color = '#16a34a';
+                    curve.setAttribute('stroke', '#16a34a');
+                    curve.setAttribute('fill', 'rgba(22, 163, 74, 0.2)');
+                } else if (R < 2.0) {
+                    rDisplay.style.color = '#ea580c'; // Orange
+                    status.textContent = "SLOW GROWTH";
+                    status.style.color = '#ea580c';
+                    curve.setAttribute('stroke', '#ea580c');
+                    curve.setAttribute('fill', 'rgba(234, 88, 12, 0.2)');
+                } else {
+                    rDisplay.style.color = '#dc2626'; // Red
+                    status.textContent = "EXPONENTIAL GROWTH";
+                    status.style.color = '#dc2626';
+                    curve.setAttribute('stroke', '#dc2626');
+                    curve.setAttribute('fill', 'rgba(220, 38, 38, 0.2)');
+                }
+
+                // Update Curve Shape
+                // Simple quadratic bezier control point manipulation based on R
+                // Base (R=4) peak at y=20 (high). End at 180 (zero).
+                // Capacity line is y=100.
+                // Start is (20, 180). End is roughly (200, 180).
+                // Control Point X = 110. Control point Y varies.
+                // y=180 is baseline. y=20 is max height.
+
+                // Formula: PeakHeight = proportional to R.
+                // R=4 -> Peak is high (y=20). Height = 160px.
+                // R=1 -> Peak should be low (steady state or slight bump). 
+                // R<1 -> Peak immediately drops.
+
+                // Simple viz hack:
+                // Y_control = 180 - ( (R / 4.0) * 160 * 1.5 )
+                // The *1.5 accentuates the height difference.
+
+                let heightFactor = R / 4.0;
+                let peakY = 180 - (heightFactor * 160);
+                if (peakY < 10) peakY = 10;
+                if (peakY > 175) peakY = 175; // Even R=0.5 has some cases usually
+
+                // If R < 1, curve should arguably not even peak, just drop?
+                // But for simplified "Curve Flattening" viz, just lowering the peak is enough to convey the concept.
+
+                // Also extend the duration if flattened?
+                // For simplicity, we keep width constant but lower height.
+
+                curve.setAttribute('d', `M20,180 Q110,${peakY} 200,180`);
+            };
         }
     };
 

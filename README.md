@@ -1,30 +1,89 @@
-# Epidemic Engine: Disease Detectives Toolkit (v2.5.0)
+# Epidemic Engine v4.0
 
-A comprehensive, offline-capable progressive web application (PWA) designed for **Science Olympiad Division B (2026)** students preparing for the Disease Detectives event.
+**The Ultimate Offline Mastery Guide for Science Olympiad Disease Detectives**
 
-## 🌟 Key Features
-- **Complete Curriculum**: 20+ Chapters covering Scientific Inquiry, Pattern Recognition, Etiology, and Prevention.
-- **Visual Learning**: Interactive Study Design Flowcharts, Epi Curve Plotters, and specialized Flashcards.
-- **Simulation**: "Exam Mode" with 50-minute timer and randomized case scenarios.
-- **Offline First**: Works 100% offline. No internet required after initial download.
-- **Field Ready**: Includes "One-Click Notesheet Generator" for competition day.
+## Overview
+Epidemic Engine is a comprehensive, offline-first web application designed to help students master the "Disease Detectives" event in Science Olympiad (Division B & C). It combines a digital textbook, interactive simulations, and precision calculators into a single portable tool.
 
-## 🚀 How to Run
-1. **Unzip** `EpiEngine_v2.5.0_VisualLearning.zip`.
-2. Double-click **`index.html`** to launch in your browser.
-3. (Optional) For best experience, use Chrome or Edge and click "Install App" to run as a native desktop app.
+## Features
+- **Comprehensive Curriculum:** 21 Chapters covering the entire 2026 Rules Manual.
+- **Offline Capable:** Runs without internet using Service Worker technology.
+- **Simulation Center:**
+  - **Infinite Outbreak Generator:** Practice mathematical problems with randomized data.
+  - **Case Library:** 50+ real-world case studies with interactive Q&A.
+- **Tools Suite:**
+  - 2x2 Contingency Table Calculator (Risk Ratio, Odds Ratio, Chi-Square).
+  - Epi Curve Generator.
+  - Exposure Window Calculator.
 
-## 📚 Tools Included
-- **2x2 Contingency Calculator**: Calculate Odds Ratio (OR) and Relative Risk (RR).
-- **Epi Curve Generator**: Visualize Point Source vs Propagated outbreaks.
-- **Exposure Window Calculator**: Estimate incubation periods.
-- **Study Design Wizard**: Interactive flowchart for selecting study types.
+## Installation & Usage
 
-## 👨‍🏫 For Coaches
-- Use **Coach Mode** (`index.html?coach=1`) to view answer keys and teaching tips inline.
-- Print clean, ink-saving study guides using the **Print Mode** (Ctrl+P).
+### Online (Vercel)
+This project is configured for easy deployment on Vercel.
 
----
-*Built for Science Olympiad 2026 Season.*  
-*Designed, Created, & Conceived by **Rishi Reddy***
+1.  **Push to GitHub:**
+    *   Initialize a git repository: `git init`
+    *   Add files: `git add .`
+    *   Commit: `git commit -m "Initial commit"`
+    *   Push to a new GitHub repository.
 
+2.  **Connect to Vercel:**
+    *   Go to [Vercel](https://vercel.com).
+    *   Click "Add New..." -> "Project".
+    *   Import your GitHub repository.
+    *   Vercel will detect the static site configuration. Click **Deploy**.
+
+
+### Offline (Local Use)
+1. Download the `EpidemicEngine_v4.0.zip` file.
+2. Extract the contents to a folder.
+3. Open `index.html` in Google Chrome or Edge.
+4. **Recommended:** Click the "Install App" icon in the address bar to install it as a standalone app.
+
+## Development
+
+### Architecture
+The application is a Vanilla JS Single Page Application (SPA).
+- `index.html`: The main entry point. Loading logic for bundles and extensions.
+- `js/epidemic-engine-content.js`: Core content definition for all chapters.
+- `js/epidemic-engine-extensions.js`: Consolidated updates and patch logic.
+- `js/quiz_bank_enhanced.js`: Repository of 500+ quiz questions.
+- `sw.js`: Service Worker configuration for offline caching.
+
+### File Structure
+```
+/
+├── index.html          # Main application shell
+├── sw.js               # Service Worker
+├── js/
+│   ├── epidemic-engine-content.js
+│   ├── epidemic-engine-extensions.js
+│   ├── quiz_bank_enhanced.js
+│   └── ...
+├── css/                # Stylesheets
+└── dist/               # Legacy bundled assets (core logic)
+```
+
+### Versioning
+### Versioning
+- **v3.0**: Major content overhaul (Genomic Epi, Mortality Metrics).
+- **v3.1**: Security audit fixes (CSP, Eval removal) and code hardening.
+- **v4.0**: Architectural refactor, consolidation of patch files.
+- **v4.0.2**: "Gold" release. Fixes caching, version consistency, and critical calculator bugs.
+
+### Building from Source
+Since this is a vanilla JS project, "building" simply means creating the distribution zip.
+1. Ensure `js/` and `css/` files are up to date.
+2. Run your preferred zip utility to archive `index.html`, `js/`, `css/`, `assets/`, `dist/`, and `sw.js`.
+3. Note: The `dist/` folder contains legacy core bundles (`epi-core` and `epi-data`) that must be included for offline functionality.
+
+## References & Sources
+The content in this application is derived from publicly available epidemiological guidelines:
+*   **CDC Field Epidemiology Manual**: Primary source for investigation steps and case definitions.
+*   **Principles of Epidemiology in Public Health Practice (CDC 3rd Ed.)**: Mathematical formulas and statistical methods.
+*   **WHO Outbreak Investigation Guidelines**: Global health context and surveillance standards.
+*   **Science Olympiad Rules Manual (2025-2026)**: Curriculum scope and event parameters.
+
+## Credits
+Designed, Created, and Conceived by **Rishi Reddy**.
+Content based on CDC Field Epidemiology Manual and WHO guidelines.

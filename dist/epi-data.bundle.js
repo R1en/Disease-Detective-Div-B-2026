@@ -959,6 +959,18 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                  <p><strong>Example:</strong> Creutzfeldt-Jakob Disease (CJD), Mad Cow Disease (BSE).</p>
             </div>
 
+            <div class="champion-concept">
+                <div class="callout-header">
+                    <i class="ph ph-dna"></i>
+                    Champion Concept: Genomic Epidemiology
+                </div>
+                <div class="callout-content">
+                    <p><strong>Genomic Epidemiology</strong> uses the genetic "fingerprint" of a pathogen to link cases.</p>
+                    <p>If two patients have viruses with <em>identical</em> genetic sequences, they are part of the same transmission chain.</p>
+                    <p><strong>Application:</strong> Used to track variants (like Omicron) and solve foodborne outbreaks (PulseNet) by linking patients to a specific food source.</p>
+                </div>
+            </div>
+
             <h2>3.5 Exam Focus & Tips</h2>
             <div class="exam-trap">
                 <div class="callout-header"><i class="ph ph-lightning"></i> High Yield Topics</div>
@@ -1216,6 +1228,7 @@ window.EPIDEMIC_ENGINE_CONTENT = {
             <p>Measures the <strong>risk</strong> of developing a disease.</p>
             <p style="background: rgba(57, 204, 204, 0.1); padding: 1rem; border-radius: 8px; border-left: 4px solid var(--teal-accent);">
                 <strong>Incidence = (New Cases / Population at Risk) × Multiplier</strong>
+                <br><small class="citation" style="color: #555; font-size: 0.8rem;">Source: CDC Principles of Epidemiology, 3rd Ed.</small>
             </p>
             <p><em>Note: The denominator must exclude people who already have the disease or are immune!</em></p>
 
@@ -1223,6 +1236,7 @@ window.EPIDEMIC_ENGINE_CONTENT = {
             <p>Measures the <strong>burden</strong> of disease in a population.</p>
             <p style="background: rgba(57, 204, 204, 0.1); padding: 1rem; border-radius: 8px; border-left: 4px solid var(--teal-accent);">
                 <strong>Prevalence = (Total Existing Cases / Total Population) × Multiplier</strong>
+                <br><small class="citation" style="color: #555; font-size: 0.8rem;">Source: CDC Principles of Epidemiology, 3rd Ed.</small>
             </p>
             <p><em>Includes both new and old cases.</em></p>
 
@@ -1425,7 +1439,26 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 </tbody>
             </table></div>
 
-            <h2>5.4 Surveillance Data Flow</h2>
+            <h2>5.5 One Health Surveillance</h2>
+            <div class="neo-card" style="border-left: 4px solid #166534; background: #f0fdf4; margin: 2rem 0;">
+                <h3 style="color: #14532d; margin-top:0;"><i class="ph-bold ph-globe"></i> One Health</h3>
+                <p>The concept that <strong>human health</strong> is connected to the health of <strong>animals</strong> and the <strong>environment</strong>.</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+                    <div style="background: white; padding: 1rem; border-radius: 8px;">
+                        <strong>Sentinel Surveillance in One Health:</strong>
+                        <ul>
+                            <li><strong>Dead Crow Testing:</strong> Using birds to detect West Nile Virus <em>before</em> humans get sick.</li>
+                            <li><strong>Canary in a Coal Mine:</strong> Animals often show symptoms first.</li>
+                        </ul>
+                    </div>
+                    <div style="background: white; padding: 1rem; border-radius: 8px;">
+                        <strong>Zoonotic Disease Tracking:</strong>
+                        <p>60% of infectious diseases in humans are spread from animals (Zoonotic).</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>5.6 Surveillance Data Flow</h2>
             <p>How does a case of Salmonella get to the CDC? It follows a chain of command.</p>
             <div class="neo-card" style="text-align: center; background: white;">
                 <div style="font-weight: bold; font-size: 1.2rem;">1. Clinician / Lab</div>
@@ -1773,96 +1806,28 @@ window.EPIDEMIC_ENGINE_CONTENT = {
 
             <h2>The 13 Steps (In Order)</h2>
             
-            <div style="text-align: center; margin: 2rem 0;">
-                <svg width="600" height="900" viewBox="0 0 400 900" class="responsive-svg" style="max-width: 100%; height: auto; background: #fafafa; border-radius: 8px; border: 1px solid #eee;">
-                    <defs>
-                         <marker id="arrowdown" markerWidth="10" markerHeight="7" refX="5" refY="3.5" orient="auto">
-                            <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
-                        </marker>
-                    </defs>
-
-                    <!-- Step 1 -->
-                    <rect x="50" y="20" width="300" height="40" rx="5" fill="#eef2ff" stroke="var(--navy-primary)" stroke-width="4"/>
-                    <text x="200" y="47" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">1. Prepare for Fieldwork</text>
-                    <line x1="200" y1="60" x2="200" y2="80" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
-
-                    <!-- Step 2 -->
-                    <rect x="50" y="80" width="300" height="40" rx="5" fill="#eef2ff" stroke="var(--navy-primary)" stroke-width="4"/>
-                    <text x="200" y="107" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">2. Verify Diagnosis</text>
-                    <line x1="200" y1="120" x2="200" y2="140" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
-
-                    <!-- Step 3 -->
-                    <rect x="50" y="140" width="300" height="40" rx="5" fill="#eef2ff" stroke="var(--navy-primary)" stroke-width="4"/>
-                    <text x="200" y="167" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">3. Establish Existence</text>
-                    <line x1="200" y1="180" x2="200" y2="200" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
-
-                    <!-- Step 4 -->
-                    <rect x="50" y="200" width="300" height="40" rx="5" fill="#e0f7fa" stroke="var(--teal-accent)" stroke-width="4"/>
-                    <text x="200" y="227" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">4. Defined Case</text>
-                    <line x1="200" y1="240" x2="200" y2="260" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
-
-                    <!-- Step 5 -->
-                    <rect x="50" y="260" width="300" height="40" rx="5" fill="#e0f7fa" stroke="var(--teal-accent)" stroke-width="4"/>
-                    <text x="200" y="287" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">5. Find Cases & Record</text>
-                    <line x1="200" y1="300" x2="200" y2="320" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
-
-                    <!-- Step 6 -->
-                    <rect x="50" y="320" width="300" height="40" rx="5" fill="#e0f7fa" stroke="var(--teal-accent)" stroke-width="4"/>
-                    <text x="200" y="347" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">6. Descriptive Epi (PPT)</text>
-                    <line x1="200" y1="360" x2="200" y2="380" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
-
-                    <!-- Step 7 -->
-                    <rect x="50" y="380" width="300" height="40" rx="5" fill="#fff3e0" stroke="#f59e0b" stroke-width="4"/>
-                    <text x="200" y="407" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">7. Develop Hypotheses</text>
-                    <line x1="200" y1="420" x2="200" y2="440" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
-
-                    <!-- Step 8 -->
-                    <rect x="50" y="440" width="300" height="40" rx="5" fill="#fff3e0" stroke="#f59e0b" stroke-width="4"/>
-                    <text x="200" y="467" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">8. Evaluate Hypotheses</text>
-                    <line x1="200" y1="480" x2="200" y2="500" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
-
-                    <!-- Step 9 -->
-                    <rect x="50" y="500" width="300" height="40" rx="5" fill="#fff3e0" stroke="#f59e0b" stroke-width="4"/>
-                    <text x="200" y="527" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">9. Reconsider / Refine</text>
-                    <line x1="200" y1="540" x2="200" y2="560" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
-
-                    <!-- Step 10 -->
-                    <rect x="50" y="560" width="300" height="40" rx="5" fill="#f3e5f5" stroke="#9c27b0" stroke-width="4"/>
-                    <text x="200" y="587" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">10. Compare with Lab/Env</text>
-                    <line x1="200" y1="600" x2="200" y2="620" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
-
-                    <!-- Step 11 -->
-                    <rect x="50" y="620" width="300" height="40" rx="5" fill="#fce4ec" stroke="#e91e63" stroke-width="4"/>
-                    <text x="200" y="647" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">11. Implement Control</text>
-                    <line x1="200" y1="660" x2="200" y2="680" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
-
-                    <!-- Step 12 -->
-                    <rect x="50" y="680" width="300" height="40" rx="5" fill="#fce4ec" stroke="#e91e63" stroke-width="4"/>
-                    <text x="200" y="707" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">12. Maintain Surveillance</text>
-                    <line x1="200" y1="720" x2="200" y2="740" stroke="#333" stroke-width="4" marker-end="url(#arrowdown)"/>
-
-                     <!-- Step 13 -->
-                    <rect x="50" y="740" width="300" height="40" rx="5" fill="#fce4ec" stroke="#e91e63" stroke-width="4"/>
-                    <text x="200" y="767" text-anchor="middle" font-weight="900" font-size="15" fill="#333" style="text-transform:uppercase;">13. Communicate Findings</text>
-                    
-                    <!-- Side note for Control Measures -->
-                    <path d="M370,640 Q390,640 390,400 Q390,100 360,100" fill="none" stroke="#e91e63" stroke-width="4" stroke-dasharray="8,5"/>
-                    <text x="395" y="380" transform="rotate(90 395,380)" font-size="13" font-weight="bold" fill="#e91e63">Control can happen ANY time!</text>
-                </svg>
-            </div>
+            <!-- Visual Roadmap Placeholder (Injected by visual-enhancements.js) -->
+            <div id="visual-investigation-roadmap-placeholder"></div>
 
             <div class="study-tip">
-                        <li><strong>F</strong>ind cases systematically (line listing)</li>
-                        <li><strong>D</strong>escribe epidemic (time/place/person)</li>
-                        <li><strong>D</strong>evelop hypotheses (agent/host/environment)</li>
-                        <li><strong>E</strong>valuate hypotheses (analytical epi)</li>
-                        <li><strong>R</strong>e-evaluate as needed</li>
-                        <li><strong>C</strong>ompare with lab/environmental studies</li>
-                        <li><strong>I</strong>mplement control measures (ASAP!)</li>
-                        <li><strong>M</strong>aintain surveillance</li>
+                <div class="callout-header"><i class="ph ph-list-numbers"></i> The 13 Steps at a Glance</div>
+                <div class="callout-content">
+                    <ol>
+                        <li><strong>P</strong>repare for field work</li>
+                        <li><strong>E</strong>stablish existence of outbreak</li>
+                        <li><strong>V</strong>erify diagnosis</li>
+                        <li><strong>C</strong>onstruct case definition</li>
+                        <li><strong>F</strong>ind cases systematically</li>
+                        <li><strong>D</strong>escribe epidemic (Person, Place, Time)</li>
+                        <li><strong>D</strong>evelop hypotheses</li>
+                        <li><strong>E</strong>valuate hypotheses (Epidemiologically)</li>
+                        <li><strong>R</strong>econsider, refine, and re-evaluate hypotheses</li>
+                        <li><strong>C</strong>ompare and reconcile with lab/environmental studies</li>
+                        <li><strong>I</strong>mplement control and prevention measures</li>
+                        <li><strong>I</strong>nitiate or maintain surveillance</li>
                         <li><strong>C</strong>ommunicate findings</li>
                     </ol>
-                    <p><em>Note: Step 10 (control measures) can occur at ANY time once the source is identified!</em></p>
+                    <p><em>Note: Control measures (Step 11) should be implemented AS SOON AS the source is known, often much earlier in the sequence!</em></p>
                 </div>
             </div>
 
@@ -1977,7 +1942,7 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 <li>Propose transmission mechanisms</li>
             </ul>
 
-            <h3>Step 8: Test Hypotheses (Analytic Studies)</h3>
+            <h3>Step 8: Evaluate Hypotheses Epidemiologically</h3>
             <p><strong>Purpose:</strong> Use statistics to confirm or refute hypotheses</p>
             <ul>
                 <li>Calculate attack rates for exposed vs. unexposed</li>
@@ -1998,21 +1963,29 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 </div>
             </div>
 
-            <h3>Step 9: Environmental & Additional Studies</h3>
-            <p><strong>Purpose:</strong> Collect environmental samples and conduct additional investigations</p>
+            <h3>Step 9: Reconsider, Refine, and Re-evaluate Hypotheses</h3>
+            <p><strong>Purpose:</strong> If analytical epidemiology (Step 8) doesn't find a significant association, go back!</p>
             <ul>
-                <li>Test food, water, air samples</li>
-                <li>Inspect facilities</li>
-                <li>Interview additional contacts</li>
-                <li>Confirm laboratory findings</li>
+                <li>Is the hypothesis wrong?</li>
+                <li>Is the case definition wrong?</li>
+                <li>Consider new vehicles or modes of transmission</li>
+                <li>Conduct new studies if needed</li>
             </ul>
 
-            <h3>Step 10: Implement Control Measures</h3>
-            <p><strong>Purpose:</strong> Stop the outbreak</p>
+            <h3>Step 10: Compare and Reconcile with Lab & Environmental Studies</h3>
+            <p><strong>Purpose:</strong> Verification of the epidemiological findings</p>
             <ul>
-                <li>Remove contaminated source</li>
-                <li>Isolate sick individuals</li>
-                <li>Quarantine exposed individuals</li>
+                <li>Test food, water, air samples (Environmental)</li>
+                <li>Genomic sequencing of pathogen (Laboratory)</li>
+                <li>Do the lab results match the statistical results?</li>
+                <li>Example: Epi data points to chicken, lab finds Salmonella on the cutting board.</li>
+            </ul>
+
+            <h3>Step 11: Implement Control and Prevention Measures</h3>
+            <p><strong>Purpose:</strong> Stop the outbreak and prevent future ones</p>
+            <ul>
+                <li>Remove contaminated source (recall food, close restaurant)</li>
+                <li>Isolate sick individuals / Quarantine exposed</li>
                 <li>Vaccinate susceptible population</li>
                 <li>Improve sanitation/hygiene</li>
             </ul>
@@ -2023,57 +1996,45 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                     Critical Timing Note
                 </div>
                 <div class="callout-content">
-                    <p><strong>Step 10 can occur at ANY time!</strong></p>
+                    <p><strong>Control measures can occur at ANY time!</strong></p>
                     <p>If you identify the source early (e.g., contaminated water pump), implement controls immediately. Don't wait to complete all 13 steps!</p>
-                    <p><strong>Example:</strong> John Snow removed the Broad Street pump handle (control measure) before completing his full investigation.</p>
                 </div>
             </div>
 
-            <h3>Step 11: Communicate Findings</h3>
-            <p><strong>Purpose:</strong> Share results with stakeholders</p>
+            <h3>Step 12: Initiate or Maintain Surveillance</h3>
+            <p><strong>Purpose:</strong> Monitor for additional cases and ensure control effectiveness</p>
             <ul>
-                <li>Report to public health authorities</li>
-                <li>Inform affected community</li>
-            </ul>
-
-            <h2>7.1 Integrated Case Study: The Picnic Outbreak</h2>
-            <div class="neo-card">
-                 <h3>Follow the Steps!</h3>
-                 <p><strong>Scenario:</strong> 20 people report vomiting after a church picnic.</p>
-                 <ol>
-                     <li><strong>Prepare:</strong> Gather questionnaires and stool kits.</li>
-                     <li><strong>Verify:</strong> Doctor confirms it's not "stomach flu" but Salmonella.</li>
-                     <li><strong>Define Case:</strong> "Any picnic attendee with vomiting/diarrhea onset within 48h."</li>
-                     <li><strong>Find Cases:</strong> Call all 50 attendees. (Don't just wait for them to call!)</li>
-                     <li><strong>Descibe:</strong> Epi curve shows a Point Source peak.</li>
-                     <li><strong>Hypothesize:</strong> "Potato salad (left in sun) caused illness."</li>
-                     <li><strong>Test:</strong> 90% of sick people ate salad; only 10% of well people did. (High Risk Ratio).</li>
-                     <li><strong>Control:</strong> Stop serving spread. Educate food handlers.</li>
-                 </ol>
-            </div>
-                <li>Inform affected community</li>
-                <li>Publish findings (if appropriate)</li>
-                <li>Provide recommendations</li>
-            </ul>
-
-            <h3>Step 12: Maintain Surveillance</h3>
-            <p><strong>Purpose:</strong> Monitor for additional cases</p>
-            <ul>
-                <li>Continue tracking cases</li>
-                <li>Ensure outbreak has ended</li>
-                <li>Watch for recurrence</li>
-                <li>Evaluate control measure effectiveness</li>
+                <li>Continue tracking cases to ensure the outbreak is declining</li>
+                <li>Watch for recurrence or secondary spread</li>
+                <li>Measure the success of control efforts</li>
             </ul>
 
             <h3>Step 13: Communicate Findings</h3>
             <p><strong>Purpose:</strong> Share investigation results with stakeholders and the public</p>
             <ul>
                 <li><strong>Report to authorities:</strong> Inform health departments and CDC</li>
-                <li><strong>Inform the community:</strong> Update affected populations</li>
-                <li><strong>Publish findings:</strong> Write formal reports (if appropriate)</li>
-                <li><strong>Provide recommendations:</strong> Share lessons learned and prevention strategies</li>
-                <li><strong>Media communication:</strong> Work with public information officers if needed</li>
+                <li><strong>Inform the community:</strong> Update affected populations to prevent panic</li>
+                <li><strong>Publish findings:</strong> Write formal reports (e.g., MMWR)</li>
+                <li><strong>Provide recommendations:</strong> Share lessons learned</li>
             </ul>
+
+            <h2>7.1 Integrated Case Study: The Picnic Outbreak</h2>
+            <div class="neo-card">
+                 <h3>Follow the Steps in Action!</h3>
+                 <p><strong>Scenario:</strong> 20 people report vomiting after a church picnic.</p>
+                 <ol>
+                     <li><strong>Prepare:</strong> Gather questionnaires and stool kits.</li>
+                     <li><strong>Verify:</strong> Doctor confirms it's not "stomach flu" but Salmonella.</li>
+                     <li><strong>Define Case:</strong> "Any picnic attendee with vomiting/diarrhea onset within 48h."</li>
+                     <li><strong>Find Cases:</strong> Call all 50 attendees. (Don't just wait for them to call!)</li>
+                     <li><strong>Describe:</strong> Epi curve shows a Point Source peak.</li>
+                     <li><strong>Hypothesize:</strong> "Potato salad (left in sun) caused illness."</li>
+                     <li><strong>Evaluate:</strong> 90% of sick people ate salad; only 10% of well people did. (High Risk Ratio).</li>
+                     <li><strong>Reconcile:</strong> Lab confirms Salmonella in leftover salad.</li>
+                     <li><strong>Control:</strong> Stop serving food. Educate food handlers.</li>
+                     <li><strong>Communicate:</strong> Issue alert to attendees.</li>
+                 </ol>
+            </div>
 
             <div class="study-tip">
                 <div class="callout-header">
@@ -3187,180 +3148,212 @@ window.EPIDEMIC_ENGINE_CONTENT = {
             </div>
 
             <div style="text-align: center; margin: 2rem 0;">
-                <h3 style="color: var(--navy-primary); margin-bottom: 1rem;">Study Design Quick Guide</h3>
-                <svg width="100%" height="auto" viewBox="0 0 1100 850" class="responsive-svg" style="max-width: 1100px; height: auto; display: block; margin: 0 auto; background: white; border: 2px solid #ddd; border-radius: 8px; padding: 1rem; font-family: sans-serif;">
+                <h3 style="color: var(--navy-primary); margin-bottom: 1rem;">📊 Study Design Decision Flowchart</h3>
+                <svg width="600" height="650" viewBox="0 0 600 650" class="responsive-svg" style="max-width: 600px; height: auto; display: block; margin: 0 auto; background: white; border: 2px solid #e5e7eb; border-radius: 8px; padding: 1rem;">
                     <defs>
-                        <marker id="arr-wide" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-                            <polygon points="0 0, 8 3, 0 6" fill="#555" />
+                        <marker id="arrow-flow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+                            <polygon points="0 0, 8 3, 0 6" fill="#374151" />
                         </marker>
                     </defs>
 
-                    <!-- Main Title -->
-                    <text x="550" y="30" text-anchor="middle" font-weight="900" font-size="22" fill="#1e40af">EPIDEMIOLOGICAL STUDY DESIGNS</text>
+                    <!-- Title -->
+                    <text x="300" y="25" text-anchor="middle" font-weight="bold" font-size="13" fill="#1e40af">When to Choose Each Study Type</text>
 
-                    <!-- Level 1: Start -->
-                    <g transform="translate(550, 60)">
-                        <rect x="-120" y="-20" width="240" height="40" rx="20" fill="#1e40af" stroke="none"/>
-                        <text x="0" y="5" text-anchor="middle" font-weight="bold" font-size="14" fill="white">Can investigator assign exposure?</text>
-                    </g>
-                    
-                    <!-- Branch Lines Level 1 -->
-                    <path d="M550,80 L250,110" stroke="#555" stroke-width="2" marker-end="url(#arr-wide)"/>
-                    <path d="M550,80 L850,110" stroke="#555" stroke-width="2" marker-end="url(#arr-wide)"/>
-
-                    <!-- YES -> EXPERIMENTAL (Left Side) -->
-                    <g transform="translate(250, 130)">
-                        <rect x="-100" y="-20" width="200" height="30" rx="0" fill="#dcfce7" stroke="#059669" stroke-width="3"/>
-                        <text x="0" y="0" text-anchor="middle" font-weight="900" font-size="16" fill="#065f46">EXPERIMENTAL</text>
-                        <text x="0" y="35" text-anchor="middle" font-weight="bold" font-size="12" fill="#059669">Randomized?</text>
+                    <!-- Q1: Can you assign exposure? -->
+                    <g transform="translate(300, 55)">
+                        <rect x="-110" y="-20" width="220" height="40" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+                        <text x="0" y="-2" text-anchor="middle" font-size="10" font-weight="bold" fill="#78350f">Can you ASSIGN/CONTROL</text>
+                        <text x="0" y="10" text-anchor="middle" font-size="10" font-weight="bold" fill="#78350f">who gets exposed?</text>
                     </g>
 
-                    <!-- NO -> OBSERVATIONAL (Right Side) -->
-                    <g transform="translate(850, 130)">
-                        <rect x="-100" y="-20" width="200" height="30" rx="0" fill="#fef3c7" stroke="#d97706" stroke-width="3"/>
-                        <text x="0" y="0" text-anchor="middle" font-weight="900" font-size="16" fill="#78350f">OBSERVATIONAL</text>
-                        <text x="0" y="35" text-anchor="middle" font-weight="bold" font-size="12" fill="#92400e">Unit of Analysis?</text>
-                    </g>
+                    <!-- YES -> RCT/Clinical Trial -->
+                    <line x1="190" y1="55" x2="110" y2="55" stroke="#059669" stroke-width="2" marker-end="url(#arrow-flow)"/>
+                    <text x="145" y="50" font-size="9" font-weight="bold" fill="#059669">YES</text>
                     
-                    <!-- EXPERIMENTAL BRANCH -->
-                    <path d="M250,150 L150,200" stroke="#059669" stroke-width="2" marker-end="url(#arr-wide)"/>
-                    <text x="180" y="180" font-size="11" font-weight="bold" fill="#059669">YES</text>
-                    
-                    <path d="M250,150 L350,200" stroke="#059669" stroke-width="2" marker-end="url(#arr-wide)"/>
-                    <text x="320" y="180" font-size="11" font-weight="bold" fill="#059669">NO</text>
-
-                    <!-- RCT Box -->
-                    <g transform="translate(150, 240)">
-                        <rect x="-80" y="-30" width="160" height="80" rx="8" fill="#dcfce7" stroke="#059669" stroke-width="3"/>
-                        <text x="0" y="-10" text-anchor="middle" font-weight="900" font-size="14" fill="#065f46">RCT / Clinical Trial</text>
-                        <text x="0" y="10" text-anchor="middle" font-size="11" fill="#047857">Gold Standard</text>
-                        <text x="0" y="25" text-anchor="middle" font-size="11" fill="#047857">Testing Interventions</text>
+                    <g transform="translate(70, 55)">
+                        <rect x="-60" y="-20" width="120" height="56" rx="8" fill="#dcfce7" stroke="#059669" stroke-width="3"/>
+                        <text x="0" y="-4" text-anchor="middle" font-size="11" font-weight="bold" fill="#065f46">RCT / Clinical</text>
+                        <text x="0" y="8" text-anchor="middle" font-size="11" font-weight="bold" fill="#065f46">Trial</text>
+                        <text x="0" y="22" text-anchor="middle" font-size="7" fill="#059669" font-style="italic">Gold Standard</text>
+                        <text x="0" y="32" text-anchor="middle" font-size="7" fill="#6b7280">Ex: Vaccine trials</text>
                     </g>
 
-                    <!-- Quasi-Experimental -->
-                    <g transform="translate(350, 240)">
-                        <rect x="-70" y="-30" width="140" height="80" rx="8" fill="#ecfdf5" stroke="#059669" stroke-width="2" stroke-dasharray="5,5"/>
-                        <text x="0" y="-10" text-anchor="middle" font-weight="bold" font-size="12" fill="#065f46">Quasi-Experimental</text>
-                        <text x="0" y="10" text-anchor="middle" font-size="11" fill="#047857">Community Trial</text>
-                        <text x="0" y="25" text-anchor="middle" font-size="11" fill="#047857">Non-randomized</text>
+                    <!-- NO -> Q2 -->
+                    <line x1="300" y1="75" x2="300" y2="110" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow-flow)"/>
+                    <text x="310" y="95" font-size="9" font-weight="bold" fill="#6b7280">NO</text>
+
+                    <!-- Q2: Analyzing individuals or groups? -->
+                    <g transform="translate(300, 135)">
+                        <rect x="-110" y="-20" width="220" height="40" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+                        <text x="0" y="-2" text-anchor="middle" font-size="10" font-weight="bold" fill="#78350f">Data on INDIVIDUALS</text>
+                        <text x="0" y="10" text-anchor="middle" font-size="10" font-weight="bold" fill="#78350f">or population GROUPS?</text>
                     </g>
 
-                    <!-- OBSERVATIONAL BRANCH -->
+                    <!-- GROUPS -> Ecological -->
+                    <line x1="410" y1="135" x2="490" y2="135" stroke="#9333ea" stroke-width="2" marker-end="url(#arrow-flow)"/>
+                    <text x="440" y="130" font-size="9" font-weight="bold" fill="#9333ea">GROUPS</text>
                     
-                    <!-- Group vs Individual Split -->
-                    <path d="M850,150 L650,200" stroke="#d97706" stroke-width="2" marker-end="url(#arr-wide)"/>
-                    <text x="700" y="180" font-size="11" font-weight="bold" fill="#78350f" transform="rotate(-15 700 180)">INDIVIDUAL</text>
-                    
-                    <path d="M850,150 L1000,200" stroke="#d97706" stroke-width="2" marker-end="url(#arr-wide)"/>
-                    <text x="950" y="170" font-size="11" font-weight="bold" fill="#78350f">GROUP</text>
-
-                    <!-- Ecological Box -->
-                    <g transform="translate(1000, 240)">
-                        <rect x="-75" y="-30" width="150" height="80" rx="8" fill="#f3e8ff" stroke="#7e22ce" stroke-width="3"/>
-                        <text x="0" y="-10" text-anchor="middle" font-weight="900" font-size="14" fill="#581c87">ECOLOGICAL</text>
-                        <text x="0" y="10" text-anchor="middle" font-size="11" fill="#6b21a8">Correlational Study</text>
-                        <text x="0" y="25" text-anchor="middle" font-size="11" fill="#6b21a8">Data: Countries/States</text>
-                        <text x="0" y="40" text-anchor="middle" font-size="9" fill="#db2777" font-style="italic">⚠️ Eco Fallacy!</text>
+                    <g transform="translate(530, 135)">
+                        <rect x="-50" y="-20" width="100" height="56" rx="8" fill="#f3e8ff" stroke="#9333ea" stroke-width="3"/>
+                        <text x="0" y="-4" text-anchor="middle" font-size="11" font-weight="bold" fill="#6b21a8">ECOLOGICAL</text>
+                        <text x="0" y="10" text-anchor="middle" font-size="8" fill="#9333ea">Population data</text>
+                        <text x="0" y="22" text-anchor="middle" font-size="7" fill="#6b7280" font-style="italic">Ex: Country-level</text>
+                        <text x="0" y="32" text-anchor="middle" font-size="7" fill="#6b7280">smoking rates</text>
                     </g>
 
-                    <!-- INDIVIDUAL Separation Question -->
-                    <g transform="translate(650, 230)">
-                        <rect x="-90" y="-15" width="180" height="30" rx="15" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
-                        <text x="0" y="5" text-anchor="middle" font-weight="bold" font-size="12" fill="#92400e">Recruit Based On?</text>
+                    <!-- INDIVIDUALS -> Q3 -->
+                    <line x1="300" y1="155" x2="300" y2="190" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow-flow)"/>
+                    <text x="270" y="175" font-size="9" font-weight="bold" fill="#6b7280">INDIVIDUALS</text>
+
+                    <!-- Q3: Follow over time? -->
+                    <g transform="translate(300, 215)">
+                        <rect x="-110" y="-20" width="220" height="40" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+                        <text x="0" y="-2" text-anchor="middle" font-size="10" font-weight="bold" fill="#78350f">Follow subjects</text>
+                        <text x="0" y="10" text-anchor="middle" font-size="10" font-weight="bold" fill="#78350f">OVER TIME?</text>
                     </g>
 
-                    <!-- Individual Branches -->
-                    <path d="M650,245 L500,330" stroke="#555" stroke-width="2" marker-end="url(#arr-wide)"/>
-                    <text x="540" y="275" font-size="10" font-weight="bold" fill="#1e40af" transform="rotate(-20 540 275)">EXPOSURE</text>
-                    
-                    <path d="M650,245 L700,350" stroke="#555" stroke-width="2" marker-end="url(#arr-wide)"/>
-                    <text x="685" y="300" font-size="10" font-weight="bold" fill="#0369a1">SNAPSHOT</text>
-                    
-                    <path d="M650,245 L900,350" stroke="#555" stroke-width="2" marker-end="url(#arr-wide)"/>
-                    <text x="800" y="280" font-size="10" font-weight="bold" fill="#991b1b" transform="rotate(20 800 280)">DISEASE</text>
+                    <!-- YES -> Q4 -->
+                    <line x1="190" y1="215" x2="130" y2="260" stroke="#059669" stroke-width="2" marker-end="url(#arrow-flow)"/>
+                    <text x="155" y="235" font-size="9" font-weight="bold" fill="#059669">YES</text>
 
-                    <!-- Cohort Box - Expanded -->
-                    <g transform="translate(500, 390)">
-                        <rect x="-90" y="-60" width="180" height="130" rx="8" fill="#dbeafe" stroke="#1d4ed8" stroke-width="3"/>
-                        <text x="0" y="-40" text-anchor="middle" font-weight="900" font-size="16" fill="#1e40af">COHORT</text>
+                    <!-- Q4: Start with exposure? -->
+                    <g transform="translate(110, 285)">
+                        <rect x="-90" y="-18" width="180" height="36" rx="6" fill="#fff3e0" stroke="#ea580c" stroke-width="2"/>
+                        <text x="0" y="-2" text-anchor="middle" font-size="9" fill="#7c2d12">Classify by EXPOSURE</text>
+                        <text x="0" y="10" text-anchor="middle" font-size="9" fill="#7c2d12">status first?</text>
+                    </g>
+
+                    <!-- YES -> Cohort -->
+                    <line x1="110" y1="303" x2="110" y2="345" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow-flow)"/>
+                    <text x="120" y="325" font-size="8" font-weight="bold" fill="#6b7280">YES</text>
+                    
+                    <g transform="translate(110, 380)">
+                        <rect x="-70" y="-24" width="140" height="68" rx="8" fill="#dcfce7" stroke="#059669" stroke-width="3"/>
+                        <text x="0" y="-6" text-anchor="middle" font-size="11" font-weight="bold" fill="#065f46">COHORT</text>
+                        <text x="0" y="6" text-anchor="middle" font-size="8" fill="#059669">Exposed → Disease</text>
+                        <text x="0" y="18" text-anchor="middle" font-size="7" fill="#059669" font-weight="bold">Use: RR, AR</text>
+                        <text x="0" y="30" text-anchor="middle" font-size="7" fill="#6b7280" font-style="italic">Ex: Framingham</text>
+                        <text x="0" y="40" text-anchor="middle" font-size="7" fill="#6b7280">Heart Study</text>
+                    </g>
+
+                    <!-- NO from Q3 -> Q5 -->
+                    <line x1="300" y1="235" x2="300" y2="270" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow-flow)"/>
+                    <text x="310" y="255" font-size="9" font-weight="bold" fill="#6b7280">NO</text>
+
+                    <!-- Q5: Start with disease? -->
+                    <g transform="translate(300, 295)">
+                        <rect x="-90" y="-18" width="180" height="36" rx="6" fill="#fff3e0" stroke="#ea580c" stroke-width="2"/>
+                        <text x="0" y="-2" text-anchor="middle" font-size="9" fill="#7c2d12">Classify by DISEASE</text>
+                        <text x="0" y="10" text-anchor="middle" font-size="9" fill="#7c2d12">status first?</text>
+                    </g>
+
+                    <!-- YES -> Case-Control -->
+                    <line x1="390" y1="295" x2="455" y2="345" stroke="#059669" stroke-width="2" marker-end="url(#arrow-flow)"/>
+                    <text x="415" y="318" font-size="8" font-weight="bold" fill="#059669">YES</text>
+                    
+                    <g transform="translate(480, 380)">
+                        <rect x="-70" y="-24" width="140" height="68" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="3"/>
+                        <text x="0" y="-6" text-anchor="middle" font-size="11" font-weight="bold" fill="#991b1b">CASE-CONTROL</text>
+                        <text x="0" y="6" text-anchor="middle" font-size="8" fill="#dc2626">Cases vs Controls</text>
+                        <text x="0" y="18" text-anchor="middle" font-size="7" fill="#dc2626" font-weight="bold">Use: OR</text>
+                        <text x="0" y="30" text-anchor="middle" font-size="7" fill="#6b7280" font-style="italic">Ex: Lung cancer</text>
+                        <text x="0" y="40" text-anchor="middle" font-size="7" fill="#6b7280">& smoking study</text>
+                    </g>
+
+                    <!-- NO -> Cross-Sectional -->
+                    <line x1="300" y1="313" x2="300" y2="350" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow-flow)"/>
+                    <text x="310" y="333" font-size="8" font-weight="bold" fill="#6b7280">NO</text>
+                    
+                    <g transform="translate(300, 385)">
+                        <rect x="-75" y="-24" width="150" height="68" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="3"/>
+                        <text x="0" y="-6" text-anchor="middle" font-size="10" font-weight="bold" fill="#1e40af">CROSS-SECTIONAL</text>
+                        <text x="0" y="6" text-anchor="middle" font-size="8" fill="#3b82f6">Snapshot in time</text>
+                        <text x="0" y="18" text-anchor="middle" font-size="7" fill="#3b82f6" font-weight="bold">Prevalence</text>
+                        <text x="0" y="30" text-anchor="middle" font-size="7" fill="#6b7280" font-style="italic">Ex: NHANES</text>
+                        <text x="0" y="40" text-anchor="middle" font-size="7" fill="#6b7280">survey</text>
+                    </g>
+
+                    <!-- Exam Tips Box -->
+                    <g transform="translate(300, 485)">
+                        <rect x="-280" y="-50" width="560" height="130" rx="8" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+                        <text x="0" y="-32" text-anchor="middle" font-size="11" font-weight="bold" fill="#92400e">🎯 EXAM QUICK GUIDE</text>
                         
-                        <!-- Prospective -->
-                        <text x="0" y="-15" text-anchor="middle" font-size="11" font-weight="bold" fill="#1e40af">1. PROSPECTIVE:</text>
-                        <text x="0" y="-2" text-anchor="middle" font-size="10" fill="#1e40af">Start now → Follow into future</text>
-                        
-                        <!-- Retrospective -->
-                        <text x="0" y="25" text-anchor="middle" font-size="11" font-weight="bold" fill="#1e40af">2. RETROSPECTIVE:</text>
-                        <text x="0" y="38" text-anchor="middle" font-size="10" fill="#1e40af">Start now → Look at past records</text>
-                        <text x="0" y="50" text-anchor="middle" font-size="10" fill="#1e40af">(Exposure happened in past)</text>
-                    </g>
-
-                    <!-- Cross-Sectional Box -->
-                    <g transform="translate(700, 390)">
-                        <rect x="-65" y="-40" width="130" height="90" rx="8" fill="#e0f2fe" stroke="#0ea5e9" stroke-width="3"/>
-                        <text x="0" y="-20" text-anchor="middle" font-weight="900" font-size="14" fill="#0369a1">CROSS-SECT</text>
-                        <text x="0" y="0" text-anchor="middle" font-size="11" font-weight="bold" fill="#0369a1">Snapshot (Now)</text>
-                        <text x="0" y="15" text-anchor="middle" font-size="10" fill="#0369a1">Start: Both</text>
-                        <text x="0" y="30" text-anchor="middle" font-size="10" font-weight="bold" fill="#0369a1">Calc: Prevalence</text>
-                    </g>
-
-                    <!-- Case-Control Box -->
-                    <g transform="translate(900, 390)">
-                        <rect x="-70" y="-40" width="140" height="90" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="3"/>
-                        <text x="0" y="-20" text-anchor="middle" font-weight="900" font-size="14" fill="#991b1b">CASE-CONTROL</text>
-                        <text x="0" y="0" text-anchor="middle" font-size="11" font-weight="bold" fill="#991b1b">Backward (Retro)</text>
-                        <text x="0" y="15" text-anchor="middle" font-size="10" fill="#991b1b">Start: Disease</text>
-                        <text x="0" y="30" text-anchor="middle" font-size="10" font-weight="bold" fill="#991b1b">Calc: OR</text>
-                    </g>
-
-                    <!-- EXAM TIPS SECTION (Bottom Full Width) -->
-                    <g transform="translate(550, 700)">
-                        <rect x="-520" y="-120" width="1040" height="240" rx="10" fill="#fffbeb" stroke="#f59e0b" stroke-width="3"/>
-                        
-                        <!-- Header -->
-                        <text x="0" y="-100" text-anchor="middle" font-weight="900" font-size="20" fill="#92400e">🚀 THE ULTIMATE STUDY DESIGN EXAM GUIDE</text>
-                        
-                        <!-- COLUMN 1: KEYWORD ASSOCIATIONS -->
-                        <g transform="translate(-480, -70)">
-                            <text x="0" y="0" font-weight="bold" font-size="14" fill="#78350f">📝 QUESTION KEYWORDS:</text>
-                            <text x="0" y="20" font-size="12" fill="#451a03">"Followed over time" → <tspan font-weight="bold" fill="#065f46">Cohort</tspan></text>
-                            <text x="0" y="40" font-size="12" fill="#451a03">"Randomly assigned" → <tspan font-weight="bold" fill="#065f46">RCT</tspan></text>
-                            <text x="0" y="60" font-size="12" fill="#451a03">"Cases and Controls" → <tspan font-weight="bold" fill="#b91c1c">Case-Control</tspan></text>
-                            <text x="0" y="80" font-size="12" fill="#451a03">"Survey/Questionnaire" → <tspan font-weight="bold" fill="#0369a1">Cross-Sect</tspan></text>
-                            <text x="0" y="100" font-size="12" fill="#451a03">"Average chocolate intake" → <tspan font-weight="bold" fill="#6b21a8">Ecological</tspan></text>
+                        <g transform="translate(-250, -12)">
+                            <text x="0" y="0" text-anchor="start" font-size="9" fill="#78350f" font-weight="bold">When to Choose:</text>
+                            <text x="0" y="14" text-anchor="start" font-size="8" fill="#78350f">✓ RCT: Testing intervention, ethical</text>
+                            <text x="0" y="26" text-anchor="start" font-size="8" fill="#78350f">✓ Cohort: Common disease, $ available</text>
+                            <text x="0" y="38" text-anchor="start" font-size="8" fill="#78350f">✓ Case-Control: RARE disease, fast</text>
+                            <text x="0" y="50" text-anchor="start" font-size="8" fill="#78350f">✓ Cross-Sect: Prevalence, hypothesis</text>
+                            <text x="0" y="62" text-anchor="start" font-size="8" fill="#78350f">✓ Ecological: Population trends</text>
                         </g>
 
-                        <!-- COLUMN 2: COMMON MISTAKES -->
-                        <g transform="translate(-180, -70)">
-                            <text x="0" y="0" font-weight="bold" font-size="14" fill="#b91c1c">⚠️ FATAL MISTAKES:</text>
-                            <text x="0" y="20" font-size="12" fill="#7f1d1d">1. Calculating Risk Ratio in Case-Control.</text>
-                            <text x="15" y="35" font-size="11" fill="#7f1d1d" font-style="italic">Only Odds Ratio allowed!</tspan></text>
-                            <text x="0" y="55" font-size="12" fill="#7f1d1d">2. Confusing Prevalence with Incidence.</text>
-                            <text x="15" y="70" font-size="11" fill="#7f1d1d" font-style="italic">Cross-Sect = Prev, Cohort = Inc.</tspan></text>
-                            <text x="0" y="90" font-size="12" fill="#7f1d1d">3. The Ecological Fallacy.</text>
-                            <text x="15" y="105" font-size="11" fill="#7f1d1d" font-style="italic">Group trend ≠ Individual truth.</tspan></text>
+                        <g transform="translate(30, -12)">
+                            <text x="0" y="0" text-anchor="start" font-size="9" fill="#78350f" font-weight="bold">Key Clues:</text>
+                            <text x="0" y="14" text-anchor="start" font-size="8" fill="#78350f">• "Randomized" → RCT</text>
+                            <text x="0" y="26" text-anchor="start" font-size="8" fill="#78350f">• "Followed over time" → Cohort</text>
+                            <text x="0" y="38" text-anchor="start" font-size="8" fill="#78350f">• "Cases and controls" → Case-Control</text>
+                            <text x="0" y="50" text-anchor="start" font-size="8" fill="#78350f">• "Survey at one time" → Cross-Sect</text>
+                            <text x="0" y="62" text-anchor="start" font-size="8" fill="#78350f">• "Country-level data" → Ecological</text>
                         </g>
 
-                        <!-- COLUMN 3: MNEMONICS & TIPS -->
-                        <g transform="translate(150, -70)">
-                            <text x="0" y="0" font-weight="bold" font-size="14" fill="#047857">🧠 MNEMONICS & TRICKS:</text>
-                            <text x="0" y="20" font-size="12" fill="#064e3b"><tspan font-weight="bold">"COH-ort"</tspan> sounds like "GO-forth"</text>
-                            <text x="15" y="35" font-size="11" fill="#064e3b" font-style="italic">You go forward in time!</tspan></text>
-                            <text x="0" y="55" font-size="12" fill="#064e3b"><tspan font-weight="bold">"Case-Control"</tspan> looks BACK</text>
-                            <text x="15" y="70" font-size="11" fill="#064e3b" font-style="italic">Like investigating a crime scene.</tspan></text>
-                            
-                            <!-- New Cohort Trap -->
-                             <text x="0" y="95" font-size="12" fill="#b91c1c"><tspan font-weight="bold">TRAP: Retro Cohort vs Case-Control</tspan></text>
-                            <text x="15" y="110" font-size="11" fill="#b91c1c" font-style="italic">Retro Cohort starts with Exposure!</tspan></text>
-                            <text x="15" y="125" font-size="11" fill="#b91c1c" font-style="italic">Case-Control starts with Disease!</tspan></text>
-                        </g>
-
-                         <!-- BOTTOM: MASTER SUMMARY -->
-                         <rect x="-480" y="65" width="960" height="40" rx="5" fill="#fff7ed" stroke="#f97316" stroke-width="1"/>
-                         <text x="0" y="90" text-anchor="middle" font-weight="bold" font-size="14" fill="#9a3412">
-                             KEY: Time Direction determines Design → Design determines Measure (RR vs OR)
-                         </text>
+                        <text x="0" y="85" text-anchor="middle" font-size="8" fill="#92400e" font-style="italic">Memory Trick: "Really Cool Cohorts Create Cross-Sectional Ecological Evidence"</text>
                     </g>
                 </svg>
+            </div>
+
+            <div class="exam-trap" style="margin: 2rem 0;">
+                <div class="callout-header">
+                    <i class="ph ph-warning"></i>
+                    EXAM TRAP: Understanding TIME in Study Designs
+                </div>
+                <div class="callout-content">
+                    <h4 style="color: var(--danger); margin-top: 0;">Time Direction = Key to Study Type</h4>
+                    
+                    <div style="background: #fef3c7; padding: 1rem; border-radius: 6px; margin: 1rem 0;">
+                        <p><strong>🕐 PROSPECTIVE (Forward in Time):</strong></p>
+                        <ul>
+                            <li><strong>RCT:</strong> Assign exposure → Follow → Measure outcome</li>
+                            <li><strong>Cohort:</strong> Identify exposed/unexposed → Follow → See who gets disease</li>
+                            <li><strong>Exam Clue:</strong> "Followed for 5 years" = Prospective</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #fee2e2; padding: 1rem; border-radius: 6px; margin: 1rem 0;">
+                        <p><strong>🕙 RETROSPECTIVE (Backward in Time):</strong></p>
+                        <ul>
+                            <li><strong>Case-Control:</strong> Start with disease status → Look back at exposures</li>
+                            <li><strong>Exam Clue:</strong> "Researchers interviewed cases about past exposure" = Retrospective</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #dbeafe; padding: 1rem; border-radius: 6px; margin: 1rem 0;">
+                        <p><strong>📸 NO TIME ELEMENT (Snapshot):</strong></p>
+                        <ul>
+                            <li><strong>Cross-Sectional:</strong> Measure exposure AND disease at SAME time</li>
+                            <li><strong>Exam Clue:</strong> "Survey taken in March 2024" = Cross-Sectional</li>
+                            <li><strong>TRAP:</strong> Cannot determine if exposure caused disease or disease caused exposure!</li>
+                        </ul>
+                    </div>
+
+                    <h4 style="color: var(--danger); margin-top: 1.5rem;">Common Exam Traps:</h4>
+                    <ol>
+                        <li><strong>TRAP:</strong> "Study followed 100 smokers and 100 non-smokers for lung cancer"
+                            <br><strong>Answer:</strong> Cohort (following forward = prospective)</li>
+                        
+                        <li style="margin-top: 0.5rem;"><strong>TRAP:</strong> "Compared 50 cancer patients with 50 healthy controls for smoking history"
+                            <br><strong>Answer:</strong> Case-Control (looking back = retrospective)</li>
+                        
+                        <li style="margin-top: 0.5rem;"><strong>TRAP:</strong> "Can you calculate attack rate?"
+                            <br><strong>Answer:</strong> ONLY if you know the total population at risk (Cohort/RCT only!)</li>
+                        
+                        <li style="margin-top: 0.5rem;"><strong>TRAP:</strong> "Survey found 30% of smokers have cough"
+                            <br><strong>Answer:</strong> Cross-Sectional (snapshot). Cannot say smoking CAUSED cough!</li>
+                    </ol>
+
+                    <div style="background: #fffbeb; border: 2px solid #f59e0b; padding: 1rem; margin-top: 1rem; border-radius: 6px;">
+                        <p style="margin: 0;"><strong>🎯 MASTER TIP:</strong> If the question asks "What measure can be calculated?" → TIME DIRECTION tells you the study type → Study type tells you the measure!</p>
+                    </div>
+                </div>
             </div>
 
             <!-- Additional learning box below flowchart -->
@@ -4754,10 +4747,10 @@ window.EPIDEMIC_ENGINE_CONTENT = {
 `
     },
     ch19: {
-        title: "Chapter 19: Advanced Evaluation",
+        title: "Chapter 19: Advanced Evaluation & Confounding",
         difficulty: "A",
         content: `
-    <h1>Chapter 19: Advanced Evaluation</h1>
+    <h1>Chapter 19: Advanced Evaluation & Confounding</h1>
             <!-- Difficulty Scale -->
             <div class="difficulty-scale-box" style="border: 2px solid #333; padding: 1rem; margin: 1rem 0; background: #fafafa; border-radius: 8px;">
                 <div style="font-weight: bold; margin-bottom: 0.5rem; text-transform: uppercase; font-size: 0.8rem; color: #555;">Target Audience</div>
@@ -5583,17 +5576,43 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 <div class="formula-card">
                     <h3>Negative Predictive Value (NPV)</h3>
                     <div class="formula-body">
-                        <div class="fraction">
-                <p class="lead">Test your recall of key terms and concepts.</p>
-                <div id="flashcard-root"></div>
-            </div >
-    `
+                            <span class="numerator">True Negatives (d)</span>
+                            <span class="denominator">Total Negative Tests (c + d)</span>
+                        </div>
+                    </div>
+                    <p class="formula-desc">Probability that a negative test means you are truly healthy.</p>
+                </div>
+            </div>
+`
     },
+
+    'appendix-c': {
+        title: "Appendix C: Diagnostic Methods",
+        difficulty: "Ref",
+        content: `
+            <h1>Appendix C: Diagnostic Methods</h1>
+            <p class="lead">Common laboratory techniques used to identify pathogens.</p>
+            
+            <div class="table-container"><table class="table">
+                <thead style="background: var(--navy-primary); color: white;">
+                    <tr><th>Method</th><th>Target</th><th>Speed</th><th>Pros/Cons</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>PCR</strong> (Polymerase Chain Reaction)</td><td>DNA/RNA</td><td>Fast (Hours)</td><td>High sensitivity, but can't distinguish live vs dead bacteria.</td></tr>
+                    <tr style="background: var(--gray-bg);"><td><strong>Culture</strong></td><td>Live Bacteria</td><td>Slow (Days)</td><td>The "Gold Standard". Allows for antibiotic resistance testing.</td></tr>
+                    <tr><td><strong>ELISA</strong> (Serology)</td><td>Antibodies (IgM/IgG)</td><td>Fast (Hours)</td><td>Detects immune response (past or recent infection).</td></tr>
+                    <tr style="background: var(--gray-bg);"><td><strong>PFGE</strong></td><td>DNA fragments</td><td>Slow</td><td>"DNA Fingerprinting" (Old standard).</td></tr>
+                    <tr><td><strong>WGS</strong> (Whole Genome Sequencing)</td><td>Entire DNA</td><td>Slow/Med</td><td>The new standard. Highest resolution for linking cases.</td></tr>
+                </tbody>
+            </table></div>
+        `
+    },
+
 
     quiz_master: {
         title: "Master Quiz: Comprehensive Exam",
         content: `
-            <div class="comprehensive-quiz-container">
+    <div class="comprehensive-quiz-container">
                 <h1>Master Quiz: Comprehensive Exam</h1>
                 <p class="lead">The ultimate test. 100 questions covering the entire curriculum (Chapters 1-20).</p>
                 <div class="neo-card" style="text-align: center; padding: 3rem;">
@@ -5604,12 +5623,12 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 </div>
                 <div id="quiz-container-master"></div>
             </div>
-        `
+    `
     },
     quiz_part1: {
         title: "Part I Quiz: Foundation & History",
         content: `
-            <div class="comprehensive-quiz-container">
+    <div class="comprehensive-quiz-container">
                 <h1>Part I Quiz: Foundation, History & Surveillance</h1>
                 <p class="lead">Test your knowledge of Chapters 1-6, plus Definitions & History.</p>
                 
@@ -5630,12 +5649,12 @@ window.EPIDEMIC_ENGINE_CONTENT = {
 
                 <div id="quiz-container-part1"></div>
             </div>
-        `
+    `
     },
     quiz_part2: {
         title: "Part II Quiz: Investigation",
         content: `
-            <div class="comprehensive-quiz-container">
+    <div class="comprehensive-quiz-container">
                 <h1>Part II Quiz: Investigation & Analysis</h1>
                 <p class="lead">Test your knowledge of Chapters 7-13.</p>
 
@@ -5656,12 +5675,12 @@ window.EPIDEMIC_ENGINE_CONTENT = {
 
                 <div id="quiz-container-part2"></div>
             </div>
-        `
+    `
     },
     quiz_part3: {
         title: "Part III Quiz: Control",
         content: `
-            <div class="comprehensive-quiz-container">
+    <div class="comprehensive-quiz-container">
                 <h1>Part III Quiz: Control & Prevention</h1>
                 <p class="lead">Test your knowledge of Chapters 14-20.</p>
 
@@ -5682,12 +5701,12 @@ window.EPIDEMIC_ENGINE_CONTENT = {
 
                 <div id="quiz-container-part3"></div>
             </div>
-        `
+    `
     },
     simulation: {
         title: "Simulation Exams",
         content: `
-            <div class="comprehensive-quiz-container">
+    <div class="comprehensive-quiz-container">
                 <h1>National Simulation Exams</h1>
                 <p class="lead">Full-length, timed practice exams generated from our 300+ question bank.</p>
                 <div id="exam-container"></div>
@@ -5709,7 +5728,7 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                     </div>
                 </div>
             </div>
-        `
+    `
     },
     case_library: {
         title: "Disease Case Library",
@@ -5726,13 +5745,13 @@ window.EPIDEMIC_ENGINE_CONTENT = {
     interactive_scenarios: {
         title: "Interactive Scenarios",
         content: `
-            <div id="interactive-cases-root" style="margin-top: 1rem;"></div>
+    <div id="interactive-cases-root" style="margin-top: 1rem;"></div>
         `
     },
     'appendix-g': {
         title: "Glossary",
         content: `
-    <div class="comprehensive-quiz-container">
+        <div class="comprehensive-quiz-container">
                 <h1>Epidemiology Glossary</h1>
                 <p class="lead">Searchable definitions of epidemiological terms.</p>
                 <div id="glossary-root"></div>
@@ -5758,7 +5777,7 @@ window.EPIDEMIC_ENGINE_CONTENT = {
     my_progress: {
         title: "My Progress",
         content: `
-            <h1>My Progress</h1>
+    <h1>My Progress</h1>
             <p class="lead">Track your performance across quizzes and exams. Data is stored locally on this device.</p>
             <div id="analytics-dashboard">
                 <div class="neo-card">
@@ -5769,12 +5788,12 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                     <button class="neo-btn outline small" id="clear-history-btn">Clear History</button>
                 </div>
             </div>
-        `
+`
     },
     coach_resources: {
         title: "Coach Resources",
         content: `
-            <div class="neo-card" style="border: 2px solid var(--accent-orange);">
+    <div class="neo-card" style="border: 2px solid var(--accent-orange);">
                 <h1><i class="ph-bold ph-chalkboard-teacher"></i> Coach Resources</h1>
                 <p class="lead">Restricted Access: Answer keys and lesson guides.</p>
                 <div class="alert alert-info">
@@ -5782,93 +5801,10 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 </div>
                 <h3>Answer Keys</h3>
                 <p>Coming soon: PDF downloads for printable quizzes.</p>
-            </div>
-        `
+            </div >
+    `
     },
-    about: {
-        title: "About & Resources",
-        content: `
-            <div style="text-align:center; margin-bottom:2rem;">
-                <img src="assets/logo.png" alt="Logo" class="logo-glow" style="width:120px; height:auto; border-radius:24px;">
-                <h1 style="margin-top:1rem; font-size:2.5rem; letter-spacing:-0.03em;">Epidemic Engine <span style="color:var(--accent-orange)">v2.0</span></h1>
-                <div class="neo-badge" style="background:var(--navy-primary); color:white; font-size:1rem; padding:0.5rem 1rem;">National Edition</div>
-            </div>
-
-            <div class="neo-card" style="margin-bottom: 2rem;">
-                <h3 style="margin-top:0; color:var(--navy-primary);"><i class="ph-bold ph-info"></i> System Information</h3>
-                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; font-size:0.95rem;">
-                    <div>
-                        <strong>Version:</strong> v2.1.0 (Stable)<br>
-                        <strong>Build Date:</strong> December 2025<br>
-                        <strong>Division:</strong> B (Middle School) & C (Intro)
-                    </div>
-                    <div>
-                        <strong>Engine:</strong> Antigravity React Core<br>
-                        <strong>License:</strong> MIT (Open Source)<br>
-                        <strong>Compliance:</strong> 2026 Rules Draft
-                    </div>
-                </div>
-                <div style="margin-top:1rem; padding-top:1rem; border-top:1px solid #eee; color:#64748b; font-size:0.9rem;">
-                    <em>"The most advanced training platform for Disease Detectives."</em>
-                </div>
-            </div>
-
-            <div style="text-align:center; margin-bottom: 2rem;">
-                 <button class="neo-btn large primary" onclick="window.generateStudyGuide()" style="padding: 1rem 2rem; font-size: 1.1rem; box-shadow: 0 4px 14px rgba(0,0,0,0.2);">
-                    <i class="ph-bold ph-file-pdf"></i> Download Full Study Guide (Ref Book)
-                </button>
-                <div style="font-size: 0.8rem; color: #64748b; margin-top: 0.5rem;">Generates a printable manual of all 20 chapters.</div>
-            </div>
-
-            <h2 style="color:var(--navy-primary); border-bottom:3px solid var(--accent-orange); display:inline-block; padding-bottom:0.25rem;">Field Resources</h2>
-            <p class="lead">Essential external links for further study and official competition updates.</p>
-
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1.5rem; margin-bottom:3rem;">
-                <a href="https://www.soinc.org" target="_blank" class="neo-card small action-card" style="text-decoration:none; color:inherit; display:block; transition:transform 0.2s;">
-                    <div style="color:var(--navy-primary); font-size:2rem; margin-bottom:0.5rem;"><i class="ph-bold ph-student"></i></div>
-                    <div style="font-weight:700; font-size:1.1rem;">Science Olympiad</div>
-                    <div style="color:#64748b; font-size:0.9rem; margin-top:0.25rem;">Official Website & Rules</div>
-                </a>
-
-                <a href="https://www.cdc.gov/eis/field-epi-manual/index.html" target="_blank" class="neo-card small action-card" style="text-decoration:none; color:inherit; display:block; transition:transform 0.2s;">
-                    <div style="color:var(--accent-blue); font-size:2rem; margin-bottom:0.5rem;"><i class="ph-bold ph-book-open"></i></div>
-                    <div style="font-weight:700; font-size:1.1rem;">CDC Field Manual</div>
-                    <div style="color:#64748b; font-size:0.9rem; margin-top:0.25rem;">The "Bible" of Epidemiology</div>
-                </a>
-
-                <a href="https://www.who.int/emergencies/diseases/en/" target="_blank" class="neo-card small action-card" style="text-decoration:none; color:inherit; display:block; transition:transform 0.2s;">
-                    <div style="color:var(--accent-orange); font-size:2rem; margin-bottom:0.5rem;"><i class="ph-bold ph-globe"></i></div>
-                    <div style="font-weight:700; font-size:1.1rem;">WHO Outbreaks</div>
-                    <div style="color:#64748b; font-size:0.9rem; margin-top:0.25rem;">Global Disease News</div>
-                </a>
-
-                 <a href="https://training.seer.cancer.gov/" target="_blank" class="neo-card small action-card" style="text-decoration:none; color:inherit; display:block; transition:transform 0.2s;">
-                    <div style="color:var(--accent-teal); font-size:2rem; margin-bottom:0.5rem;"><i class="ph-bold ph-chart-line-up"></i></div>
-                    <div style="font-weight:700; font-size:1.1rem;">SEER Training</div>
-                    <div style="color:#64748b; font-size:0.9rem; margin-top:0.25rem;">Cancer Statistics & Methods</div>
-                </a>
-            </div>
-
-            </div>
-
-            <div class="neo-card" style="background:#fff0f0; border:1px solid #fababb; margin-bottom: 2rem;">
-                <h3 style="margin-top:0; color: #b91c1c;">System Tools</h3>
-                <p>Use this area to clear all local data, including quiz scores, custom notes, and flashcard progress. Useful when starting a new season or sharing this device.</p>
-                <button onclick="if(confirm('WARNING: This will permanently delete ALL your progress, scores, and custom notes sheet data. This cannot be undone.\n\nAre you sure you want to completely reset the application?')) { localStorage.clear(); location.reload(); }" class="neo-btn danger">
-                    <i class="ph-bold ph-trash"></i> Factory Reset Application
-                </button>
-            </div>
-
-            <div class="neo-card" style="background:#f8fafc; border:none;">
-                <h3 style="margin-top:0;">Development Credits</h3>
-                 <ul style="list-style:none; padding:0; margin:0; display:grid; gap:0.5rem;">
-                    <li><strong>Lead Architect:</strong> Minum (Antigravity)</li>
-                    <li><strong>Content Strategy:</strong> Google DeepMind</li>
-                    <li><strong>UX Design:</strong> Agentic UI Framework</li>
-                 </ul>
-            </div>
-        `
-    },
+    // Old 'about' block removed in favor of the consolidated one at the end of file.
     appendix: {
         title: "Appendix & Resources",
         content: `
@@ -5877,7 +5813,7 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 <div class="tabs" style="margin-bottom: 1rem;">
                     <button class="neo-btn small active" onclick="showTab('rules')">Rules</button>
                     <button class="neo-btn small" onclick="showTab('strategy')">Strategy</button>
-                    <button class="neo-btn small" onclick="showTab('diagnostic')">Diagnostic</button>
+                    <button class="neo-btn small" onclick="showTab('diagnostic')">Diagnostics</button>
                     <button class="neo-btn small" onclick="showTab('biases')">Biases</button>
                     <button class="neo-btn small" onclick="showTab('mnemonics')">Mnemonics</button>
                     <button class="neo-btn small" onclick="showTab('formulas')">Formulas</button>
@@ -5966,35 +5902,192 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                             </ul>
                         </div>
                     </div>
+                </div>
 
                 <div id="diagnostic" class="tab-content" style="display:none;">
-                    <h3>Mastery Diagnostic Checklist</h3>
-                    <p class="lead">Track your readiness for Regionals/States. Be honest!</p>
-                    
-                    <div style="background: #fff; padding: 1.5rem; border-radius: 8px; border: 1px solid #e2e8f0;">
-                       <h4 style="margin-top:0; border-bottom: 2px solid #eee; padding-bottom: 0.5rem;">Part I: Foundation</h4>
-                       <label class="neo-check" style="display:block; margin:0.5rem 0;"><input type="checkbox"> <span>I can explain the Epidemiologic Triad (Agent, Host, Environment).</span></label>
-                       <label class="neo-check" style="display:block; margin:0.5rem 0;"><input type="checkbox"> <span>I know the difference: Endemic vs. Epidemic vs. Pandemic.</span></label>
-                       <label class="neo-check" style="display:block; margin:0.5rem 0;"><input type="checkbox"> <span>I can list 3 modes of transmission (Direct, Vehicle, Vector).</span></label>
-                       <label class="neo-check" style="display:block; margin:0.5rem 0;"><input type="checkbox"> <span>I know the 4 types of Surveillance (Passive, Active, Sentinel, Syndromic).</span></label>
-                       
-                       <h4 style="margin-top:1.5rem; border-bottom: 2px solid #eee; padding-bottom: 0.5rem;">Part II: Investigation & Math</h4>
-                       <label class="neo-check" style="display:block; margin:0.5rem 0;"><input type="checkbox"> <span>I have memorized the 10+ Steps of an Outbreak Investigation.</span></label>
-                       <label class="neo-check" style="display:block; margin:0.5rem 0;"><input type="checkbox"> <span>I can calculate: Incidence, Prevalence, and Attack Rate.</span></label>
-                       <label class="neo-check" style="display:block; margin:0.5rem 0;"><input type="checkbox"> <span>I can fill out a 2x2 table from a word problem.</span></label>
-                       <label class="neo-check" style="display:block; margin:0.5rem 0;"><input type="checkbox"> <span>I can interpret an Epi Curve (Point Source vs. Propagated).</span></label>
-                       <label class="neo-check" style="display:block; margin:0.5rem 0;"><input type="checkbox"> <span><strong>(Adv)</strong> I understand what "Relative Risk > 1" implies.</span></label>
-
-                       <h4 style="margin-top:1.5rem; border-bottom: 2px solid #eee; padding-bottom: 0.5rem;">Part III: Control & Prevention</h4>
-                       <label class="neo-check" style="display:block; margin:0.5rem 0;"><input type="checkbox"> <span>I can distinguish Primary, Secondary, and Tertiary prevention.</span></label>
-                       <label class="neo-check" style="display:block; margin:0.5rem 0;"><input type="checkbox"> <span>I know the difference between Isolation and Quarantine.</span></label>
-                       <label class="neo-check" style="display:block; margin:0.5rem 0;"><input type="checkbox"> <span>I can identify at least 3 types of Bias (Selection, Recall, etc.).</span></label>
-                       <label class="neo-check" style="display:block; margin:0.5rem 0;"><input type="checkbox"> <span>I can identify Hill's Criteria (Temporality, Strength, etc.).</span></label>
-                    </div>
-                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;"><em>Tip: Use your browser's "Save Page" or just screenshot this list to track progress over time.</em></p>
+                    <h3>Diagnostic & Readiness Hub</h3>
+                    <p class="lead">Master test metrics and track your preparation status.</p>
+                    <div id="diagnostic-container"></div>
                 </div>
             </div>
     `
+    }
+    ,
+
+    about: {
+        title: "About Epidemic Engine",
+        content: `
+            <style>
+                .about-hero {
+                    background: linear-gradient(135deg, var(--navy-primary) 0%, #2563eb 100%);
+                    color: white;
+                    padding: 4rem 2rem;
+                    border-radius: 24px;
+                    text-align: center;
+                    margin-bottom: 3rem;
+                    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+                    position: relative;
+                    overflow: hidden;
+                }
+                .about-hero::before {
+                    content: '';
+                    position: absolute;
+                    top: 0; left: 0; right: 0; bottom: 0;
+                    background-image: radial-gradient(circle at 20% 150%, rgba(255,255,255,0.1) 0%, transparent 50%);
+                }
+                .profile-card {
+                    background: white;
+                    border-radius: 16px;
+                    padding: 2rem;
+                    border: 1px solid #e2e8f0;
+                    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                    text-align: center;
+                    transition: transform 0.2s;
+                }
+                .profile-card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                }
+                .tech-badge {
+                    background: #f1f5f9;
+                    color: #475569;
+                    padding: 0.25rem 0.75rem;
+                    border-radius: 9999px;
+                    font-size: 0.8rem;
+                    font-weight: 600;
+                    display: inline-block;
+                    margin: 0.25rem;
+                }
+            </style>
+
+            <!-- Hero Section -->
+            <div class="about-hero">
+                <div style="position: relative; z-index: 2;">
+                    <img src="assets/logo.png" alt="Logo" style="width: 96px; height: 96px; border-radius: 24px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); background: white; padding: 4px;">
+                    <h1 style="margin: 1.5rem 0 0.5rem; font-size: 3rem; font-weight: 800; letter-spacing: -0.025em; color: white;">Epidemic Engine</h1>
+                    <div style="display: inline-flex; align-items: center; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); padding: 0.5rem 1rem; border-radius: 9999px; border: 1px solid rgba(255,255,255,0.3);">
+                        <span style="width: 8px; height: 8px; background: #4ade80; border-radius: 50%; margin-right: 0.5rem; box-shadow: 0 0 8px #4ade80;"></span>
+                        <span style="font-weight: 600; font-size: 0.9rem; letter-spacing: 0.5px;">v3.0.0 GRANDMASTER EDITION</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mission -->
+            <div style="max-width: 800px; margin: 0 auto 4rem; text-align: center;">
+                <h2 style="font-size: 2rem; color: var(--navy-primary); margin-bottom: 1rem;">Democratizing Epidemiology</h2>
+                <p style="font-size: 1.25rem; color: #64748b; line-height: 1.6;">
+                    The Epidemic Engine is built on a single belief: <strong style="color: var(--navy-primary);">Every student deserves National-level training tools.</strong> By combining medical expertise with advanced simulation technology, we are leveling the playing field for future Disease Detectives.
+                </p>
+            </div>
+
+            <!-- Credits Grid -->
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
+                
+                <!-- Architect Profile -->
+                <div class="profile-card">
+                    <div style="width: 80px; height: 80px; background: var(--navy-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 2rem;">
+                        <i class="ph-bold ph-user"></i>
+                    </div>
+                    <h3 style="margin: 0; font-size: 1.5rem; color: var(--navy-primary);">Naveen Minumula, MD</h3>
+                    <div style="color: var(--accent-orange); font-weight: 600; font-size: 0.9rem; letter-spacing: 1px; margin-top: 0.25rem; text-transform: uppercase;">Lead Architect & Creator</div>
+                    <p style="color: #64748b; margin: 1.5rem 0; font-size: 0.95rem;">
+                        Leveraging clinical experience to create medically accurate, high-fidelity outbreak simulations.
+                    </p>
+                    <div style="display: flex; gap: 0.5rem; justify-content: center;">
+                        <a href="mailto:contact@epidemicengine.com" class="neo-btn small outline"><i class="ph-bold ph-envelope"></i> Contact</a>
+                    </div>
+                </div>
+
+                <!-- Technology Stack -->
+                <div class="profile-card" style="text-align: left;">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                        <div style="width: 48px; height: 48px; background: #f8fafc; color: var(--navy-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                            <i class="ph-bold ph-code"></i>
+                        </div>
+                        <div>
+                            <h3 style="margin: 0; font-size: 1.25rem;">Technology Stack</h3>
+                            <div style="color: #64748b; font-size: 0.9rem;">Powered by Antigravity</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 1rem;">
+                        <strong style="display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">Core Engine</strong>
+                        <span class="tech-badge">Vanilla JS (ES6+)</span>
+                        <span class="tech-badge">Service Workers</span>
+                        <span class="tech-badge">Canvas API</span>
+                    </div>
+
+                    <div style="margin-bottom: 1rem;">
+                        <strong style="display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">Design System</strong>
+                        <span class="tech-badge">Neo-Brutalist UI</span>
+                        <span class="tech-badge">CSS Grid</span>
+                        <span class="tech-badge">Phosphor Icons</span>
+                    </div>
+
+                    <div>
+                        <strong style="display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">Infrastructure</strong>
+                        <span class="tech-badge">Vercel Edge</span>
+                        <span class="tech-badge">PWA Standards</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Version History (Timeline) -->
+            <div class="neo-card" style="margin-bottom: 4rem;">
+                <h3 style="border-bottom: 2px solid #eee; padding-bottom: 1rem; margin-top: 0;">
+                    <i class="ph-bold ph-git-commit"></i> Release History
+                </h3>
+                <div style="display: grid; gap: 1.5rem;">
+                    <div style="display: flex; gap: 1rem;">
+                        <div style="font-weight: 700; color: var(--navy-primary); min-width: 80px;">v3.0.0</div>
+                        <div>
+                            <strong style="display: block; color: #0f172a;">Grandmaster Edition</strong>
+                            <div style="color: #64748b; font-size: 0.95rem;">Added "Infinite Outbreak" Procedural Engine. Optimized for Vercel deployment.</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <div style="font-weight: 700; color: #64748b; min-width: 80px;">v2.6.0</div>
+                        <div>
+                            <strong style="display: block; color: #334155;">Tier 2 Enhancements</strong>
+                            <div style="color: #64748b; font-size: 0.95rem;">Herd Immunity Calculator, Environmental Toxins (Ch 21), Mega Scenarios (Potluck, Wedding, Cruise).</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <div style="font-weight: 700; color: #64748b; min-width: 80px;">v2.5.3</div>
+                        <div>
+                            <strong style="display: block; color: #334155;">Mega Cases</strong>
+                            <div style="color: #64748b; font-size: 0.95rem;">Introduced complex multi-step case studies (C1-C50) with line lists using the Case Library engine.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Footer -->
+            <h2 style="text-align: center; margin-bottom: 2rem;">Official Resources</h2>
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 4rem;">
+                <a href="https://www.soinc.org" target="_blank" class="neo-card small action-card" style="text-decoration:none; color:inherit; text-align: center; display:block; transition:transform 0.2s;">
+                    <div style="color:var(--navy-primary); font-size:2.5rem; margin-bottom:0.5rem;"><i class="ph-bold ph-student"></i></div>
+                    <div style="font-weight:700; font-size:1.1rem;">Science Olympiad</div>
+                    <div style="color:#64748b; font-size:0.9rem;">Official Rules</div>
+                </a>
+                <a href="https://www.cdc.gov/eis/field-epi-manual/index.html" target="_blank" class="neo-card small action-card" style="text-decoration:none; color:inherit; text-align: center; display:block; transition:transform 0.2s;">
+                    <div style="color:var(--accent-blue); font-size:2.5rem; margin-bottom:0.5rem;"><i class="ph-bold ph-book-open"></i></div>
+                    <div style="font-weight:700; font-size:1.1rem;">CDC Field Manual</div>
+                    <div style="color:#64748b; font-size:0.9rem;">The "Bible" of Epi</div>
+                </a>
+                <a href="https://www.who.int" target="_blank" class="neo-card small action-card" style="text-decoration:none; color:inherit; text-align: center; display:block; transition:transform 0.2s;">
+                    <div style="color:var(--accent-orange); font-size:2.5rem; margin-bottom:0.5rem;"><i class="ph-bold ph-globe"></i></div>
+                    <div style="font-weight:700; font-size:1.1rem;">WHO Global</div>
+                    <div style="color:#64748b; font-size:0.9rem;">Outbreak News</div>
+                </a>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 2rem;">
+                 <button onclick="if(confirm('WARNING: This will permanently delete ALL your progress. Are you sure?')) { localStorage.clear(); location.reload(); }" class="neo-btn danger">
+                    <i class="ph-bold ph-trash"></i> Factory Reset Application
+                </button>
+            </div>
+        `
     }
 };
 
@@ -11741,6 +11834,19 @@ window.APPENDIX_DATA = {
                 ["99%", "0.01", "2.576"]
             ]
         }
+    },
+    DIAGNOSTIC: {
+        metrics: [
+            { name: "Sensitivity (TPR)", calc: "TP / (TP + FN)", desc: "Proportion of diseased people who test positive." },
+            { name: "Specificity (TNR)", calc: "TN / (TN + FP)", desc: "Proportion of healthy people who test negative." },
+            { name: "PPV", calc: "TP / (TP + FP)", desc: "Among positives, proportion who truly have disease." },
+            { name: "NPV", calc: "TN / (TN + FN)", desc: "Among negatives, proportion who truly do not have disease." },
+            { name: "Accuracy", calc: "(TP + TN) / Total", desc: "Overall correct classification rate." }
+        ],
+        checklist: [
+            { category: "Foundation", items: ["Triad (Agent/Host/Env)", "Endemic vs Epidemic", "Surveillance Types"] },
+            { category: "Math", items: ["2x2 Table Completion", "Sensitivity/Specificity Calc", "Epi Curve Interpretation"] }
+        ]
     }
 };
 

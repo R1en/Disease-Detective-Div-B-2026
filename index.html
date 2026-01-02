@@ -4,19 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Epidemic Engine: Disease Detectives Mastery Guide (2026)</title>
-    <!-- <link rel="manifest" href="manifest.json"> -->
-    <script>
-        if (window.location.protocol !== 'file:') {
-            const link = document.createElement('link');
-            link.rel = 'manifest';
-            link.href = 'manifest.json';
-            document.head.appendChild(link);
-        }
-    </script>
+    <title>The Epidemic Engine: Disease Detectives Mastery Guide (v4.0.2)</title>
+    <meta property="og:title" content="Epidemic Engine - Disease Detectives Toolkit (v4.0.2)">
+    <meta property="og:description"
+        content="The ultimate offline training simulator for Science Olympiad. Features 50+ cases, Infinite Outbreak Generator, and precision calculators.">
+    <meta property="og:image" content="assets/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- SEO -->
+    <meta name="description"
+        content="Free offline study tool for Science Olympiad Disease Detectives (Div B). Includes outbreak simulations, epi curve tools, and 50+ practice cases.">
+    <meta name="keywords"
+        content="Science Olympiad, Disease Detectives, Epidemiology, STEM, Public Health, CDC, Outbreak Simulation">
+    <meta name="author" content="Epidemic Engine Team">
+
+    <!-- iOS / PWA -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Epi Engine">
+    <link rel="apple-touch-icon" href="assets/logo.png">
+
+    <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#ff5c00">
     <link rel="icon" type="image/png" href="assets/logo.png">
     <script src="js/vendor/phosphor-icons.js"></script>
+
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data:; connect-src 'self';">
     <!--
       Use legacy styling files for the Epidemic Engine. The modern
       modular theme has been replaced with the original CSS to
@@ -31,11 +45,13 @@
 
 <body>
     <div class="app-container">
-        <div class="sidebar-overlay" onclick="toggleMobileMenu()"></div>
+        <!-- Accessibility: Overlay is now a button-like interactor -->
+        <div class="sidebar-overlay" role="button" aria-label="Close Menu" tabindex="0"></div>
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="brand" style="display: flex; align-items: center; gap: 0.75rem;">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style="height: 32px; width: 32px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style="height: 32px; width: 32px;"
+                        aria-label="Epidemic Engine Logo - Stylized disease outbreak visualization">
                         <circle cx="50" cy="50" r="45" fill="url(#logoGrad)" stroke="#000" stroke-width="2" />
                         <defs>
                             <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -48,56 +64,81 @@
                     </svg>
                     Epidemic Engine
                 </div>
+                <!-- Hamburger Menu for Mobile -->
+                <button class="hamburger" id="mobile-toggle" onclick="toggleSidebar()" aria-label="Toggle Menu">
+                    <i class="ph ph-list"></i>
+                </button>
             </div>
             <nav class="sidebar-nav">
                 <button class="nav-item active" data-chapter="home">
                     <i class="ph ph-house"></i> Home
                 </button>
                 <div class="nav-group">
-                    <div class="nav-label">Part I: The Foundation</div>
+                    <div class="nav-label label-p1">Part I: The Foundation</div>
                     <button class="nav-item" data-chapter="ch1">1. Frameworks & Mindset</button>
                     <button class="nav-item" data-chapter="ch2">2. History & Heroes</button>
                     <button class="nav-item" data-chapter="ch3">3. The Triad & Chain</button>
                     <button class="nav-item" data-chapter="ch4">4. Measures of Freq.</button>
                     <button class="nav-item" data-chapter="ch5">5. Surveillance Sys.</button>
+                    <button class="nav-item nav-sub-item sub-p1" data-chapter="surveillance_systems">
+                        <i class="ph ph-broadcast"></i> 5B. Surveillance Types
+                    </button>
                     <button class="nav-item" data-chapter="ch6">6. Natural History</button>
                     <button class="nav-item" data-chapter="quiz_part1">
                         <i class="ph ph-exam"></i> Part I Quiz
                     </button>
                 </div>
                 <div class="nav-group">
-                    <div class="nav-label">Part II: Investigation & Analysis</div>
+                    <div class="nav-label label-p2">Part II: Investigation & Analysis</div>
                     <button class="nav-item" data-chapter="ch7">7. Invest. Roadmap</button>
                     <button class="nav-item" data-chapter="ch8">8. Case Definitions</button>
                     <button class="nav-item" data-chapter="ch9">9. Line Lists & Data</button>
                     <button class="nav-item" data-chapter="ch10">10. Curves & Timing</button>
                     <button class="nav-item" data-chapter="ch11">11. Outbreak Math I</button>
+                    <button class="nav-item nav-sub-item sub-p2" data-chapter="study_design">
+                        <i class="ph ph-flow-arrow"></i> 11B. Study Design
+                    </button>
                     <button class="nav-item" data-chapter="ch12">12. Outbreak Math II</button>
+                    <button class="nav-item nav-sub-item sub-p2" data-chapter="genomic_epi">
+                        <i class="ph ph-dna"></i> 12B. Genomic Epi
+                    </button>
                     <button class="nav-item" data-chapter="ch13">13. Hypothesis Test</button>
+                    <button class="nav-item nav-sub-item sub-p2" data-chapter="predictive_values">
+                        <i class="ph ph-chart-line"></i> 13B. Predictive Values
+                    </button>
                     <button class="nav-item" data-chapter="quiz_part2">
                         <i class="ph ph-exam"></i> Part II Quiz
                     </button>
                 </div>
                 <div class="nav-group">
-                    <div class="nav-label">Part III: Control & Prevention</div>
+                    <div class="nav-label label-p3">Part III: Control & Prevention</div>
                     <button class="nav-item" data-chapter="ch14">14. Data Synthesis</button>
+                    <button class="nav-item nav-sub-item sub-p3" data-chapter="bias_identification">
+                        <i class="ph ph-warning"></i> 14B. Bias & Confounding
+                    </button>
+                    <button class="nav-item nav-sub-item sub-p3" data-chapter="mortality_metrics">
+                        <i class="ph ph-skull"></i> 14C. Mortality Metrics
+                    </button>
                     <button class="nav-item" data-chapter="ch15">15. Prevention Levels</button>
                     <button class="nav-item" data-chapter="ch16">16. Control Measures</button>
                     <button class="nav-item" data-chapter="ch17">17. Isolation & Ethics</button>
                     <button class="nav-item" data-chapter="ch18">18. Pop. Dynamics</button>
                     <button class="nav-item" data-chapter="ch19">19. Advanced Eval</button>
                     <button class="nav-item" data-chapter="ch20">20. Case Studies</button>
+                    <button class="nav-item" data-chapter="ch21">21. Environmental Toxins</button>
                     <button class="nav-item" data-chapter="quiz_part3">
                         <i class="ph ph-exam"></i> Part III Quiz
                     </button>
                 </div>
                 <div class="nav-group">
-                    <button class="nav-item coach-only" data-chapter="coach_resources" style="display: none;">
+                    <div class="nav-label label-management" style="color: #64748b; margin-top: 1rem;"><i
+                            class="ph-bold ph-users-three"></i> Management</div>
+                    <button class="nav-item coach-only" data-chapter="coach_resources">
                         <i class="ph ph-chalkboard-teacher"></i> Coach Resources
                     </button>
                 </div>
                 <div class="nav-group">
-                    <div class="nav-label">Tools & Appendices</div>
+                    <div class="nav-label label-tools">Tools & Appendices</div>
                     <button class="nav-item" data-chapter="drills">
                         <i class="ph ph-wrench"></i> Interactive Drills
                     </button>
@@ -110,8 +151,20 @@
                     <button class="nav-item" data-chapter="interactive_scenarios">
                         <i class="ph ph-game-controller"></i> Interactive Scenarios
                     </button>
+                    <!-- New dynamic practice problems generator for Phase 2 --><!-- icon chosen for question/quiz -->
+                    <button class="nav-item" data-chapter="random_problems">
+                        <i class="ph ph-question"></i> Practice Problems
+                    </button>
+                    <!-- Phase 9: Case Challenges multi‑step quiz -->
+                    <button class="nav-item" data-chapter="case_quiz">
+                        <i class="ph ph-clipboard-text"></i> Case Challenges
+                    </button>
+                    <!-- Phase 5: Quick Quiz module using aggregated question bank -->
+                    <button class="nav-item" data-chapter="quick_quiz">
+                        <i class="ph ph-lightning"></i> Quick Quiz
+                    </button>
                     <button class="nav-item" data-chapter="appendix">
-                        <i class="ph ph-books"></i> Appendix & Resources
+                        <i class="ph ph-books"></i> Appendix (A-I Reference)
                     </button>
                     <button class="nav-item" data-chapter="about">
                         <i class="ph ph-info"></i> About & Credits
@@ -129,17 +182,19 @@
             </div>
 
             <footer class="site-footer"
-                style="margin-top: 4rem; padding: 2rem 0; border-top: 2px solid var(--border-color); text-align: center; color: var(--text-color); font-family: 'Space Grotesk', sans-serif; opacity: 0.8;">
-                <p style="margin-bottom: 0.5rem;">
-                    <strong>The Epidemic Engine</strong> v2.5.0 • © 2026 Science Olympiad Mastery Guide<br>
+                style="margin-top: 6rem; padding: 3rem 0; border-top: 2px solid var(--border-color); text-align: center; color: var(--text-color); font-family: var(--font-heading); opacity: 0.8;">
+                <p style="margin-bottom: 1rem; line-height: 1.6;">
+                    <strong>The Epidemic Engine</strong> v4.0.2 • © 2026 Science Olympiad Mastery Guide<br>
                     <span
-                        style="display: block; margin-top: 0.4rem; font-size: 0.95rem; color: var(--navy-primary);">Designed,
+                        style="display: block; margin-top: 0.75rem; font-size: 1rem; color: var(--navy-primary);">Designed,
                         Created, & Conceived by <strong>Rishi Reddy</strong></span>
                 </p>
-                <p style="font-size: 0.85rem; margin-bottom: 0;">Content based on CDC/WHO principles. For educational
+                <p style="font-size: 0.85rem; margin-bottom: 0.5rem; opacity: 0.7;">Content based on CDC/WHO principles.
+                    For educational
                     use only.</p>
-                <p style="font-size: 0.85rem; margin-top: 0.5rem;"><a href="#"
-                        onclick="loadChapter('about'); return false;" style="color: var(--text-muted);">About Epidemic
+                <p style="font-size: 0.9rem; margin-top: 1rem;"><a href="#"
+                        onclick="loadChapter('about'); return false;"
+                        style="color: var(--accent-orange); text-decoration: underline;">About Epidemic
                         Engine</a></p>
             </footer>
 
@@ -156,17 +211,48 @@
     <!-- Bundled JS: data first, then core engine -->
     <script src="dist/epi-data.bundle.js"></script>
     <script src="dist/epi-core.bundle.js"></script>
-    <script>
-        if ('serviceWorker' in navigator && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('SW Registered!', reg.scope))
-                    .catch(err => console.log('SW Failure:', err));
-            });
-        } else if (window.location.protocol === 'file:') {
-            console.log('Service Workers are not supported on the file:// protocol. Run via a local server to test offline features.');
-        }
-    </script>
+
+    <!-- Phase 13: Source Overrides (Fixing Content Visibility) -->
+    <script src="js/epidemic-engine-content.js?v=4.0.2"></script>
+    <script src="js/chapter-reference.js?v=4.0.2"></script>
+    <script src="js/quiz_bank_enhanced.js?v=4.0.2"></script>
+
+    <!-- App Init: Service Worker and UI Logic (CSP Safe) -->
+    <script src="js/app-init.js"></script>
+
+    <!-- Extensions: Consolidated features and updates -->
+    <script src="js/epidemic-engine-extensions.js"></script>
+    <!-- Phase 2 scripts: Coach portal and dynamic practice problems -->
+    <script src="js/coach_resources.js"></script>
+    <script src="js/random_problems.js"></script>
+
+    <!-- Custom Flash Drills: aggregate question pool and override loader -->
+    <script src="js/custom_flash_drills.js"></script>
+
+    <!-- Quick Quiz module -->
+    <script src="js/quick_quiz.js"></script>
+
+
+    <!-- Phase 8: diagnostic tools page definition -->
+    <script src="js/diagnostic_tools.js"></script>
+
+    <!-- Phase 9: case challenges multi‑step quiz -->
+    <script src="js/case_quiz.js"></script>
+
+    <!-- Phase 12: Genomic Epidemiology Content -->
+
+    <!-- Phase 13: Surveillance Systems -->
+
+    <!-- Phase 14: Mega Cases (Tier 2 Enhancements) -->
+    <script src="js/mega-cases-data.js"></script>
+    <script src="js/mega-scenarios-data.js"></script>
+
+    <!-- Phase 15: Herd Immunity Tool -->
+    <script src="js/tool-herd-immunity.js"></script>
+
+    <!-- Phase 16: Tier 3 (Infinite) -->
+    <script src="js/procedural-engine.js"></script>
+    <script src="js/tools-interface-content.js"></script>
 </body>
 
 </html>

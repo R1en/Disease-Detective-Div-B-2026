@@ -134,4 +134,40 @@
         font-size: 1rem;
         line-height: 1.5;
     }
+
+    /* --- Accessibility Touch Targets (min 44px) --- */
+    button,
+    select,
+    input[type="checkbox"]+span,
+    nav button {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    /* Fix Hamburger Menu tap area */
+    #mobile-menu-toggle {
+        padding: 1rem;
+        min-height: 48px;
+        min-width: 48px;
+        display: flex;
+        /* Ensure centering */
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* --- 2x2 Calculator Mobile Polish --- */
+    /* Allow results to sit side-by-side on small screens */
+    .results-grid {
+        grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)) !important;
+        gap: 0.5rem !important;
+    }
+
+    .results-grid .neo-card.small {
+        padding: 0.75rem !important;
+        font-size: 0.9rem;
+    }
+
+    .stat-value {
+        font-size: 1.25rem !important;
+    }
 }
