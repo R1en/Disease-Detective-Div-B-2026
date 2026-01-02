@@ -26,4 +26,5 @@ A comprehensive, offline-capable progressive web application (PWA) designed for 
 
 ---
 *Built for Science Olympiad 2026 Season.*  
-*Designed, Created, & Conceived by **Naveen Minumula, MD***
+*Designed, Created, & Conceived by **Rishi Reddy***
+
