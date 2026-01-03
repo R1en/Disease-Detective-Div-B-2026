@@ -19,10 +19,10 @@ window.EPIDEMIC_ENGINE_CONTENT = {
 
     // PART I: FOUNDATION & SURVEILLANCE
     ch1: {
-        title: "Chapter 1: Core Frameworks & Mindset",
+        title: "Chapter 1: Mindset",
         difficulty: "★☆☆☆☆",
         content: `
-            <h1>Chapter 1: Core Frameworks & Mindset</h1>
+            <h1>Chapter 1: Mindset</h1>
             <!-- Difficulty Scale -->
             <div class="difficulty-scale-box" style="border: 2px solid #333; padding: 1rem; margin: 1rem 0; background: #fafafa; border-radius: 8px;">
                 <div style="font-weight: bold; margin-bottom: 0.5rem; text-transform: uppercase; font-size: 0.8rem; color: #555;">Target Audience</div>
@@ -258,40 +258,8 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 <li>Foundation for all public health action</li>
             </ul>
 
-            <h2>5.5 International Health Regulations (IHR)</h2>
-            <div class="callout-header" style="background: var(--gold-accent); color: var(--navy-primary);">
-                <i class="ph ph-globe"></i> Global Surveillance
-            </div>
-            <p><strong>IHR (2005):</strong> A legally binding international law that helps countries work together to save lives while minimizing interference with international trade and travel.</p>
-            
-            <div class="neo-card" style="margin: 1.5rem 0;">
-                <h3 style="margin-top:0; color:var(--navy-primary);">PHEIC (Public Health Emergency of International Concern)</h3>
-                <p>The **WHO Director-General** declares a PHEIC if an event is:</p>
-                <ol>
-                    <li><strong>Extraordinary</strong></li>
-                    <li><strong>A public health risk to other states</strong> (via international spread)</li>
-                    <li><strong>Potentially requiring a coordinated international response</strong></li>
-                </ol>
-            </div>
-
-            <div class="study-tip">
-                <div class="callout-header"><i class="ph ph-lightbulb"></i> Mnemonic: IHR Decision Instrument</div>
-                <div class="callout-content">
-                    <p>To decide if you must notify the WHO, answer these 4 Questions:</p>
-                    <ul style="list-style: none; padding: 0;">
-                        <li>1. Is the public health impact serious?</li>
-                        <li>2. Is the event unusual or unexpected?</li>
-                        <li>3. Is there a significant risk of international spread?</li>
-                        <li>4. Is there a significant risk of international travel/trade restrictions?</li>
-                    </ul>
-                    <p><strong>Rule:</strong> If "Yes" to **any 2** questions -> Notify WHO within 24 hours.</p>
-                    <p><em>(Note: Smallpox, Polio, SARS, and new Influenza are ALWAYS reportable).</em></p>
-                </div>
-            </div>
-
-            <h2>5.6 Exam Focus (National)</h2>
             <div class="exam-trap">
-                <div class="callout-header"><i class="ph ph-lightning"></i> High Yield Topics</div>
+                <div class="callout-header"><i class="ph ph-lightning"></i> Chapter 1 Exam Focus</div>
                 <div class="callout-content">
                     <ul>
                         <li><strong>Definition:</strong> Memorize "Distribution and Determinants".</li>
@@ -490,6 +458,9 @@ window.EPIDEMIC_ENGINE_CONTENT = {
             </div>
 
             <h2>2.3 The Natural History Timeline</h2>
+            <div class="callout-info" style="background: #f0f9ff; border-left: 4px solid #0284c7; padding: 1rem; margin-bottom: 1.5rem; border-radius: 4px;">
+                <p style="margin:0;"><strong><i class="ph ph-link"></i> See Also:</strong> <a href="#ch6" onclick="event.preventDefault(); loadChapter('ch6');" style="color:#0284c7;text-decoration:underline;">Chapter 6: Natural History of Disease</a> for detailed diagrams and timing concepts (Incubation vs Latency, LIV mnemonic).</p>
+            </div>
             <p>Diseases progress through predictable stages. Understanding this helps you identify where to intervene!</p>
             
             <div class="neo-card" style="margin: 1.5rem 0;">
@@ -1561,12 +1532,8 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                     </ul>
                 </div>
             </div>
-`
-    },
-    surveillance_systems: {
-        title: "Chapter 5B: Surveillance Types",
-        difficulty: "★☆☆☆☆",
-        content: `
+            <hr style="border: 0; border-top: 2px solid var(--navy-primary); margin: 3rem 0;">
+
             <h1>Chapter 5B: Surveillance Types</h1>
             <div class="difficulty-scale-box" style="border: 2px solid #333; padding: 1rem; margin: 1rem 0; background: #fafafa; border-radius: 8px;">
                 <div style="font-weight: bold; margin-bottom: 0.5rem; text-transform: uppercase; font-size: 0.8rem; color: #555;">Target Audience</div>
@@ -1623,6 +1590,51 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 <div class="accordion-content">
                     <p><strong>Question:</strong> Automated software scans pharmacy sales for spikes in anti-diarrheal medication.</p>
                     <p><strong>Type:</strong> Syndromic (Proxy data, early warning).</p>
+                </div>
+            </div>
+
+            <h2>5.5 International Health Regulations (IHR)</h2>
+            <div class="callout-header" style="background: var(--gold-accent); color: var(--navy-primary);">
+                <i class="ph ph-globe"></i> Global Surveillance
+            </div>
+            <p><strong>IHR (2005):</strong> A legally binding international law that helps countries work together to save lives while minimizing interference with international trade and travel.</p>
+            
+            <div class="neo-card" style="margin: 1.5rem 0;">
+                <h3 style="margin-top:0; color:var(--navy-primary);">PHEIC (Public Health Emergency of International Concern)</h3>
+                <p>The <strong>WHO Director-General</strong> declares a PHEIC if an event is:</p>
+                <ol>
+                    <li><strong>Extraordinary</strong></li>
+                    <li><strong>A public health risk to other states</strong> (via international spread)</li>
+                    <li><strong>Potentially requiring a coordinated international response</strong></li>
+                </ol>
+            </div>
+
+            <div class="study-tip">
+                <div class="callout-header"><i class="ph ph-lightbulb"></i> Mnemonic: IHR Decision Instrument</div>
+                <div class="callout-content">
+                    <p>To decide if you must notify the WHO, answer these 4 Questions:</p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li>1. Is the public health impact serious?</li>
+                        <li>2. Is the event unusual or unexpected?</li>
+                        <li>3. Is there a significant risk of international spread?</li>
+                        <li>4. Is there a significant risk of international travel/trade restrictions?</li>
+                    </ul>
+                    <p><strong>Rule:</strong> If "Yes" to <strong>any 2</strong> questions → Notify WHO within 24 hours.</p>
+                    <p><em>(Note: Smallpox, Polio, SARS, and new Influenza are ALWAYS reportable).</em></p>
+                </div>
+            </div>
+
+            <h2>5.6 Exam Focus: Surveillance</h2>
+            <div class="exam-trap">
+                <div class="callout-header"><i class="ph ph-lightning"></i> High Yield Topics</div>
+                <div class="callout-content">
+                    <ul>
+                        <li><strong>Active vs Passive:</strong> Know who initiates contact (Active = health department reaches out).</li>
+                        <li><strong>Syndromic:</strong> Uses non-specific symptoms for early warning (e.g., ER visits for fever).</li>
+                        <li><strong>Sentinel:</strong> Selected high-quality sites for detailed data.</li>
+                        <li><strong>IHR:</strong> WHO must be notified within 24 hours for PHEIC events.</li>
+                        <li><strong>Always Reportable:</strong> Smallpox, Polio, SARS, Novel Influenza.</li>
+                    </ul>
                 </div>
             </div>
         `
@@ -1685,6 +1697,9 @@ window.EPIDEMIC_ENGINE_CONTENT = {
             </div>
 
             <h2>6.2 The Natural History Timeline</h2>
+            <div class="callout-info" style="background: #f0f9ff; border-left: 4px solid #0284c7; padding: 1rem; margin-bottom: 1.5rem; border-radius: 4px;">
+                <p style="margin:0;"><strong><i class="ph ph-link"></i> See Also:</strong> <a href="#ch2" onclick="event.preventDefault(); loadChapter('ch2');" style="color:#0284c7;text-decoration:underline;">Chapter 2: History & Heroes</a> for carrier type drills and the Typhoid Mary case study.</p>
+            </div>
             <div style="text-align: center; margin: 3rem 0;">
                 <svg width="700" height="280" viewBox="0 0 700 280" class="responsive-svg" style="max-width: 100%; height: auto; background: white; border: 2px solid #e5e7eb; border-radius: 8px; padding: 1rem;">
                     <defs>
@@ -3216,12 +3231,9 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                     </ul>
                 </div>
             </div>
-        `
-    },
-    study_design: {
-        title: "Chapter 11B: Study Design Selector",
-        difficulty: "★★★☆☆",
-        content: `
+
+            <hr style="border: 0; border-top: 2px solid var(--navy-primary); margin: 3rem 0;">
+
             <h1>Chapter 11B: Study Design Selector</h1>
             <!-- Difficulty Scale -->
             <div class="difficulty-scale-box" style="border: 2px solid #333; padding: 1rem; margin: 1rem 0; background: #fafafa; border-radius: 8px;">
@@ -3467,114 +3479,6 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 </div>
             </div>
 
-            <div style="text-align: center; margin: 2rem 0;">
-                <h3 style="color: var(--navy-primary); margin-bottom: 1rem;">📊 Study Design Decision Flowchart</h3>
-                <svg width="600" height="650" viewBox="0 0 600 650" class="responsive-svg" style="max-width: 600px; height: auto; display: block; margin: 0 auto; background: white; border: 2px solid #e5e7eb; border-radius: 8px; padding: 1rem;">
-                    <defs>
-                        <marker id="arrow-flow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-                            <polygon points="0 0, 8 3, 0 6" fill="#374151" />
-                        </marker>
-                    </defs>
-
-                    <!-- Title -->
-                    <text x="300" y="25" text-anchor="middle" font-weight="bold" font-size="13" fill="#1e40af">When to Choose Each Study Type</text>
-
-                    <!-- Q1: Can you assign exposure? -->
-                    <g transform="translate(300, 55)">
-                        <rect x="-110" y="-20" width="220" height="40" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
-                        <text x="0" y="-2" text-anchor="middle" font-size="10" font-weight="bold" fill="#78350f">Can you ASSIGN/CONTROL</text>
-                        <text x="0" y="10" text-anchor="middle" font-size="10" font-weight="bold" fill="#78350f">who gets exposed?</text>
-                    </g>
-
-                    <!-- YES -> RCT/Clinical Trial -->
-                    <line x1="190" y1="55" x2="110" y2="55" stroke="#059669" stroke-width="2" marker-end="url(#arrow-flow)"/>
-                    <text x="145" y="50" font-size="9" font-weight="bold" fill="#059669">YES</text>
-                    
-                    <g transform="translate(70, 55)">
-                        <rect x="-60" y="-20" width="120" height="56" rx="8" fill="#dcfce7" stroke="#059669" stroke-width="3"/>
-                        <text x="0" y="-4" text-anchor="middle" font-size="11" font-weight="bold" fill="#065f46">RCT / Clinical</text>
-                        <text x="0" y="8" text-anchor="middle" font-size="11" font-weight="bold" fill="#065f46">Trial</text>
-                        <text x="0" y="22" text-anchor="middle" font-size="7" fill="#059669" font-style="italic">Gold Standard</text>
-                        <text x="0" y="32" text-anchor="middle" font-size="7" fill="#6b7280">Ex: Vaccine trials</text>
-                    </g>
-
-                    <!-- NO -> Q2 -->
-                    <line x1="300" y1="75" x2="300" y2="110" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow-flow)"/>
-                    <text x="310" y="95" font-size="9" font-weight="bold" fill="#6b7280">NO</text>
-
-                    <!-- Q2: Analyzing individuals or groups? -->
-                    <g transform="translate(300, 135)">
-                        <rect x="-110" y="-20" width="220" height="40" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
-                        <text x="0" y="-2" text-anchor="middle" font-size="10" font-weight="bold" fill="#78350f">Data on INDIVIDUALS</text>
-                        <text x="0" y="10" text-anchor="middle" font-size="10" font-weight="bold" fill="#78350f">or population GROUPS?</text>
-                    </g>
-
-                    <!-- GROUPS -> Ecological -->
-                    <line x1="410" y1="135" x2="490" y2="135" stroke="#9333ea" stroke-width="2" marker-end="url(#arrow-flow)"/>
-                    <text x="440" y="130" font-size="9" font-weight="bold" fill="#9333ea">GROUPS</text>
-                    
-                    <g transform="translate(530, 135)">
-                        <rect x="-50" y="-20" width="100" height="56" rx="8" fill="#f3e8ff" stroke="#9333ea" stroke-width="3"/>
-                        <text x="0" y="-4" text-anchor="middle" font-size="11" font-weight="bold" fill="#6b21a8">ECOLOGICAL</text>
-                        <text x="0" y="10" text-anchor="middle" font-size="8" fill="#9333ea">Population data</text>
-                        <text x="0" y="22" text-anchor="middle" font-size="7" fill="#6b7280" font-style="italic">Ex: Country-level</text>
-                        <text x="0" y="32" text-anchor="middle" font-size="7" fill="#6b7280">smoking rates</text>
-                    </g>
-
-                    <!-- INDIVIDUALS -> Q3 -->
-                    <line x1="300" y1="155" x2="300" y2="190" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow-flow)"/>
-                    <text x="270" y="175" font-size="9" font-weight="bold" fill="#6b7280">INDIVIDUALS</text>
-
-                    <!-- Q3: Follow over time? -->
-                    <g transform="translate(300, 215)">
-                        <rect x="-110" y="-20" width="220" height="40" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
-                        <text x="0" y="-2" text-anchor="middle" font-size="10" font-weight="bold" fill="#78350f">Follow subjects</text>
-                        <text x="0" y="10" text-anchor="middle" font-size="10" font-weight="bold" fill="#78350f">OVER TIME?</text>
-                    </g>
-
-                    <!-- YES -> Q4 -->
-                    <line x1="190" y1="215" x2="130" y2="260" stroke="#059669" stroke-width="2" marker-end="url(#arrow-flow)"/>
-                    <text x="155" y="235" font-size="9" font-weight="bold" fill="#059669">YES</text>
-
-                    <!-- Q4: Start with exposure? -->
-                    <g transform="translate(110, 285)">
-                        <rect x="-90" y="-18" width="180" height="36" rx="6" fill="#fff3e0" stroke="#ea580c" stroke-width="2"/>
-                        <text x="0" y="-2" text-anchor="middle" font-size="9" fill="#7c2d12">Classify by EXPOSURE</text>
-                        <text x="0" y="10" text-anchor="middle" font-size="9" fill="#7c2d12">status first?</text>
-                    </g>
-
-                    <!-- YES -> Cohort -->
-                    <line x1="110" y1="303" x2="110" y2="345" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow-flow)"/>
-                    <text x="120" y="325" font-size="8" font-weight="bold" fill="#6b7280">YES</text>
-                    
-                    <g transform="translate(110, 380)">
-                        <rect x="-70" y="-24" width="140" height="68" rx="8" fill="#dcfce7" stroke="#059669" stroke-width="3"/>
-                        <text x="0" y="-6" text-anchor="middle" font-size="11" font-weight="bold" fill="#065f46">COHORT</text>
-                        <text x="0" y="6" text-anchor="middle" font-size="8" fill="#059669">Exposed → Disease</text>
-                        <text x="0" y="18" text-anchor="middle" font-size="7" fill="#059669" font-weight="bold">Use: RR, AR</text>
-                        <text x="0" y="30" text-anchor="middle" font-size="7" fill="#6b7280" font-style="italic">Ex: Framingham</text>
-                        <text x="0" y="40" text-anchor="middle" font-size="7" fill="#6b7280">Heart Study</text>
-                    </g>
-
-                    <!-- NO from Q3 -> Q5 -->
-                    <line x1="300" y1="235" x2="300" y2="270" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow-flow)"/>
-                    <text x="310" y="255" font-size="9" font-weight="bold" fill="#6b7280">NO</text>
-
-                    <!-- Q5: Start with disease? -->
-                    <g transform="translate(300, 295)">
-                        <rect x="-90" y="-18" width="180" height="36" rx="6" fill="#fff3e0" stroke="#ea580c" stroke-width="2"/>
-                        <text x="0" y="-2" text-anchor="middle" font-size="9" fill="#7c2d12">Classify by DISEASE</text>
-                        <text x="0" y="10" text-anchor="middle" font-size="9" fill="#7c2d12">status first?</text>
-                    </g>
-
-                    <!-- YES -> Case-Control -->
-                    <line x1="390" y1="295" x2="455" y2="345" stroke="#059669" stroke-width="2" marker-end="url(#arrow-flow)"/>
-                    <text x="415" y="318" font-size="8" font-weight="bold" fill="#059669">YES</text>
-                    
-                    <g transform="translate(480, 380)">
-                        <rect x="-70" y="-24" width="140" height="68" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="3"/>
-                        <text x="0" y="-6" text-anchor="middle" font-size="11" font-weight="bold" fill="#991b1b">CASE-CONTROL</text>
-                        <text x="0" y="6" text-anchor="middle" font-size="8" fill="#dc2626">Cases vs Controls</text>
                         <text x="0" y="18" text-anchor="middle" font-size="7" fill="#dc2626" font-weight="bold">Use: OR</text>
                         <text x="0" y="30" text-anchor="middle" font-size="7" fill="#6b7280" font-style="italic">Ex: Lung cancer</text>
                         <text x="0" y="40" text-anchor="middle" font-size="7" fill="#6b7280">& smoking study</text>
@@ -3950,12 +3854,9 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                     </ul>
                 </div>
             </div>
-        `
-    },
-    genomic_epi: {
-        title: "Chapter 12B: Genomic Epidemiology",
-        difficulty: "★★★★★",
-        content: `
+
+            <hr style="border: 0; border-top: 2px solid var(--navy-primary); margin: 3rem 0;">
+
             <h1>Chapter 12B: Genomic Epidemiology</h1>
             <!-- Difficulty Scale -->
             <div class="difficulty-scale-box" style="border: 2px solid #333; padding: 1rem; margin: 1rem 0; background: #fafafa; border-radius: 8px;">
@@ -4259,12 +4160,9 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                     </ul>
                 </div>
             </div>
-`
-    },
-    predictive_values: {
-        title: "Chapter 13B: Predictive Values",
-        difficulty: "★★★★★",
-        content: `
+
+            <hr style="border: 0; border-top: 2px solid var(--navy-primary); margin: 3rem 0;">
+
             <h1>Chapter 13B: Predictive Values (PPV & NPV)</h1>
             <div class="difficulty-scale-box" style="border: 2px solid #333; padding: 1rem; margin: 1rem 0; background: #fafafa; border-radius: 8px;">
                 <div style="font-weight: bold; margin-bottom: 0.5rem; text-transform: uppercase; font-size: 0.8rem; color: #555;">Target Audience</div>
@@ -4456,12 +4354,9 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                     </ul>
                 </div>
             </div>
-        `
-    },
-    bias_identification: {
-        title: "Chapter 14B: Bias & Confounding",
-        difficulty: "★★★★★",
-        content: `
+
+            <hr style="border: 0; border-top: 2px solid var(--navy-primary); margin: 3rem 0;">
+
             <h1>Chapter 14B: Bias & Confounding</h1>
             <div class="difficulty-scale-box" style="border: 2px solid #333; padding: 1rem; margin: 1rem 0; background: #fafafa; border-radius: 8px;">
                 <div style="font-weight: bold; margin-bottom: 0.5rem; text-transform: uppercase; font-size: 0.8rem; color: #555;">Target Audience</div>
@@ -4508,12 +4403,9 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                     <p><strong>Confounding</strong> is a real relationship that is misinterpreted. The association exists, but it's not causal.</p>
                 </div>
             </div>
-        `
-    },
-    mortality_metrics: {
-        title: "Chapter 14C: Mortality Metrics",
-        difficulty: "★★★☆☆",
-        content: `
+
+            <hr style="border: 0; border-top: 2px solid var(--navy-primary); margin: 3rem 0;">
+
             <h1>Chapter 14C: Mortality Metrics</h1>
             <!-- Difficulty Scale -->
             <div class="difficulty-scale-box" style="border: 2px solid #333; padding: 1rem; margin: 1rem 0; background: #fafafa; border-radius: 8px;">
@@ -5713,10 +5605,10 @@ window.EPIDEMIC_ENGINE_CONTENT = {
     },
 
     ch21: {
-        title: "Chapter 21: Environmental Toxins",
+        title: "Chapter 21: Env. Toxins",
         difficulty: "★★★★★",
         content: `
-            <h1>Chapter 21: Environmental Toxins & Chemical Epidemiology</h1>
+            <h1>Chapter 21: Env. Toxins & Chemical Epidemiology</h1>
             <!-- Difficulty Scale -->
             <div class="difficulty-scale-box" style="border: 2px solid #333; padding: 1rem; margin: 1rem 0; background: #fafafa; border-radius: 8px;">
                 <div style="font-weight: bold; margin-bottom: 0.5rem; text-transform: uppercase; font-size: 0.8rem; color: #555;">Target Audience</div>

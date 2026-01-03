@@ -3,7 +3,7 @@
  * Handles sidebar navigation and dynamic content loading
  */
 
-const APP_VERSION = 'v3.0.0';
+const APP_VERSION = 'v2.4.0';
 
 document.addEventListener('DOMContentLoaded', () => {
     // console.log(`[EPIDEMIC ENGINE] Initializing ${APP_VERSION}...`);
@@ -113,16 +113,8 @@ function setupNavigation() {
 }
 
 function loadChapter(chapterId, updateHistory = true) {
-    // Safeguard: Prevent accidental exit from active quiz
-    // Safeguard: Auto-save active quiz if navigating away
-    if (window.currentQuizEngine && !window.currentQuizEngine.isComplete) {
-        if (typeof window.currentQuizEngine.saveLocalProgress === 'function') {
-            window.currentQuizEngine.saveLocalProgress();
-            // Optional: Toast notification that "Progress Saved"
-            if (window.UI) window.UI.toast("Quiz progress saved in background.", "info");
-        }
-        window.currentQuizEngine = null; // Clear active state
-    }
+    // v5: No auto-save. quizEngine is cleaned up via cleanup() on exit.
+    window.quizEngine = null;
 
     // Alias home to welcome
     if (chapterId === 'home') chapterId = 'welcome';
@@ -346,19 +338,9 @@ function loadChapter(chapterId, updateHistory = true) {
             let html = '';
             const catOrder = ['Food & Waterborne', 'Vector & Zoonotic', 'Respiratory', 'Other & Bioterror', 'Special Concepts', 'Other'];
 
-            const categoryIcons = {
-                'Food & Waterborne': 'ph-drop',
-                'Vector & Zoonotic': 'ph-bug',
-                'Respiratory': 'ph-wind',
-                'Other & Bioterror': 'ph-warning',
-                'Special Concepts': 'ph-star',
-                'Other': 'ph-folder'
-            };
-
             catOrder.forEach(cat => {
                 if (!categories[cat] || categories[cat].length === 0) return;
-                const iconClass = categoryIcons[cat] || 'ph-files';
-                html += `<h2 style="color: var(--accent-purple); margin-top: 2rem; border-bottom: 2px solid #eee; padding-bottom: 0.5rem;"><i class="ph-bold ${iconClass}"></i> ${cat}</h2>`;
+                html += `<h2 style="color: var(--accent-purple); margin-top: 2rem; border-bottom: 2px solid #eee; padding-bottom: 0.5rem;"><i class="ph-bold ph-files"></i> ${cat}</h2>`;
                 if (cat === 'Food & Waterborne') {
                     html += `<p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">
                         <strong>Exam Tip:</strong> Foodborne outbreaks are the #1 most common exam topic. Master the "classic" pathogens (Salmonella, Norovirus, Staph aureus) below.
@@ -410,55 +392,6 @@ function loadChapter(chapterId, updateHistory = true) {
                                 <div style="background: #fff; border: 1px solid #eee; padding: 0.5rem; border-radius: 4px; border-left: 2px solid #ef4444; margin-top:0.25rem;">${c.spot_map}</div>
                             </div>` : ''}
 
-                            ${c.lineList ? `
-                            <div style="margin-bottom: 1rem;">
-                                <strong style="color:var(--navy-primary);"><i class="ph-bold ph-table"></i> Investigation Data (Line List):</strong>
-                                <div style="margin-top:0.5rem; overflow-x:auto; max-height:300px; border:1px solid #ddd;">
-                                    <table style="width:100%; border-collapse:collapse; font-size:0.8rem;">
-                                        <thead style="position:sticky; top:0; background:#f1f5f9;">
-                                            <tr>
-                                                ${Object.keys(c.lineList[0]).map(k => `<th style="padding:6px; text-transform:capitalize; border:1px solid #ddd;">${k.replace(/_/g, ' ')}</th>`).join('')}
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            ${c.lineList.map((row, i) => `
-                                                <tr style="background:${i % 2 === 0 ? '#fff' : '#f9fafb'};">
-                                                    ${Object.values(row).map(v => `<td style="padding:6px; border:1px solid #ddd; text-align:center;">${v}</td>`).join('')}
-                                                </tr>
-                                            `).join('')}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>` : ''}
-
-                            ${c.twoByTwo ? `
-                            <div style="margin-bottom: 1rem;">
-                                <strong style="color:var(--navy-primary);"><i class="ph-bold ph-grid-four"></i> Investigation Data (2x2 Table):</strong>
-                                <div style="margin-top:0.5rem; display:flex; justify-content:center;">
-                                    <table style="border-collapse:collapse; border:1px solid #ddd; background:#fff; font-size:0.9rem;">
-                                        <thead>
-                                            <tr style="background:#f1f5f9;">
-                                                <th style="padding:8px; border:1px solid #ddd;">${c.twoByTwo.exposure}</th>
-                                                <th style="padding:8px; border:1px solid #ddd;">Ill (Cases)</th>
-                                                <th style="padding:8px; border:1px solid #ddd;">Well (Controls)</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th style="padding:8px; border:1px solid #ddd; text-align:left; background:#f9fafb;">Exposed</th>
-                                                <td style="padding:8px; border:1px solid #ddd; text-align:center; font-weight:bold; color:#ef4444;">${c.twoByTwo.a}</td>
-                                                <td style="padding:8px; border:1px solid #ddd; text-align:center;">${c.twoByTwo.b}</td>
-                                            </tr>
-                                            <tr>
-                                                <th style="padding:8px; border:1px solid #ddd; text-align:left; background:#f9fafb;">Unexposed</th>
-                                                <td style="padding:8px; border:1px solid #ddd; text-align:center;">${c.twoByTwo.c}</td>
-                                                <td style="padding:8px; border:1px solid #ddd; text-align:center;">${c.twoByTwo.d}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>` : ''}
-
                             ${c.counterfactual ? `
                             <div style="margin-bottom: 1rem; font-size: 0.9rem;">
                                 <strong style="color:var(--navy-primary);"><i class="ph-bold ph-arrows-merge"></i> Counterfactual ("What If"):</strong>
@@ -467,23 +400,11 @@ function loadChapter(chapterId, updateHistory = true) {
 
                              ${c.questions ? `
                             <div style="margin-top: 1rem;">
-                                <strong><i class="ph-bold ph-question"></i> Discussion & Analysis:</strong>
+                                <strong><i class="ph-bold ph-question"></i> Discussion:</strong>
                                 ${c.questions.map(q => `
-                                    <div style="margin-top: 0.75rem; font-size: 0.9rem; border-bottom:1px dotted #eee; padding-bottom:0.75rem;">
-                                        <div style="font-weight:600; color:#333; margin-bottom:0.25rem;">Q: ${q.q}</div>
-                                        ${q.hint ? `<div style="font-style:italic; color:#666; font-size:0.85rem; margin-bottom:0.25rem;">ℹ️ Hint: ${q.hint}</div>` : ''}
-                                        
-                                        ${c.isMegaCase ? `
-                                        <details>
-                                            <summary style="cursor:pointer; color:var(--accent-blue); font-size:0.85rem; font-weight:600;">Show Solution</summary>
-                                            <div style="margin-top: 0.5rem; background:#f0fdf4; padding:0.5rem; border-radius:4px; border:1px solid #bbf7d0;">
-                                                <div style="font-weight:bold; color:var(--accent-green);">A: ${q.a}</div>
-                                                ${q.explanation ? `<div style="margin-top:0.25rem; font-size:0.85rem; color:#333; line-height:1.4;">${q.explanation}</div>` : ''}
-                                            </div>
-                                        </details>
-                                        ` : `
+                                    <div style="margin-top: 0.5rem; font-size: 0.9rem; border-bottom:1px dotted #eee; padding-bottom:0.5rem;">
+                                        <div style="font-weight:600; color:#333;">Q: ${q.q}</div>
                                         <div style="color: var(--accent-green); margin-top: 0.25rem;">A: ${q.a}</div>
-                                        `}
                                     </div>
                                 `).join('')}
                             </div>` : ''}
@@ -574,13 +495,17 @@ function loadChapter(chapterId, updateHistory = true) {
                 `}).join('');
             }
 
-            // Initialize all Appendix Subtabs if engine exists
+            // Initialize Glossary and Flashcards if engine exists
             if (window.appendixEngine) {
-                if (chapterId === 'appendix' || chapterId === 'appendix-g' || chapterId === 'appendix-f') {
+                if (chapterId === 'appendix') {
                     window.appendixEngine.initGlossary('glossary-root');
                     window.appendixEngine.initFlashcards('flashcard-root');
-                    window.appendixEngine.initFormulas('formulas-root');
-                    window.appendixEngine.initTables('tables-root');
+                }
+                if (chapterId === 'appendix-g') {
+                    window.appendixEngine.initGlossary('glossary-root');
+                }
+                if (chapterId === 'appendix-f') {
+                    window.appendixEngine.initFlashcards('flashcard-root');
                 }
             }
 
@@ -614,97 +539,74 @@ function loadChapter(chapterId, updateHistory = true) {
                 `).join('');
             }
 
-            // setupDiagnosticRendering() is now called via window.renderDiagnosticHub()
-            if (typeof window.renderDiagnosticHub === 'function') {
-                window.renderDiagnosticHub();
-            }
+            // Define showTab globally if not already
+            window.showTab = function (tabId) {
+                // console.log('[SHOWTAB] Called with tabId:', tabId);
 
+                document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+                const tabContent = document.getElementById(tabId);
+                if (tabContent) {
+                    tabContent.style.display = 'block';
+                }
 
+                document.querySelectorAll('.neo-btn.small').forEach(el => el.classList.remove('active'));
+                if (event && event.target && event.target.classList.contains('neo-btn')) {
+                    event.target.classList.add('active');
+                }
 
+                // Initialize flashcards when flashcards tab is clicked
+                if (tabId === 'flashcards' && window.appendixEngine) {
+                    // console.log('[SHOWTAB] Initializing flashcards...');
+                    setTimeout(() => {
+                        window.appendixEngine.initFlashcards('flashcard-root');
+                    }, 50);
+                }
+
+                // Initialize glossary when glossary tab is clicked
+                if (tabId === 'glossary' && window.appendixEngine) {
+                    // console.log('[SHOWTAB] Initializing glossary...');
+                    setTimeout(() => {
+                        window.appendixEngine.initGlossary('glossary-root');
+                    }, 50);
+                }
+
+                // Initialize formulas when formulas tab is clicked
+                if (tabId === 'formulas' && window.appendixEngine) {
+                    // console.log('[SHOWTAB] Initializing formulas...');
+                    setTimeout(() => {
+                        window.appendixEngine.initFormulas('formulas-root');
+                    }, 50);
+                }
+
+                // Initialize tables when tables tab is clicked
+                if (tabId === 'tables' && window.appendixEngine) {
+                    // console.log('[SHOWTAB] Initializing tables...');
+                    setTimeout(() => {
+                        window.appendixEngine.initTables('tables-root');
+                    }, 50);
+                }
+
+                // Initialize logic when logic tab is clicked
+                if (tabId === 'logic' && window.appendixEngine) {
+                    setTimeout(() => {
+                        window.appendixEngine.initLogic('logic-root');
+                    }, 50);
+                }
+            };
         }, 100);
     }
 
-    // Auto-Resume Logic for Quizzes
-    if (window.startQuiz) {
-        let resumeQuizId = null;
-        if (chapterId === 'quiz_part1') resumeQuizId = 'part1';
-        if (chapterId === 'quiz_part2') resumeQuizId = 'part2';
-        if (chapterId === 'quiz_part3') resumeQuizId = 'part3';
+    // Auto-Resume Logic for Quizzes - DISABLED (v5 has no pause)
+    // if (window.startQuiz) { ... }
 
-        if (resumeQuizId) {
-            const saved = localStorage.getItem('quiz_progress_' + resumeQuizId);
-            if (saved) {
-                // Check if not complete
-                try {
-                    const parsed = JSON.parse(saved);
-                    if (!parsed.isComplete) {
-                        setTimeout(() => window.startQuiz(resumeQuizId), 50);
-                    }
-                } catch (e) { console.error('Error parsing quiz progress to resume', e); }
-            }
-        }
-    }
-
-    // Auto-Resume Logic for Simulations
-    if (chapterId === 'simulation' && window.startSimulationExam) {
-        // Check for any active simulation exam
-        for (let i = 1; i <= 4; i++) {
-            const key = 'quiz_progress_sim_exam_' + i; // Assuming ID format used by simulation
-            const saved = localStorage.getItem(key);
-            if (saved) {
-                try {
-                    const parsed = JSON.parse(saved);
-                    if (!parsed.isComplete) {
-                        // Found an active exam, resume it
-                        setTimeout(() => window.startSimulationExam(i), 50);
-                        break; // Resume the first one found (or we could track timestamp for most recent)
-                    }
-                } catch (e) { }
-            }
-        }
-    }
+    // Auto-Resume Logic for Simulations - DISABLED (v5 has no pause)
+    // if (chapterId === 'simulation' && window.startSimulationExam) { ... }
 
     // Scroll to top
     const mainContent = document.querySelector('.main-content');
     if (mainContent) {
         mainContent.scrollTop = 0;
     }
-
-    // Render Next Chapter Navigation with slight delay to ensure dynamic content is loaded
-    setTimeout(() => {
-        renderChapterNav(chapterId);
-    }, 250);
-}
-
-/**
- * Renders a navigation footer with 'Next Chapter' button
- */
-function renderChapterNav(currentId) {
-    const navItems = Array.from(document.querySelectorAll('.nav-item'));
-    const currentIndex = navItems.findIndex(item => item.getAttribute('data-chapter') === currentId);
-
-    if (currentIndex === -1 || currentIndex >= navItems.length - 1) return;
-
-    const nextItem = navItems[currentIndex + 1];
-    const nextId = nextItem.getAttribute('data-chapter');
-    const nextTitle = nextItem.innerText.replace(/^[0-9A-Z.]+\s/, ''); // Clean title
-
-    const container = document.getElementById('content-container');
-    if (!container) return;
-
-    const navHtml = `
-        <div class="chapter-footer-nav" style="margin-top: 4rem; padding: 2rem; border: 2px solid black; border-radius: 12px; background: white; box-shadow: 4px 4px 0 black; display: flex; justify-content: space-between; align-items: center;">
-            <div style="text-align: left;">
-                <span style="font-size: 0.8rem; text-transform: uppercase; font-weight: 800; color: #64748b; letter-spacing: 0.1em;">Up Next</span>
-                <h4 style="margin: 0.25rem 0 0; color: var(--navy-primary);">${nextTitle}</h4>
-            </div>
-            <button class="neo-btn primary" onclick="loadChapter('${nextId}')" style="display: flex; align-items: center; gap: 0.5rem;">
-                Continue <i class="ph-bold ph-arrow-right"></i>
-            </button>
-        </div>
-    `;
-
-    container.insertAdjacentHTML('beforeend', navHtml);
 }
 
 function getChapterContent(chapterId) {
@@ -785,11 +687,11 @@ window.setupAccordions = setupAccordions;
 // Global functions for Quiz and Simulation
 // Global functions for Quiz and Simulation
 window.startQuiz = function (partId) {
-    // console.log('Starting quiz for:', partId);
+    console.log('QuizEngine v5 startQuiz:', partId);
 
     // Check if new engine is loaded
-    if (typeof QuizEngine === 'undefined') {
-        console.error('QuizEngine not loaded. Please reloading or check build.');
+    if (typeof window.QuizEngine === 'undefined') {
+        console.error('QuizEngine not loaded.');
         return;
     }
 
@@ -798,14 +700,13 @@ window.startQuiz = function (partId) {
     const difficulty = diffSelect ? diffSelect.value : 'balanced';
 
     // 2. Clear Screen for Full-Page Mode
-    // This removes the Title, Intro Text, and Difficulty Selector
     const mainContainer = document.getElementById('content-container');
     if (!mainContainer) return;
 
     mainContainer.innerHTML = '<div id="quiz-fullscreen-root" style="height: 100%;"></div>';
 
     // Use centralized helper from QuizEngine
-    const questions = QuizEngine.getQuestionsForPart(partId, difficulty);
+    const questions = window.QuizEngine.getQuestionsForPart(partId, difficulty);
 
     if (questions.length === 0) {
         console.error('No questions found for quiz:', partId);
@@ -818,17 +719,16 @@ window.startQuiz = function (partId) {
         return;
     }
 
-    // Initialize unified QuizEngine
-    window.currentQuizEngine = new QuizEngine({
-        quizId: partId, // Pass ID for analytics
+    // Initialize QuizEngine v5
+    window.quizEngine = new window.QuizEngine({
+        quizId: partId,
         mode: 'practice',
-        containerId: 'quiz-fullscreen-root', // Target new Clean Div
+        containerId: 'quiz-fullscreen-root',
         questions: questions,
-        timeLimit: null, // No strict timer for practice
-        enableInstantFeedback: true, // Show explanation immediately after answer
-        returnChapter: partId.startsWith('quiz_') ? partId : 'quiz_' + partId
+        timeLimit: null,
+        enableInstantFeedback: true
     });
-    window.currentQuizEngine.start();
+    window.quizEngine.start();
 };
 
 window.startSimulation = function () {
@@ -837,9 +737,9 @@ window.startSimulation = function () {
 
 // Start one of several simulation exams
 window.startSimulationExam = function (examNumber) {
-    // console.log('Starting simulation exam', examNumber);
+    console.log('QuizEngine v5 startSimulationExam:', examNumber);
 
-    if (typeof QuizEngine === 'undefined') {
+    if (typeof window.QuizEngine === 'undefined') {
         console.error('QuizEngine not loaded');
         return;
     }
@@ -854,7 +754,7 @@ window.startSimulationExam = function (examNumber) {
 
     mainContainer.innerHTML = '<div id="sim-fullscreen-root" style="height: 100%;"></div>';
 
-    const { questions, boundaries } = QuizEngine.generateSimulation(difficulty);
+    const { questions, boundaries } = window.QuizEngine.generateSimulation(difficulty);
 
     if (questions.length === 0) {
         if (typeof window.UI !== 'undefined') window.UI.toast("Failed to generate exam - check content data.", "error");
@@ -865,18 +765,15 @@ window.startSimulationExam = function (examNumber) {
         return;
     }
 
-    // Initialize unified QuizEngine in exam mode
-    window.currentQuizEngine = new QuizEngine({
-        quizId: 'simulation-' + examNumber, // Pass ID for analytics
+    // Initialize QuizEngine v5 in exam mode
+    window.quizEngine = new window.QuizEngine({
+        quizId: 'simulation-' + examNumber,
         mode: 'simulation',
-        containerId: 'sim-fullscreen-root', // Main container for exam
+        containerId: 'sim-fullscreen-root',
         questions: questions,
-        sectionBoundaries: boundaries,
-        timeLimit: 50 * 60, // 50 minutes
-        returnChapter: 'simulation'
+        timeLimit: 50 * 60
     });
-
-    window.currentQuizEngine.start();
+    window.quizEngine.start();
 };
 
 /* ================= RESPONSIVE NAV ================= */
@@ -974,91 +871,3 @@ function setupProtection() {
 
     // console.log('[EPIDEMIC ENGINE] Content Protection Active');
 }
-
-// Global Tab Visibility Controller
-window.showTab = function (tabId) {
-    // console.log("[EPIDEMIC ENGINE] Showing tab:", tabId);
-
-    // Hide all tab contents
-    document.querySelectorAll(".tab-content").forEach(el => {
-        el.style.display = "none";
-    });
-
-    // Show target content
-    const tabContent = document.getElementById(tabId);
-    if (tabContent) {
-        tabContent.style.display = "block";
-    }
-
-    // Update tab buttons
-    document.querySelectorAll(".tabs .neo-btn.small").forEach(el => el.classList.remove("active"));
-
-    // Set active button
-    if (typeof event !== "undefined" && event && event.target && event.target.classList.contains("neo-btn")) {
-        event.target.classList.add("active");
-    } else {
-        const btn = document.querySelector(`.tabs button[onclick*="'${tabId}'"]`);
-        if (btn) btn.classList.add("active");
-    }
-
-    // Specialized Initializations
-    if (tabId === "diagnostic") {
-        if (typeof window.renderDiagnosticHub === 'function') {
-            window.renderDiagnosticHub();
-        }
-    }
-
-    if (window.appendixEngine) {
-        if (tabId === "flashcards") {
-            setTimeout(() => window.appendixEngine.initFlashcards("flashcard-root"), 50);
-        }
-        if (tabId === "glossary") {
-            setTimeout(() => window.appendixEngine.initGlossary("glossary-root"), 50);
-        }
-        if (tabId === "formulas") {
-            setTimeout(() => window.appendixEngine.initFormulas("formulas-root"), 50);
-        }
-        if (tabId === "tables") {
-            setTimeout(() => window.appendixEngine.initTables("tables-root"), 50);
-        }
-    }
-};
-
-// Global Diagnostic Engine
-window.renderDiagnosticHub = function () {
-    const diagContainer = document.getElementById("diagnostic-container");
-    if (!diagContainer) return;
-
-    if (!window.APPENDIX_DATA || !window.APPENDIX_DATA.DIAGNOSTIC) {
-        console.warn("[EPIDEMIC ENGINE] Diagnostic data missing from APPENDIX_DATA.");
-        diagContainer.innerHTML = "<div class='neo-card' style='border-left:4px solid #ef4444;'>Error: Diagnostic data not loaded.</div>";
-        return;
-    }
-
-    let html = `<div class="neo-card small" style="background: #f8fafc; border-left: 4px solid var(--accent-blue); padding: 1.5rem; margin-bottom: 2rem;">
-        <h4 style="margin-top:0;">Key Metrics</h4>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">`;
-
-    window.APPENDIX_DATA.DIAGNOSTIC.metrics.forEach(m => {
-        html += `<div style="background: white; padding: 0.75rem; border-radius: 6px; border: 1px solid #e2e8f0;">
-            <strong style="color: var(--accent-blue);">${m.name}</strong>
-            <div style="font-family: monospace; font-size: 0.9rem; margin: 0.25rem 0; color: #334155;">${m.calc}</div>
-            <div style="font-size: 0.8rem; color: #64748b;">${m.desc}</div>
-        </div>`;
-    });
-
-    html += `</div></div> <h4 style="margin-top:2rem;">Mastery Checklist</h4>`;
-
-    window.APPENDIX_DATA.DIAGNOSTIC.checklist.forEach(c => {
-        html += `<div class="neo-card small" style="margin-top: 1rem;">
-            <strong style="display:block; margin-bottom: 0.5rem; border-bottom: 1px solid #eee;">${c.category}</strong>
-            ${c.items.map(item => `
-                <label class="neo-check" style="display:block; margin: 0.25rem 0;">
-                    <input type="checkbox"> <span>${item}</span>
-                </label>
-            `).join("")}
-        </div>`;
-    });
-
-    diagContainer.innerHTML = html;
-};

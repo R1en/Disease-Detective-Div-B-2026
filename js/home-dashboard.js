@@ -1,3 +1,4 @@
+console.log("DEBUG: Loading home-dashboard.js v4.0.2");
 class HomeDashboard {
     constructor(containerId = 'content-container') {
         this.containerId = containerId;
@@ -121,121 +122,205 @@ class HomeDashboard {
                 filter: none;
             }
             @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+            /* Curriculum Grid Styles */
+            .curriculum-container {
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
+                margin-top: 2rem;
+            }
+            .unit-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 1rem;
+            }
+            .lesson-box {
+                padding: 0.75rem;
+                border-radius: 8px;
+                text-align: center;
+                font-weight: 700;
+                color: black;
+                border: 3px solid white;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+                cursor: pointer;
+                transition: all 0.2s;
+                font-size: 0.9rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                aspect-ratio: 1 / 1; /* Make them square */
+                width: 100%;
+                line-height: 1.3;
+                position: relative;
+                overflow: hidden;
+            }
+            .lesson-box:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+                z-index: 10;
+            }
+            /* Color Themes */
+            .lesson-box.blue { background-color: #60a5fa; } /* Stronger Blue */
+            .lesson-box.purple { background-color: #c084fc; } /* Stronger Purple */
+            .lesson-box.green { background-color: #4ade80; } /* Stronger Green */
+            .lesson-box.orange { background-color: #fb923c; } /* Stronger Orange */
+
         `;
         document.head.appendChild(style);
     }
 
     render() {
-        const container = document.getElementById(this.containerId);
-        if (!container) return;
+        try {
+            console.log("DEBUG: rendering HomeDashboard...");
+            const container = document.getElementById(this.containerId);
+            if (!container) {
+                console.error("HomeDashboard container not found:", this.containerId);
+                return;
+            }
 
-        const quizStats = window.AnalyticsManager ? window.AnalyticsManager.getGlobalStats() : { totalAttempts: 0, averageScore: 0 };
-        const chapters = window.AnalyticsManager ? window.AnalyticsManager.getChapterStats() : { viewed: 0, total: 20 };
+            const quizStats = window.AnalyticsManager ? window.AnalyticsManager.getGlobalStats() : { totalAttempts: 0, averageScore: 0 };
+            const chapters = window.AnalyticsManager ? window.AnalyticsManager.getChapterStats() : { viewed: 0, total: 20 };
 
-        // SVG Logo (Vector) - High Quality
-        const svgLogo = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='grad1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23003d6b;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23007acc;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='45' fill='url(%23grad1)' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M50 15 L50 45 L75 60 L25 60 L50 45' fill='%23ff5c00' stroke='%23fff' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='10' fill='%23fff'/%3E%3C/svg%3E`;
+            // SVG Logo (Vector) - High Quality
+            const svgLogo = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='grad1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23003d6b;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23007acc;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='45' fill='url(%23grad1)' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M50 15 L50 45 L75 60 L25 60 L50 45' fill='%23ff5c00' stroke='%23fff' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='10' fill='%23fff'/%3E%3C/svg%3E`;
 
-        container.innerHTML = `
-            <div class="home-wrapper">
-                <!-- Hero Banner -->
-                <div class="hero-banner">
-                    <div style="flex: 1; min-width: 300px; padding-left: 1rem;">
-                        <h1 style="color: var(--navy-primary); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 1rem;">
-                            <img src="${svgLogo}" class="logo-glow" alt="Logo" style="width: 64px; height: 64px; border-radius: 50%;">
-                            Epidemic Engine
-                        </h1>
-                        <p style="font-size: 1.25rem; opacity: 1; margin-bottom: 0.5rem; color: #334155; font-weight: 500;">
-                            Navigate outbreaks, visualize patterns, and master Disease Detectives (v4.0.2).
-                        </p>
-                        <p style="font-size: 0.9rem; margin-bottom: 1.5rem; color: #475569;">
-                            Designed, Created, & Conceived by <strong style="color: var(--navy-primary);">Rishi Reddy</strong>
-                        </p>
-                        <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
-                            <button class="neo-btn primary" onclick="loadChapter('ch1')">Start Learning</button>
-                            <button class="neo-btn outline" onclick="loadChapter('simulation')">Simulation Exams</button>
-                            <!-- Div Toggle -->
-                            <div style="display: flex; align-items: center; background: white; padding: 4px; border: 2px solid #000; border-radius: 8px;">
-                                <button id="btn-div-b" class="btn small" style="border:none; box-shadow:none; font-size:0.8rem;" onclick="toggleDivision('B')">Div B</button>
-                                <div style="width:1px; height:20px; background:#ccc;"></div>
-                                <button id="btn-div-c" class="btn small" style="border:none; box-shadow:none; font-size:0.8rem; opacity: 0.5;" onclick="toggleDivision('C')">Div C</button>
+            container.innerHTML = `
+                <div class="home-wrapper">
+                    <!-- Hero Banner -->
+                    <div class="hero-banner">
+                        <div style="flex: 1; min-width: 300px; padding-left: 1rem;">
+                            <h1 style="color: var(--navy-primary); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 1rem;">
+                                <img src="${svgLogo}" class="logo-glow" alt="Logo" style="width: 64px; height: 64px; border-radius: 50%;">
+                                Epidemic Engine
+                            </h1>
+                            <p style="font-size: 1.25rem; opacity: 1; margin-bottom: 0.5rem; color: #334155; font-weight: 500;">
+                                Navigate outbreaks, visualize patterns, and master Disease Detectives (v4.0.3).
+                            </p>
+                            <p style="font-size: 0.9rem; margin-bottom: 1.5rem; color: #475569;">
+                                Designed, Created, & Conceived by <strong style="color: var(--navy-primary);">Rishi Reddy</strong>
+                            </p>
+                            <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                                <button class="neo-btn primary" onclick="loadChapter('ch1')">Start Learning</button>
+                                <button class="neo-btn outline" onclick="loadChapter('simulation')">Simulation Exams</button>
+                                <!-- Div Toggle -->
+                                <div style="display: flex; align-items: center; background: white; padding: 4px; border: 2px solid #000; border-radius: 8px;">
+                                    <button id="btn-div-b" class="btn small" style="border:none; box-shadow:none; font-size:0.8rem;" onclick="toggleDivision('B')">Div B</button>
+                                    <div style="width:1px; height:20px; background:#ccc;"></div>
+                                    <button id="btn-div-c" class="btn small" style="border:none; box-shadow:none; font-size:0.8rem; opacity: 0.5;" onclick="toggleDivision('C')">Div C</button>
+                                </div>
+                            </div>
+                            <div style="margin-top: 0.5rem;">
+                                <button onclick="resetAppProgress()" style="background: none; border: none; font-size: 0.8rem; color: #94a3b8; cursor: pointer; text-decoration: underline;">
+                                    Reset All Progress & Data
+                                </button>
                             </div>
                         </div>
-                        <div style="margin-top: 0.5rem;">
-                            <button onclick="resetAppProgress()" style="background: none; border: none; font-size: 0.8rem; color: #94a3b8; cursor: pointer; text-decoration: underline;">
-                                Reset All Progress & Data
-                            </button>
-                        </div>
-                    </div>
-                    <div class="game-monitor" style="flex: 1; min-width: 300px; max-width: 400px; margin-top: 1rem;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-                            <strong style="text-transform: uppercase; letter-spacing: 1px; color: var(--navy-primary);">Transmission Sim</strong>
-                            <span id="game-score" class="neo-badge">0</span>
-                        </div>
-                        <div id="game-container" style="position: relative; height: 200px; background: #f8fafc; border-radius: 8px; overflow: hidden; border: 2px solid #000;">
-                            <canvas id="bg-canvas" style="display: block; width: 100%; height: 100%;"></canvas>
-                            <div id="game-overlay" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.7); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px);">
-                                <button class="neo-btn primary small" onclick="window.HomeDashboard.startGame()">Start Simulation</button>
+                        <div class="game-monitor" style="flex: 1; min-width: 300px; max-width: 400px; margin-top: 1rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                <strong style="text-transform: uppercase; letter-spacing: 1px; color: var(--navy-primary);">Transmission Sim</strong>
+                                <span id="game-score" class="neo-badge">0</span>
+                            </div>
+                            <div id="game-container" style="position: relative; height: 200px; background: #f8fafc; border-radius: 8px; overflow: hidden; border: 2px solid #000;">
+                                <canvas id="bg-canvas" style="display: block; width: 100%; height: 100%;"></canvas>
+                                <div id="game-overlay" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.7); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px);">
+                                    <button class="neo-btn primary small" onclick="window.HomeDashboard.startGame()">Start Simulation</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Global Search -->
-                <div class="search-section" style="margin-bottom: 2rem; position: relative; z-index: 100;">
-                    <div style="position: relative;">
-                        <i class="ph-bold ph-magnifying-glass" style="position: absolute; left: 1.2rem; top: 50%; transform: translateY(-50%); font-size: 1.25rem; color: #64748b;"></i>
-                        <input type="text" id="global-search-input" placeholder="Search chapters, glossary terms, or cases..." 
-                               onkeyup="window.HomeDashboard.performSearch(this.value)"
-                               style="width: 100%; padding: 1rem 1rem 1rem 3.5rem; font-size: 1.1rem; border: 2px solid #000; border-radius: 12px; box-shadow: 4px 4px 0 #000; outline: none; transition: all 0.2s;">
+                    <!-- Global Search -->
+                    <div class="search-section" style="margin-bottom: 2rem; position: relative; z-index: 100;">
+                        <div style="position: relative;">
+                            <i class="ph-bold ph-magnifying-glass" style="position: absolute; left: 1.2rem; top: 50%; transform: translateY(-50%); font-size: 1.25rem; color: #64748b;"></i>
+                            <input type="text" id="global-search-input" placeholder="Search chapters, glossary terms, or cases..." 
+                                   onkeyup="window.HomeDashboard.performSearch(this.value)"
+                                   style="width: 100%; padding: 1rem 1rem 1rem 3.5rem; font-size: 1.1rem; border: 2px solid #000; border-radius: 12px; box-shadow: 4px 4px 0 #000; outline: none; transition: all 0.2s;">
+                        </div>
+                        <div id="search-results" style="display: none; margin-top: 0.5rem; background: white; border: 2px solid #000; border-radius: 12px; overflow: hidden; box-shadow: 6px 6px 0 rgba(0,0,0,0.2); position: absolute; width: 100%;"></div>
                     </div>
-                    <div id="search-results" style="display: none; margin-top: 0.5rem; background: white; border: 2px solid #000; border-radius: 12px; overflow: hidden; box-shadow: 6px 6px 0 rgba(0,0,0,0.2); position: absolute; width: 100%;"></div>
-                </div>
 
-                <!-- Stats Grid -->
-                <!-- Filled in JS below to use variables -->
+                    <!-- Stats Grid -->
+                    <div class="stats-grid">
+                        <div class="stat-card accent-green">
+                            <div class="stat-value">${quizStats.averageScore}%</div>
+                            <div class="stat-label">Avg Quiz Score</div>
+                        </div>
+                        <div class="stat-card accent-blue">
+                            <div class="stat-value">${chapters.viewed}/${chapters.total}</div>
+                            <div class="stat-label">Chapters Read</div>
+                        </div>
+                        <div class="stat-card accent-purple">
+                            <div class="stat-value">${quizStats.totalAttempts}</div>
+                            <div class="stat-label">Quizzes Taken</div>
+                        </div>
+                    </div>
+
+                    <!-- Curriculum Grid -->
+                    <div class="curriculum-container">
+                        ${this.renderUnitBlock('Unit 1: The Foundation', 'blue', [
+                { id: 'ch1', label: '1. Mindsed' },
+                { id: 'ch2', label: '2. History' },
+                { id: 'ch3', label: '3. Triad & Chain' },
+                { id: 'ch4', label: '4. Freq. Measures' },
+                { id: 'ch5', label: '5. Surveillance' },
+                { id: 'ch6', label: '6. Nat. History' }
+            ])}
+
+                        ${this.renderUnitBlock('Unit 2: Investigation', 'purple', [
+                { id: 'ch7', label: '7. Roadmap' },
+                { id: 'ch8', label: '8. Case Defs' },
+                { id: 'ch9', label: '9. Line Lists' },
+                { id: 'ch10', label: '10. Epi Curves' },
+                { id: 'ch11', label: '11. Math I' },
+                { id: 'ch12', label: '12. Math II' },
+                { id: 'ch13', label: '13. Hypoth. Test' },
+            ])}
+
+                        ${this.renderUnitBlock('Unit 3: Control & Prevention', 'green', [
+                { id: 'ch14', label: '14. Synthesis' },
+                { id: 'ch15', label: '15. Prevention' },
+                { id: 'ch16', label: '16. Control' },
+                { id: 'ch17', label: '17. Ethics' },
+                { id: 'ch18', label: '18. Dynamics' },
+                { id: 'ch19', label: '19. Adv. Eval' },
+                { id: 'ch20', label: '20. Cases' },
+                { id: 'ch21', label: '21. Env. Toxins' }
+            ])}
+
+                        ${this.renderUnitBlock('Tools & Resources', 'orange', [
+                { id: 'simulation', label: 'Sim Exams' },
+                { id: 'case_library', label: 'Case Library' },
+                { id: 'drills', label: 'Calculators' },
+                { id: 'interactive_scenarios', label: 'Scenarios' },
+                { id: 'random_problems', label: 'Practice' },
+                { id: 'case_quiz', label: 'Challenges' },
+                { id: 'quick_quiz', label: 'Quick Quiz' },
+                { id: 'appendix', label: 'Appendix' }
+            ])}
+                    </div>
+                </div>
+            `;
+        } catch (e) {
+            console.error("HomeDashboard Render Error:", e);
+            document.getElementById(this.containerId).innerHTML = `<div class="alert alert-danger">Dashboard Error: ${e.message}</div>`;
+        }
+    }
+
+    renderUnitBlock(title, color, items) {
+        return `
+            <div class="unit-section" style="margin-bottom: 2rem;">
+                <h3 style="color: #334155; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; margin-bottom: 1rem;">${title}</h3>
+                <div class="unit-grid ${color}">
+                    ${items.map(item => `
+                        <div class="lesson-box ${color}" onclick="loadChapter('${item.id}')">
+                            ${item.label}
+                        </div>
+                    `).join('')}
+                </div>
             </div>
-        `;
-
-        container.querySelector('.home-wrapper').insertAdjacentHTML('beforeend', `
-                <div class="stats-grid">
-                    <div class="stat-card accent-green">
-                        <div class="stat-value">${quizStats.averageScore}%</div>
-                        <div class="stat-label">Avg Quiz Score</div>
-                    </div>
-                    <div class="stat-card accent-blue">
-                        <div class="stat-value">${chapters.viewed}/${chapters.total}</div>
-                        <div class="stat-label">Chapters Read</div>
-                    </div>
-                    <div class="stat-card accent-purple">
-                        <div class="stat-value">${quizStats.totalAttempts}</div>
-                        <div class="stat-label">Quizzes Taken</div>
-                    </div>
-                </div>
-
-                <h2 style="margin-bottom: 1rem; color: var(--navy-primary);">Quick Actions</h2>
-                <div class="quick-actions">
-                    <div class="action-card" onclick="loadChapter('simulation')">
-                        <i class="ph-bold ph-clock" style="font-size: 2rem; color: var(--accent-orange); margin-bottom: 0.5rem;"></i>
-                        <h3 style="margin: 0; font-size: 1.25rem;">Timed Exam</h3>
-                        <p style="margin: 0.5rem 0 0; font-size: 0.9rem; color: #64748b;">Full 50-minute simulation.</p>
-                    </div>
-                     <div class="action-card" onclick="loadChapter('case_library')">
-                        <i class="ph-bold ph-files" style="font-size: 2rem; color: var(--success); margin-bottom: 0.5rem;"></i>
-                        <h3 style="margin: 0; font-size: 1.25rem;">Case Library</h3>
-                        <p style="margin: 0.5rem 0 0; font-size: 0.9rem; color: #64748b;">16+ Outbreak Scenarios.</p>
-                    </div>
-                     <div class="action-card" onclick="loadChapter('drills')">
-                        <i class="ph-bold ph-wrench" style="font-size: 2rem; color: var(--accent-purple); margin-bottom: 0.5rem;"></i>
-                        <h3 style="margin: 0; font-size: 1.25rem;">Calculators</h3>
-                        <p style="margin: 0.5rem 0 0; font-size: 0.9rem; color: #64748b;">2x2, Curves, Exposure.</p>
-                    </div>
-                    <div class="action-card" onclick="loadChapter('ch12')">
-                        <i class="ph-bold ph-eye" style="font-size: 2rem; color: var(--navy-primary); margin-bottom: 0.5rem;"></i>
-                        <h3 style="margin: 0; font-size: 1.25rem;">Visual Guides</h3>
-                        <p style="margin: 0.5rem 0 0; font-size: 0.9rem; color: #64748b;">Flowcharts & Infographics.</p>
-                    </div>
-                </div>
-        `);
+            `;
     }
 
     startGame() {
@@ -368,7 +453,7 @@ class HomeDashboard {
         if (overlay) {
             overlay.style.display = 'flex';
             overlay.innerHTML = `
-                <div style="text-align: center;">
+            <div style="text-align: center;">
                     <h2 style="color: #16a34a; font-size: 2rem; margin-bottom: 0.5rem;">SUCCESS</h2>
                     <p style="color: #000; margin-bottom: 1.5rem;">Threats Neutralized: ${this.gameState.score}</p>
                     <button class="neo-btn primary" onclick="window.HomeDashboard.startGame()">Re-Deploy</button>
@@ -471,15 +556,15 @@ class HomeDashboard {
         const topMatches = matches.slice(0, 8); // Limit to 8
         resultsContainer.style.display = 'block';
         resultsContainer.innerHTML = topMatches.map((m, i) => `
-            <div class="search-result-item" onclick="window.HomeDashboard.results[${i}].action()" 
-                 style="padding: 0.75rem; border-bottom: 1px solid #eee; cursor: pointer; transition: background 0.1s;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <strong style="color: var(--navy-primary);">${m.label}</strong>
-                    <span class="neo-badge small" style="font-size: 0.7rem; background: #f1f5f9; color: #64748b;">${m.type}</span>
-                </div>
+            <div class="search-result-item" onclick="window.HomeDashboard.results[${i}].action()"
+        style = "padding: 0.75rem; border-bottom: 1px solid #eee; cursor: pointer; transition: background 0.1s;" >
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <strong style="color: var(--navy-primary);">${m.label}</strong>
+                <span class="neo-badge small" style="font-size: 0.7rem; background: #f1f5f9; color: #64748b;">${m.type}</span>
+            </div>
                 ${m.sub ? `<div style="font-size: 0.85rem; color: #666; margin-top: 0.25rem;">${m.sub}</div>` : ''}
             </div>
-        `).join('');
+            `).join('');
 
         // Store actions slightly differently to access them via index in HTML
         this.results = topMatches;
