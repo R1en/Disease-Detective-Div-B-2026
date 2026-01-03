@@ -53,6 +53,23 @@ window.TOOLS_MANAGER = {
                 }
             }
 
+            // Phase 17: Inject Practice Problems Tab
+            if (firstTab && !document.querySelector('[data-tool="problems"]')) {
+                const probTab = document.createElement('button');
+                probTab.className = 'tool-tab';
+                probTab.setAttribute('data-tool', 'problems');
+                probTab.innerHTML = '<i class="ph-bold ph-question"></i> Problems';
+                firstTab.parentNode.appendChild(probTab);
+
+                const firstContent = document.querySelector('.tool-content');
+                if (firstContent) {
+                    const probContent = document.createElement('div');
+                    probContent.id = 'tool-container-problems';
+                    probContent.className = 'tool-content';
+                    firstContent.parentNode.appendChild(probContent);
+                }
+            }
+
             this.setupTabs();
             // Initialize default tool (2x2)
             if (typeof Calculator2x2 !== 'undefined' && document.getElementById('tool-container-2x2')) {
@@ -150,6 +167,20 @@ window.TOOLS_MANAGER = {
                 case 'infinite':
                     if (typeof OutbreakGenerator !== 'undefined') {
                         OutbreakGenerator.renderTo('tool-container-infinite');
+                    }
+                    break;
+                case 'problems':
+                    const container = document.getElementById('tool-container-problems');
+                    if (container && !document.getElementById('rp-problem-container')) {
+                        // Inject content manually
+                        container.innerHTML = `
+                            <h2>Interactive Practice Problems</h2>
+                            <p>Test your understanding of outbreak mathematics (RR, OR, Ve, Sensitivity, etc.).</p>
+                            <div id="rp-problem-container" style="margin-top: 2rem;"></div>
+                        `;
+                    }
+                    if (window.RandomProblems && window.RandomProblems.init) {
+                        window.RandomProblems.init();
                     }
                     break;
             }

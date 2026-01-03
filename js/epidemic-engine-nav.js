@@ -3,7 +3,7 @@
  * Handles sidebar navigation and dynamic content loading
  */
 
-const APP_VERSION = 'v2.4.0';
+const APP_VERSION = 'v5.0.0';
 
 document.addEventListener('DOMContentLoaded', () => {
     // console.log(`[EPIDEMIC ENGINE] Initializing ${APP_VERSION}...`);
@@ -31,7 +31,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Initialize UI Helpers
+    /**
+     * Global UI Utilities for notifications and modals.
+     * @namespace
+     */
     window.UI = {
+        /**
+         * Shows a temporary toast notification.
+         * @param {string} msg - The message to display.
+         * @param {string} [type='info'] - 'info', 'success', or 'error'.
+         */
         toast: function (msg, type = 'info') {
             const el = document.createElement('div');
             el.className = `neo-toast ${type}`;
@@ -77,6 +86,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+/**
+ * Initializes navigation event listeners.
+ * Handles clicking on sidebar items, updating active states, and mobile menu behavior.
+ */
 function setupNavigation() {
     const navItems = document.querySelectorAll('.nav-item');
 
@@ -112,6 +125,13 @@ function setupNavigation() {
     });
 }
 
+/**
+ * Loads a specific chapter/section into the main content container.
+ * Handles history state, active navigation highlighting, and module initialization.
+ * 
+ * @param {string} chapterId - The ID of the chapter to load (e.g., 'ch1', 'tools').
+ * @param {boolean} [updateHistory=true] - Whether to push this state to browser history.
+ */
 function loadChapter(chapterId, updateHistory = true) {
     // v5: No auto-save. quizEngine is cleaned up via cleanup() on exit.
     window.quizEngine = null;

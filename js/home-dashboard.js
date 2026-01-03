@@ -195,7 +195,7 @@ class HomeDashboard {
                                 Epidemic Engine
                             </h1>
                             <p style="font-size: 1.25rem; opacity: 1; margin-bottom: 0.5rem; color: #334155; font-weight: 500;">
-                                Navigate outbreaks, visualize patterns, and master Disease Detectives (v4.0.3).
+                                Navigate outbreaks, visualize patterns, and master Disease Detectives (v5.0.0).
                             </p>
                             <p style="font-size: 0.9rem; margin-bottom: 1.5rem; color: #475569;">
                                 Designed, Created, & Conceived by <strong style="color: var(--navy-primary);">Rishi Reddy</strong>
@@ -210,9 +210,9 @@ class HomeDashboard {
                                     <button id="btn-div-c" class="btn small" style="border:none; box-shadow:none; font-size:0.8rem; opacity: 0.5;" onclick="toggleDivision('C')">Div C</button>
                                 </div>
                             </div>
-                            <div style="margin-top: 0.5rem;">
-                                <button onclick="resetAppProgress()" style="background: none; border: none; font-size: 0.8rem; color: #94a3b8; cursor: pointer; text-decoration: underline;">
-                                    Reset All Progress & Data
+                            <div style="margin-top: 1rem;">
+                                <button class="neo-btn danger small" onclick="resetAppProgress()">
+                                    <i class="ph-bold ph-trash"></i> Reset Data
                                 </button>
                             </div>
                         </div>
@@ -257,48 +257,29 @@ class HomeDashboard {
                         </div>
                     </div>
 
-                    <!-- Curriculum Grid -->
-                    <div class="curriculum-container">
-                        ${this.renderUnitBlock('Unit 1: The Foundation', 'blue', [
-                { id: 'ch1', label: '1. Mindsed' },
-                { id: 'ch2', label: '2. History' },
-                { id: 'ch3', label: '3. Triad & Chain' },
-                { id: 'ch4', label: '4. Freq. Measures' },
-                { id: 'ch5', label: '5. Surveillance' },
-                { id: 'ch6', label: '6. Nat. History' }
-            ])}
-
-                        ${this.renderUnitBlock('Unit 2: Investigation', 'purple', [
-                { id: 'ch7', label: '7. Roadmap' },
-                { id: 'ch8', label: '8. Case Defs' },
-                { id: 'ch9', label: '9. Line Lists' },
-                { id: 'ch10', label: '10. Epi Curves' },
-                { id: 'ch11', label: '11. Math I' },
-                { id: 'ch12', label: '12. Math II' },
-                { id: 'ch13', label: '13. Hypoth. Test' },
-            ])}
-
-                        ${this.renderUnitBlock('Unit 3: Control & Prevention', 'green', [
-                { id: 'ch14', label: '14. Synthesis' },
-                { id: 'ch15', label: '15. Prevention' },
-                { id: 'ch16', label: '16. Control' },
-                { id: 'ch17', label: '17. Ethics' },
-                { id: 'ch18', label: '18. Dynamics' },
-                { id: 'ch19', label: '19. Adv. Eval' },
-                { id: 'ch20', label: '20. Cases' },
-                { id: 'ch21', label: '21. Env. Toxins' }
-            ])}
-
-                        ${this.renderUnitBlock('Tools & Resources', 'orange', [
-                { id: 'simulation', label: 'Sim Exams' },
-                { id: 'case_library', label: 'Case Library' },
-                { id: 'drills', label: 'Calculators' },
-                { id: 'interactive_scenarios', label: 'Scenarios' },
-                { id: 'random_problems', label: 'Practice' },
-                { id: 'case_quiz', label: 'Challenges' },
-                { id: 'quick_quiz', label: 'Quick Quiz' },
-                { id: 'appendix', label: 'Appendix' }
-            ])}
+                    <!-- Quick Actions -->
+                    <h3 style="margin-top: 2rem; margin-bottom: 1rem; color: #334155;">Quick Actions</h3>
+                    <div class="quick-actions">
+                        <div class="action-card" onclick="loadChapter('simulation')">
+                            <div style="font-size: 2rem; color: var(--accent-orange); margin-bottom: 0.5rem;"><i class="ph-bold ph-timer"></i></div>
+                            <h3 style="margin: 0; font-size: 1.1rem;">Timed Exam</h3>
+                            <p style="font-size: 0.9rem; color: #666;">Full 50-minute simulation.</p>
+                        </div>
+                        <div class="action-card" onclick="loadChapter('case_library')">
+                            <div style="font-size: 2rem; color: var(--accent-green); margin-bottom: 0.5rem;"><i class="ph-bold ph-files"></i></div>
+                            <h3 style="margin: 0; font-size: 1.1rem;">Case Library</h3>
+                            <p style="font-size: 0.9rem; color: #666;">15+ Outbreak Scenarios.</p>
+                        </div>
+                        <div class="action-card" onclick="loadChapter('case_quiz')">
+                             <div style="font-size: 2rem; color: var(--accent-purple); margin-bottom: 0.5rem;"><i class="ph-bold ph-puzzle-piece"></i></div>
+                            <h3 style="margin: 0; font-size: 1.1rem;">Case Challenges</h3>
+                            <p style="font-size: 0.9rem; color: #666;">Multi-step outbreak quizzes.</p>
+                        </div>
+                        <div class="action-card" onclick="loadChapter('appendix')">
+                            <div style="font-size: 2rem; color: var(--accent-blue); margin-bottom: 0.5rem;"><i class="ph-bold ph-books"></i></div>
+                            <h3 style="margin: 0; font-size: 1.1rem;">Resources</h3>
+                            <p style="font-size: 0.9rem; color: #666;">Reference & Cheat Sheets.</p>
+                        </div>
                     </div>
                 </div>
             `;

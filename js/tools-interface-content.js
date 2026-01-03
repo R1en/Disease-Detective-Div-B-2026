@@ -33,6 +33,9 @@ const TOOLS_INTERFACE_HTML = `
             <button class="tool-tab" data-tool="drills">
                 <i class="ph-bold ph-lightning"></i> Flash Drills
             </button>
+            <button class="tool-tab" data-tool="problems">
+                <i class="ph-bold ph-question"></i> Problems
+            </button>
             <button class="tool-tab" data-tool="infinite">
                 <i class="ph-bold ph-infinity"></i> Infinite Outbreak
             </button>
@@ -67,6 +70,12 @@ const TOOLS_INTERFACE_HTML = `
             
             <div id="tool-container-drills" class="tool-content">
                 <div class="alert info">Loading Flash Drills...</div>
+            </div>
+
+            <div id="tool-container-problems" class="tool-content">
+                <h2>Interactive Practice Problems</h2>
+                <p>Test your understanding of outbreak mathematics (RR, OR, Ve, Sensitivity, etc.).</p>
+                <div id="rp-problem-container" style="margin-top: 2rem;"></div>
             </div>
             
             <div id="tool-container-infinite" class="tool-content">

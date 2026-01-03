@@ -33,6 +33,30 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 </div>
             </div>
 
+            <h2>1.0 Study Roadmap</h2>
+            <div class="neo-card small" style="background: #f8fafc; border-left: 4px solid var(--navy-primary); margin-bottom: 2rem;">
+                <p><strong>Welcome, Disease Detective!</strong> Use this roadmap to navigate based on your competition level.</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+                    <div style="background: white; padding: 1rem; border-radius: 6px; border: 1px solid #e2e8f0;">
+                        <h4 style="margin-top: 0; color: #15803d;">🟢 Division B (Middle School)</h4>
+                        <ul style="font-size: 0.9rem; padding-left: 1.2rem;">
+                            <li><strong>Focus:</strong> Chapters 1-10 (The "Steps" & Basics).</li>
+                            <li><strong>Calculations:</strong> Mastery of 2x2 Tables, Attack Rates, Odds Ratios.</li>
+                            <li><strong>Goal:</strong> Understand the 10 Steps of Outbreak Investigation.</li>
+                        </ul>
+                    </div>
+                    <div style="background: white; padding: 1rem; border-radius: 6px; border: 1px solid #e2e8f0;">
+                        <h4 style="margin-top: 0; color: #c2410c;">🟠 Division C (High School)</h4>
+                        <ul style="font-size: 0.9rem; padding-left: 1.2rem;">
+                            <li><strong>Focus:</strong> All Chapters (especially Ch 12-14 Advanced Stats).</li>
+                            <li><strong>Calculations:</strong> Relative Risk, CI, Chi-Square, SE.</li>
+                            <li><strong>Goal:</strong> Deep understanding of bias, confounding, and study design nuances.</li>
+                        </ul>
+                    </div>
+                </div>
+                <p style="margin-top: 1rem; font-size: 0.9rem;"><strong>Path:</strong> Start with <strong>Ch 1-3</strong> (Mindset), then <strong>Ch 6-10</strong> (Investigation Steps), then <strong>Calculations</strong>.</p>
+            </div>
+
             <p class="lead">Epidemiology is the study of the <strong>distribution</strong> and <strong>determinants</strong> of health-related states in populations, and the <strong>application</strong> of this study to control health problems.</p>
 
             <h2>1.1 The Three Pillars of Epidemiology</h2>
@@ -3984,7 +4008,36 @@ window.EPIDEMIC_ENGINE_CONTENT = {
 
             <p class="lead">Epidemiology is a science of testing ideas. We don't just guess; we form hypotheses and test them with data to see if they hold up.</p>
 
-            <h2>13.1 The Hypotheses</h2>
+            <h2>13.1 Prerequisite: Types of Attack Rates</h2>
+            <p>Before testing hypotheses, we must define the rates we are comparing.</p>
+            
+            <div class="neo-card small" style="background: #fffbeb; border-left: 4px solid #f59e0b; margin: 1.5rem 0;">
+                <h3 style="margin-top: 0;"><i class="ph-bold ph-chart-bar"></i> Key Rate Definitions</h3>
+                <ul style="margin-bottom: 0;">
+                    <li><strong>Overall Attack Rate:</strong> Percentage of the <em>entire</em> group that became ill.
+                        <br><em style="color: #666; font-size: 0.9em;">Formula: Ill / Total Population</em>
+                    </li>
+                    <li style="margin-top: 0.5rem;"><strong>Food-Specific Attack Rate:</strong> Percentage of people who ate a <em>specific item</em> who became ill.
+                        <br><em style="color: #666; font-size: 0.9em;">Formula: Ill (ate X) / Total (ate X)</em>
+                    </li>
+                    <li style="margin-top: 0.5rem;"><strong>Secondary Attack Rate (SAR):</strong> Person-to-person spread <em>after</em> initial exposure.
+                        <br><em style="color: #666; font-size: 0.9em;">SAR = (New Cases - Initial Cases) / (Susceptible - Initial Cases)</em>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="exam-trap">
+                <div class="callout-header"><i class="ph ph-warning"></i> Study Design Check</div>
+                <div class="callout-content">
+                    <p><strong>REMEMBER:</strong></p>
+                    <ul>
+                        <li><strong>Cohort / RCT:</strong> Denominator is known → Calculate <strong>Attack Rate</strong> & <strong>Relative Risk</strong>.</li>
+                        <li><strong>Case-Control:</strong> Denominator unknown → Calculate <strong>Odds Ratio</strong> only.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>13.2 The Hypotheses</h2>
             <p>Every study has two competing hypotheses:</p>
             <ul>
                 <li><strong>Null Hypothesis (H₀):</strong> There is <strong>NO</strong> association between the exposure and the disease. (The "Boring" hypothesis).</li>
@@ -4012,7 +4065,7 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 </div>
             </div>
 
-            <h2>13.2 Errors in Testing</h2>
+            <h2>13.3 Errors in Testing</h2>
             <p>Sometimes the math leads us to the wrong conclusion.</p>
 
             <div class="table-container"><table class="table">
@@ -4048,7 +4101,7 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 </div>
             </div>
 
-            <h2>13.3 Advanced Statistics (National Level)</h2>
+            <h2>13.4 Advanced Statistics (National Level)</h2>
             <div class="callout-header" style="background: var(--gold-accent); color: var(--navy-primary);">
                 <i class="ph ph-star"></i> National Level Concept
             </div>
@@ -4072,7 +4125,7 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 <li><strong>Standard Error (SE):</strong> Used to calculate CI. Larger sample size = Smaller SE = Narrower CI = More Precision.</li>
             </ul>
 
-            <h2>13.4 Advanced Concepts (National)</h2>
+            <h2>13.5 Advanced Concepts (National)</h2>
             <div class="neo-card small" style="background: #eef2ff; border-left: 4px solid var(--accent-purple);">
                  <h3><i class="ph-bold ph-chart-bar-horizontal"></i> Power & Sample Size</h3>
                  <ul>
@@ -4104,7 +4157,7 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 </div>
             </div>
 
-            <h2>13.5 Hypothesis Drill</h2>
+            <h2>13.6 Hypothesis Drill</h2>
 
             <div class="drill-box">
                 <div class="callout-header">
@@ -4149,7 +4202,7 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 <li><strong>Type II:</strong> False Negative.</li>
             </ul>
 
-            <h2>13.4 Exam Focus & Tips</h2>
+            <h2>13.7 Exam Focus & Tips</h2>
             <div class="exam-trap">
                 <div class="callout-header"><i class="ph ph-lightning"></i> High Yield Topics</div>
                 <div class="callout-content">
@@ -6634,13 +6687,14 @@ window.EPIDEMIC_ENGINE_CONTENT = {
         content: `
             <style>
                 .about-hero {
-                    background: linear-gradient(135deg, var(--navy-primary) 0%, #2563eb 100%);
+                    background: var(--navy-primary);
                     color: white;
                     padding: 4rem 2rem;
-                    border-radius: 24px;
+                    border: 3px solid var(--navy-primary);
+                    border-radius: 12px;
                     text-align: center;
                     margin-bottom: 3rem;
-                    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+                    box-shadow: 8px 8px 0px 0px rgba(0,0,0,0.2);
                     position: relative;
                     overflow: hidden;
                 }
@@ -6649,29 +6703,32 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                     position: absolute;
                     top: 0; left: 0; right: 0; bottom: 0;
                     background-image: radial-gradient(circle at 20% 150%, rgba(255,255,255,0.1) 0%, transparent 50%);
+                    opacity: 0.5;
                 }
                 .profile-card {
                     background: white;
-                    border-radius: 16px;
+                    border-radius: 8px;
                     padding: 2rem;
-                    border: 1px solid #e2e8f0;
-                    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                    border: 2px solid var(--navy-primary);
+                    box-shadow: 4px 4px 0px 0px var(--navy-primary);
                     text-align: center;
-                    transition: transform 0.2s;
+                    transition: all 0.2s;
                 }
                 .profile-card:hover {
-                    transform: translateY(-5px);
-                    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                    transform: translate(-2px, -2px);
+                    box-shadow: 6px 6px 0px 0px var(--navy-primary);
                 }
                 .tech-badge {
-                    background: #f1f5f9;
-                    color: #475569;
+                    background: white;
+                    color: var(--navy-primary);
                     padding: 0.25rem 0.75rem;
-                    border-radius: 9999px;
+                    border: 2px solid var(--navy-primary);
+                    border-radius: 6px;
                     font-size: 0.8rem;
-                    font-weight: 600;
+                    font-weight: 700;
                     display: inline-block;
                     margin: 0.25rem;
+                    box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.1);
                 }
             </style>
 
@@ -6682,7 +6739,7 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                     <h1 style="margin: 1.5rem 0 0.5rem; font-size: 3rem; font-weight: 800; letter-spacing: -0.025em; color: white;">Epidemic Engine</h1>
                     <div style="display: inline-flex; align-items: center; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); padding: 0.5rem 1rem; border-radius: 9999px; border: 1px solid rgba(255,255,255,0.3);">
                         <span style="width: 8px; height: 8px; background: #4ade80; border-radius: 50%; margin-right: 0.5rem; box-shadow: 0 0 8px #4ade80;"></span>
-                        <span style="font-weight: 600; font-size: 0.9rem; letter-spacing: 0.5px;">v3.0.0 GRANDMASTER EDITION</span>
+                        <span style="font-weight: 600; font-size: 0.9rem; letter-spacing: 0.5px;">v5.0.0 MASTERY GUIDE</span>
                     </div>
                 </div>
             </div>
@@ -6754,9 +6811,23 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 </h3>
                 <div style="display: grid; gap: 1.5rem;">
                     <div style="display: flex; gap: 1rem;">
-                        <div style="font-weight: 700; color: var(--navy-primary); min-width: 80px;">v3.0.0</div>
+                        <div style="font-weight: 700; color: var(--navy-primary); min-width: 80px;">v5.0.0</div>
                         <div>
-                            <strong style="display: block; color: #0f172a;">Grandmaster Edition</strong>
+                            <strong style="display: block; color: #0f172a;">Mastery Guide</strong>
+                            <div style="color: #64748b; font-size: 0.95rem;">Coach Mode, UI Overhaul, Refined Content, and Tools Integration.</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <div style="font-weight: 700; color: #64748b; min-width: 80px;">v4.0.0</div>
+                        <div>
+                            <strong style="display: block; color: #334155;">Gold Standard</strong>
+                            <div style="color: #64748b; font-size: 0.95rem;">Complete Content Verification, Offline Architecture, Mobile enhancements.</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <div style="font-weight: 700; color: #64748b; min-width: 80px;">v3.0.0</div>
+                        <div>
+                            <strong style="display: block; color: #334155;">Grandmaster Edition</strong>
                             <div style="color: #64748b; font-size: 0.95rem;">Added "Infinite Outbreak" Procedural Engine. Optimized for Vercel deployment.</div>
                         </div>
                     </div>

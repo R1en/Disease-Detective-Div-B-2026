@@ -19,7 +19,14 @@ window.OutbreakGenerator = {
         { name: "Office Potluck", items: ["Chili", "Cornbread", "Brownie", "Dip"] }
     ],
 
-    // Generate a single random case
+    /**
+     * Generates a completely new random outbreak scenario.
+     * Selects a pathogen, setting, and culprit food, then simulates patient data
+     * including exposure status and illness onset times based on risk probabilities.
+     * Retries automatically if the generated data is statistically ambiguous.
+     * 
+     * @returns {Object} The scenario object containing title, line list, and solution.
+     */
     generate: function () {
         console.log("[GENERATOR] Creating new outbreak...");
 
@@ -105,7 +112,14 @@ window.OutbreakGenerator = {
         };
     },
 
-    // Analyze data to calculate OR for each item
+    /**
+     * Calculates the Odds Ratio (OR) for each food item in the line list.
+     * Used to validate the solvability of the generated outbreak.
+     * 
+     * @param {Array} lineList - Array of patient objects.
+     * @param {Array} items - Array of food item names.
+     * @returns {Array} List of analysis results per item {item, a, b, c, d, OR}.
+     */
     analyze: function (lineList, items) {
         return items.map(item => {
             let a = 0, b = 0, c = 0, d = 0;
@@ -134,7 +148,12 @@ window.OutbreakGenerator = {
         return `Day ${day}, ${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
     },
 
-    // Render Function: Injects the generated case into the DOM container
+    /**
+     * Renders a new Infinite Outbreak case into the specified DOM container.
+     * Creates the line list table and interactive analysis controls.
+     * 
+     * @param {string} containerId - The ID of the HTML element to render into.
+     */
     renderTo: function (containerId) {
         const container = document.getElementById(containerId);
         if (!container) return;
@@ -144,30 +163,37 @@ window.OutbreakGenerator = {
         // Build HTML Table
         const headers = ["ID", "Age", "Sex", ...data.items, "Ill?", "Onset"];
 
-        let html = `
+        const html = `
             <div class="neo-card">
-                <div style="display:flex; justify-content:space-between;">
-                    <h2>${data.title}</h2>
+                <div style="display:flex; justify-content:space-between; align-items: center; margin-bottom: 1rem;">
+                    <h2 style="margin:0;">${data.title}</h2>
                     <button class="neo-btn small outline" onclick="OutbreakGenerator.renderTo('${containerId}')">
-                        <i class="ph-bold ph-arrows-clockwise"></i> Generate New
+                        <i class="ph-bold ph-arrows-clockwise"></i> Generate New Outbreak
                     </button>
                 </div>
-                <p>${data.description}</p>
                 
-                <div style="overflow-x:auto; margin: 1rem 0;">
-                    <table class="data-table small-text">
-                        <thead>
-                            <tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr>
+                <div style="background: #f0f9ff; border: 1px solid #bae6fd; padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+                    <p style="margin:0; font-size: 0.95rem;"><strong>🕵️ Mission:</strong> A cluster of illnesses has been reported. Review the <strong>Line List</strong> below to identify the culprit food item.</p>
+                </div>
+
+                <div style="margin-bottom: 0.5rem; font-size: 0.85rem; color: #666; font-style: italic;">
+                    <i class="ph-bold ph-table"></i> Line List Data:
+                </div>
+                
+                <div style="overflow-x:auto; margin-bottom: 1.5rem; border: 1px solid #e2e8f0; border-radius: 6px;">
+                    <table class="data-table small-text" style="margin:0;">
+                        <thead style="background: #f8fafc;">
+                            <tr>${headers.map(h => `<th style="padding: 0.5rem;">${h}</th>`).join('')}</tr>
                         </thead>
                         <tbody>
                             ${data.lineList.map(p => `
-                                <tr class="${p.ill === 'Y' ? 'row-ill' : ''}">
-                                    <td>${p.id}</td>
-                                    <td>${p.age}</td>
-                                    <td>${p.sex}</td>
-                                    ${data.items.map(i => `<td>${p.foods[i]}</td>`).join('')}
-                                    <td style="font-weight:bold; color:${p.ill === 'Y' ? 'red' : 'green'}">${p.ill}</td>
-                                    <td>${p.onset}</td>
+                                <tr class="${p.ill === 'Y' ? 'row-ill' : ''}" style="${p.ill === 'Y' ? 'background: #fff1f2;' : ''}">
+                                    <td style="padding: 0.5rem;">${p.id}</td>
+                                    <td style="padding: 0.5rem;">${p.age}</td>
+                                    <td style="padding: 0.5rem;">${p.sex}</td>
+                                    ${data.items.map(i => `<td style="padding: 0.5rem; text-align: center;">${p.foods[i]}</td>`).join('')}
+                                    <td style="padding: 0.5rem; font-weight:bold; color:${p.ill === 'Y' ? '#dc2626' : '#166534'}">${p.ill}</td>
+                                    <td style="padding: 0.5rem;">${p.onset}</td>
                                 </tr>
                             `).join('')}
                         </tbody>
@@ -175,9 +201,16 @@ window.OutbreakGenerator = {
                 </div>
 
                 <!-- Interactive Analysis -->
-                <div class="quiz-box">
-                    <h3>Your Analysis</h3>
-                    <p>Which item has the strongest association?</p>
+                <div class="quiz-box" style="background: #fafafa; border: 2px solid #e5e5e5; padding: 1.5rem; border-radius: 8px;">
+                    <h3 style="margin-top:0;">🔎 Your Analysis</h3>
+                    <p>Which food item is the most likely cause?</p>
+                    
+                    <div style="margin-bottom: 1rem;">
+                        <span style="font-size: 0.85rem; background: #fffbeb; padding: 0.25rem 0.5rem; border-radius: 4px; border: 1px solid #fcd34d;">
+                            Tip: Compare the <strong>Attack Rate</strong> (Ill / Total) for those who ate vs. didn't eat each item.
+                        </span>
+                    </div>
+
                     <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
                         ${data.items.map(item => `
                             <button class="neo-btn outline" onclick="OutbreakGenerator.checkAnswer('${item}', '${data.culprit.replace(/'/g, "\\'")}', this.parentElement)">
@@ -188,14 +221,20 @@ window.OutbreakGenerator = {
                     <div id="gen-feedback" style="margin-top:1rem;"></div>
                 </div>
 
-                <details style="margin-top:2rem;">
-                    <summary>Show Full Solution</summary>
-                    <div style="background:#f0fdf4; padding:1rem; margin-top:0.5rem; border-radius:8px;">
-                        <strong>Culprit:</strong> ${data.culprit}<br>
-                        <strong>Agent:</strong> ${data.agent_type}<br>
-                        <strong>Odds Ratio:</strong> ${data.solution.OR.toFixed(2)} (Highest)<br>
-                        <br>
-                        <em>Note: In real life, check Incubation Period to confirm Agent.</em>
+                <details style="margin-top:2rem; border-top: 1px solid #eee; padding-top: 1rem;">
+                    <summary style="cursor: pointer; color: #666;">Show Solution & Statistics</summary>
+                    <div style="background:#f0fdf4; padding:1rem; margin-top:0.5rem; border-radius:8px; border: 1px solid #bbf7d0;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div>
+                                <strong>Culprit:</strong> <span style="color: #166534;">${data.culprit}</span><br>
+                                <strong>Agent:</strong> ${data.agent_type}
+                            </div>
+                            <div>
+                                <strong>Odds Ratio (OR):</strong> ${data.solution.OR.toFixed(2)}<br>
+                                <span style="font-size: 0.8rem; color: #666;">(Highest association)</span>
+                            </div>
+                        </div>
+                        <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem;"><em>Note: In a defined cohort like this, you could also calculate Attack Rates. The generated solution uses OR as a general measure of association.</em></p>
                     </div>
                 </details>
             </div>

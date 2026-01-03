@@ -387,18 +387,15 @@
     }
   }
 
+  // Expose initialization API globally for Tools Manager
+  window.RandomProblems = {
+    init: function () {
+      // Ensure container exists logic is handled by Tools Manager or polling
+      waitForContainer();
+    },
+    render: renderProblem
+  };
+
   // Start polling once
   waitForContainer();
-
-  // Re-render a problem when the nav item is clicked. This ensures that a new
-  // problem appears immediately after navigating back to this chapter.
-  document.querySelectorAll('.nav-item').forEach(btn => {
-    if (btn.getAttribute('data-chapter') === 'random_problems') {
-      btn.addEventListener('click', () => {
-        setTimeout(() => {
-          waitForContainer();
-        }, 150);
-      });
-    }
-  });
 })();
