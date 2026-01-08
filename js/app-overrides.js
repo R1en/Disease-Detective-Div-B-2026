@@ -344,7 +344,7 @@
                 return arr;
             };
             const selectRandom = (arr, n) => shuffle([...arr]).slice(0, n);
-            const { all, boundaries } = window.QuizEngine.generateSimulation(difficulty);
+            let all = [], boundaries = [], idx = 0;
             ['part1', 'part2', 'part3'].forEach(part => {
                 const qs = window.QuizEngine.getQuestionsForPart(part, difficulty);
                 const sel = selectRandom(qs, Math.min(17, qs.length));
