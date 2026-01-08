@@ -36,7 +36,7 @@ window.OutbreakGenerator = {
 
         // 2. Pick the "Culprit" Food (Must be in the setting's items)
         // If agent specific source is in setting, prioritize it. Otherwise random.
-        let culprit = setting.items[Math.floor(Math.random() * setting.items.length)];
+        const culprit = setting.items[Math.floor(Math.random() * setting.items.length)];
         // Optional: Align culprit with agent preference for realism (e.g. Staph + Potato Salad)
         // For difficulty, sometimes mismatch them? For now, fully random culprit.
 
@@ -59,7 +59,7 @@ window.OutbreakGenerator = {
             // Culprit: High exposure rate (e.g. 50-80% ate it)
             // Others: Random exposure rate
             setting.items.forEach(item => {
-                let eatProb = 0.5; // Baseline
+                const eatProb = 0.5; // Baseline
                 person.foods[item] = Math.random() < eatProb ? "Y" : "N";
             });
 
@@ -67,7 +67,7 @@ window.OutbreakGenerator = {
             // If ate culprit -> High chance of illness (Attack Rate)
             // If didn't eat culprit -> Low chance (Background rate / error)
             const ateCulprit = person.foods[culprit] === "Y";
-            let risk = ateCulprit ? 0.85 : 0.05; // 85% vs 5% AR
+            const risk = ateCulprit ? 0.85 : 0.05; // 85% vs 5% AR
 
             if (Math.random() < risk) {
                 person.ill = "Y";
@@ -134,7 +134,7 @@ window.OutbreakGenerator = {
             // OR = (a*d)/(b*c)
             const num = a * d;
             const den = b * c;
-            let or = (den === 0) ? (num > 0 ? 999 : 1) : (num / den); // 999 = Infinity
+            const or = (den === 0) ? (num > 0 ? 999 : 1) : (num / den); // 999 = Infinity
 
             return { item, a, b, c, d, OR: or };
         });

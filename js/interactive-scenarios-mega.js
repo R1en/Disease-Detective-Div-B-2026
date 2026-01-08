@@ -13,42 +13,77 @@
             steps: [
                 {
                     id: "step1",
-                    text: "<h6>Step 1: Initial Report</h6><p>On Wednesday, the school nurse reports that 45 of 300 students who ate lunch on Monday developed nausea, vomiting, and diarrhea starting Tuesday morning. Most recovered within 24 hours.</p><p><strong>Calculate the Attack Rate.</strong></p>",
+                    text: `<h6>Step 1: Initial Report</h6>
+                    <p>On Wednesday morning, the school nurse reports multiple students with gastrointestinal illness. She provides you with the following preliminary line list:</p>
+                    <table class='line-list-table' style='font-size:0.85rem; margin:1rem 0;'>
+                    <tr><th>ID</th><th>Grade</th><th>Ate Lunch Mon</th><th>Onset Date</th><th>Onset Time</th><th>Symptoms</th></tr>
+                    <tr><td>001</td><td>6</td><td>Yes</td><td>Tue</td><td>6:00 AM</td><td>V, D</td></tr>
+                    <tr><td>002</td><td>7</td><td>Yes</td><td>Tue</td><td>7:30 AM</td><td>V, N</td></tr>
+                    <tr><td>003</td><td>6</td><td>Yes</td><td>Tue</td><td>8:00 AM</td><td>V, D, N</td></tr>
+                    <tr><td>004</td><td>8</td><td>Yes</td><td>Tue</td><td>9:00 AM</td><td>V, D</td></tr>
+                    <tr><td>005</td><td>7</td><td>Yes</td><td>Mon</td><td>11:00 PM</td><td>V</td></tr>
+                    <tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                    </table>
+                    <p style='font-size:0.85rem; color:#666;'>V=Vomiting, D=Diarrhea, N=Nausea. Total: 45 cases out of 300 students who ate Monday lunch.</p>
+                    <p><strong>Calculate the Attack Rate.</strong></p>`,
                     options: [
-                        { text: "AR = 15%", feedback: "Correct! 45/300 × 100 = 15%", correct: true },
+                        { text: "AR = 15%", feedback: "Correct! 45/300 × 100 = 15%. This is the proportion of the exposed population that became ill.", correct: true },
                         { text: "AR = 45%", feedback: "Incorrect. You need to divide cases by total exposed, not just count cases.", correct: false },
                         { text: "AR = 30%", feedback: "Incorrect. Check your calculation: 45/300.", correct: false }
                     ]
                 },
                 {
                     id: "step2",
-                    text: "<h6>Step 2: Incubation Period</h6><p>Lunch was served Monday 12:00 PM. First case onset: Monday 11:00 PM (11 hours). Last case onset: Tuesday 2:00 PM (26 hours). Peak: Tuesday 8:00 AM (20 hours).</p><p><strong>Which pathogen fits this incubation period?</strong></p>",
+                    text: `<h6>Step 2: Incubation Period Analysis</h6>
+                    <p>Review the onset times from the line list. Lunch was served Monday 12:00 PM.</p>
+                    <ul style='text-align:left;'>
+                    <li><strong>First case:</strong> Monday 11:00 PM (11 hours post-exposure)</li>
+                    <li><strong>Median onset:</strong> Tuesday 8:00 AM (20 hours)</li>
+                    <li><strong>Last case:</strong> Tuesday 2:00 PM (26 hours)</li>
+                    </ul>
+                    <p><strong>Based on the incubation period range (11-26 hours), which pathogen is MOST likely?</strong></p>`,
                     options: [
-                        { text: "Staphylococcus aureus (1-6 hours)", feedback: "Incorrect. Too short.", correct: false },
-                        { text: "Norovirus (12-48 hours)", feedback: "Correct! The 11-26 hour range with peak at 20 hours fits Norovirus perfectly.", correct: true },
-                        { text: "Salmonella (6-72 hours, median 12-36)", feedback: "Possible, but Norovirus is more likely given the short duration and vomiting prominence.", correct: false }
+                        { text: "Staphylococcus aureus (incubation 1-6 hours)", feedback: "Incorrect. The minimum incubation of 11 hours is too long for Staph.", correct: false },
+                        { text: "Norovirus (incubation 12-48 hours)", feedback: "Correct! The 11-26 hour range with peak at 20 hours fits Norovirus. The prominent vomiting also supports this.", correct: true },
+                        { text: "Clostridium perfringens (incubation 8-16 hours)", feedback: "Possible but less likely. C. perfringens typically causes diarrhea > vomiting, and max incubation is ~16 hours.", correct: false }
                     ]
                 },
                 {
                     id: "step3",
-                    text: "<h6>Step 3: Food History</h6><p>Students who ate the chicken salad: 60 students, 40 ill (AR = 67%). Students who did NOT eat chicken salad: 240 students, 5 ill (AR = 2%).</p><p><strong>Calculate the Relative Risk (RR).</strong></p>",
+                    text: `<h6>Step 3: Food-Specific Attack Rates</h6>
+                    <p>You conduct a cohort study asking about all foods eaten. The results:</p>
+                    <table class='exam-table'>
+                    <tr><th>Food Item</th><th>Ate: Ill/Total</th><th>AR (Ate)</th><th>Did Not Eat: Ill/Total</th><th>AR (Not)</th></tr>
+                    <tr><td>Chicken Salad</td><td>40/60</td><td>67%</td><td>5/240</td><td>2%</td></tr>
+                    <tr><td>Fruit Cup</td><td>20/150</td><td>13%</td><td>25/150</td><td>17%</td></tr>
+                    <tr><td>Milk</td><td>30/200</td><td>15%</td><td>15/100</td><td>15%</td></tr>
+                    </table>
+                    <p><strong>Calculate the Relative Risk (RR) for the Chicken Salad.</strong></p>`,
                     options: [
-                        { text: "RR = 33.5", feedback: "Correct! RR = 67% / 2% = 33.5. Students who ate chicken salad were 33.5 times more likely to get sick.", correct: true },
-                        { text: "RR = 2.0", feedback: "Incorrect. You may have reversed the calculation.", correct: false },
-                        { text: "RR = 0.67", feedback: "Incorrect. Check the formula: AR_exposed / AR_unexposed.", correct: false }
+                        { text: "RR = 33.5", feedback: "Correct! RR = AR(exposed)/AR(unexposed) = 67%/2% = 33.5. Students who ate chicken salad were 33.5 times more likely to become ill!", correct: true },
+                        { text: "RR = 2.0", feedback: "Incorrect. You may have reversed the calculation or used wrong values.", correct: false },
+                        { text: "RR = 0.67", feedback: "Incorrect. An RR < 1 would indicate protection, but chicken salad was clearly a risk factor.", correct: false }
                     ]
                 },
                 {
                     id: "step4",
-                    text: "<h6>Step 4: Control Measures</h6><p>Investigation reveals the chicken salad was left at room temperature for 3 hours before serving. A food handler was ill the previous week.</p><p><strong>What is the PRIMARY control measure?</strong></p>",
+                    text: `<h6>Step 4: Environmental Investigation & Control</h6>
+                    <p>Your investigation reveals:</p>
+                    <ul style='text-align:left;'>
+                    <li>The chicken salad was prepared Sunday evening and stored at room temperature overnight</li>
+                    <li>A food handler reported "stomach bug" symptoms last week but continued working</li>
+                    <li>Handwashing facilities in the kitchen had no soap</li>
+                    </ul>
+                    <p><strong>What is the MOST appropriate set of control measures?</strong></p>`,
                     options: [
-                        { text: "Close the school for deep cleaning", feedback: "Incorrect. Norovirus outbreak is over; this is excessive.", correct: false },
-                        { text: "Exclude ill food handlers, enforce time/temperature controls, and educate staff on proper food handling", feedback: "Correct! Multi-pronged approach addresses the source and prevents recurrence.", correct: true },
-                        { text: "Administer antibiotics to all students", feedback: "Incorrect. Norovirus is viral; antibiotics don't work.", correct: false }
+                        { text: "Close the school for 2 weeks and disinfect all classrooms", feedback: "Incorrect. The outbreak is over and this is excessive. Norovirus doesn't persist on surfaces for weeks.", correct: false },
+                        { text: "Exclude ill food handlers until 48h symptom-free, enforce cold-holding temperatures, restock handwashing supplies, and provide food safety training", feedback: "Correct! This multi-pronged approach addresses all identified failures: sick worker, time-temperature abuse, and hygiene gaps.", correct: true },
+                        { text: "Prescribe antibiotics to all 300 students who ate lunch", feedback: "Incorrect. Norovirus is a virus; antibiotics don't work. Also, prophylactic antibiotics are inappropriate here.", correct: false }
                     ]
                 }
             ]
         },
+
         {
             id: "MC2",
             title: "The Swimming Pool Cryptosporidiosis",
@@ -456,10 +491,9 @@
         return;
     }
 
-    if (db['mc1']) {
-        // console.log("MEGA Scenarios already merged.");
-        return;
-    }
+    // Always overwrite mc1-mc10 with enhanced versions that include data tables
+    // (Previously had a guard: if (db['mc1']) return; but this prevented updates)
+
 
     INTERACTIVE_CASES_DATA.forEach(mc => {
         const caseKey = mc.id.toLowerCase();

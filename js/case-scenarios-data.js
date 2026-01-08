@@ -12,8 +12,8 @@ const CASE_SCENARIOS = [
                 feedback: "<b>Correct!</b> Rapid onset (4h) + vomiting without fever strongly suggests a preformed toxin like Staph aureus. Norovirus usually takes 12-48h."
             },
             {
-                text: "<b>Investigation:</b> You interview the students. Attack Rates: Chicken Salad (80% vs 33%), Mac & Cheese (80% vs 33%), Fruit (67% vs 60%).",
-                question: "Both Chicken Salad and Mac & Cheese have the same Attack Rates. Which is the more likely vehicle for Staph aureus?",
+                text: "<b>Investigation:</b> You interview the students. Attack Rates: Chicken Salad (80% exposed vs 33% unexposed), Mac & Cheese (80% exposed vs 33% unexposed), Fruit (67% exposed vs 60% unexposed).",
+                question: "Both Chicken Salad and Mac & Cheese have the same Attack Rates. Which is the more likely vehicle for <i>Staphylococcus aureus</i>?",
                 options: ["Chicken Salad", "Mac & Cheese", "Fruit", "Both are equally likely"],
                 answer: 0,
                 feedback: "<b>Correct!</b> Chicken Salad is a high-risk food for Staph (hand contact + temperature abuse). Mac & Cheese is less likely to support Staph toxin formation."
@@ -90,13 +90,13 @@ const CASE_SCENARIOS = [
         steps: [
             {
                 text: "<b>Background:</b> Several students fell ill after a basketball game. You survey attendees.",
-                question: "Data: Sick/Total (3/4) vs Not Sick/Total (3/4). What is the Risk Ratio?",
+                question: "Among those who consumed food at the concession stand, 3 out of 4 (75%) became ill. Among those who did NOT consume food at the stand, 3 out of 4 (75%) also became ill. What is the Risk Ratio?",
                 options: ["2.0", "0.5", "1.0", "1.5"],
                 answer: 2,
                 feedback: "<b>Correct!</b> AR(exposed) = 75%, AR(unexposed) = 75%. RR = 0.75 / 0.75 = 1.0. The game is NOT the cause."
             },
             {
-                text: "<b>Re-evaluation:</b> You look for other common exposures. All sick students ate at a specific concession stand.",
+                text: "<b>Re-evaluation:</b> You look for other common exposures. All ill students consumed food at a specific concession stand.",
                 question: "What is your next step?",
                 options: ["Close the school", "Calculate AR for specific food items at the stand", "Test the water", "Interview the basketball players"],
                 answer: 1,
@@ -131,7 +131,7 @@ const CASE_SCENARIOS = [
         difficulty: "Intermediate",
         steps: [
             {
-                text: "<b>Background:</b> Kids report diarrhea after swimming. Cryptosporidium is suspected.",
+                text: "<b>Background:</b> Children report diarrhea after swimming. Cryptosporidium is suspected.",
                 question: "Why is 'Crypto' a common pool pathogen?",
                 options: ["It multiplies in water", "It is chlorine-resistant", "It is airborne", "It comes from algae"],
                 answer: 1,

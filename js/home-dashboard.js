@@ -1,27 +1,28 @@
-console.log("DEBUG: Loading home-dashboard.js v4.0.2");
-class HomeDashboard {
-    constructor(containerId = 'content-container') {
-        this.containerId = containerId;
-        this.injectStyles();
+(() => {
+    console.log("DEBUG: Loading home-dashboard.js v4.0.2");
+    class HomeDashboard {
+        constructor(containerId = 'content-container') {
+            this.containerId = containerId;
+            this.injectStyles();
 
-        // Game State
-        this.gameState = {
-            active: false,
-            score: 0,
-            frame: 0,
-            nodes: []
-        };
-    }
+            // Game State
+            this.gameState = {
+                active: false,
+                score: 0,
+                frame: 0,
+                nodes: []
+            };
+        }
 
-    init() {
-        this.render();
-    }
+        init() {
+            this.render();
+        }
 
-    injectStyles() {
-        if (document.getElementById('home-dashboard-styles')) return;
-        const style = document.createElement('style');
-        style.id = 'home-dashboard-styles';
-        style.textContent = `
+        injectStyles() {
+            if (document.getElementById('home-dashboard-styles')) return;
+            const style = document.createElement('style');
+            style.id = 'home-dashboard-styles';
+            style.textContent = `
             .home-wrapper {
                 max-width: 1200px;
                 margin: 0 auto;
@@ -167,25 +168,25 @@ class HomeDashboard {
             .lesson-box.orange { background-color: #fb923c; } /* Stronger Orange */
 
         `;
-        document.head.appendChild(style);
-    }
+            document.head.appendChild(style);
+        }
 
-    render() {
-        try {
-            console.log("DEBUG: rendering HomeDashboard...");
-            const container = document.getElementById(this.containerId);
-            if (!container) {
-                console.error("HomeDashboard container not found:", this.containerId);
-                return;
-            }
+        render() {
+            try {
+                console.log("DEBUG: rendering HomeDashboard...");
+                const container = document.getElementById(this.containerId);
+                if (!container) {
+                    console.error("HomeDashboard container not found:", this.containerId);
+                    return;
+                }
 
-            const quizStats = window.AnalyticsManager ? window.AnalyticsManager.getGlobalStats() : { totalAttempts: 0, averageScore: 0 };
-            const chapters = window.AnalyticsManager ? window.AnalyticsManager.getChapterStats() : { viewed: 0, total: 20 };
+                const quizStats = window.AnalyticsManager ? window.AnalyticsManager.getGlobalStats() : { totalAttempts: 0, averageScore: 0 };
+                const chapters = window.AnalyticsManager ? window.AnalyticsManager.getChapterStats() : { viewed: 0, total: 20 };
 
-            // SVG Logo (Vector) - High Quality
-            const svgLogo = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='grad1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23003d6b;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23007acc;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='45' fill='url(%23grad1)' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M50 15 L50 45 L75 60 L25 60 L50 45' fill='%23ff5c00' stroke='%23fff' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='10' fill='%23fff'/%3E%3C/svg%3E`;
+                // SVG Logo (Vector) - High Quality
+                const svgLogo = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='grad1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23003d6b;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23007acc;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='45' fill='url(%23grad1)' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M50 15 L50 45 L75 60 L25 60 L50 45' fill='%23ff5c00' stroke='%23fff' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='10' fill='%23fff'/%3E%3C/svg%3E`;
 
-            container.innerHTML = `
+                container.innerHTML = `
                 <div class="home-wrapper">
                     <!-- Hero Banner -->
                     <div class="hero-banner">
@@ -195,7 +196,7 @@ class HomeDashboard {
                                 Epidemic Engine
                             </h1>
                             <p style="font-size: 1.25rem; opacity: 1; margin-bottom: 0.5rem; color: #334155; font-weight: 500;">
-                                Navigate outbreaks, visualize patterns, and master Disease Detectives (v5.0.0).
+                                Navigate outbreaks, visualize patterns, and master Disease Detectives (v6.0.0).
                             </p>
                             <p style="font-size: 0.9rem; margin-bottom: 1.5rem; color: #475569;">
                                 Designed, Created, & Conceived by <strong style="color: var(--navy-primary);">Rishi Reddy</strong>
@@ -283,14 +284,14 @@ class HomeDashboard {
                     </div>
                 </div>
             `;
-        } catch (e) {
-            console.error("HomeDashboard Render Error:", e);
-            document.getElementById(this.containerId).innerHTML = `<div class="alert alert-danger">Dashboard Error: ${e.message}</div>`;
+            } catch (e) {
+                console.error("HomeDashboard Render Error:", e);
+                document.getElementById(this.containerId).innerHTML = `<div class="alert alert-danger">Dashboard Error: ${e.message}</div>`;
+            }
         }
-    }
 
-    renderUnitBlock(title, color, items) {
-        return `
+        renderUnitBlock(title, color, items) {
+            return `
             <div class="unit-section" style="margin-bottom: 2rem;">
                 <h3 style="color: #334155; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; margin-bottom: 1rem;">${title}</h3>
                 <div class="unit-grid ${color}">
@@ -302,241 +303,241 @@ class HomeDashboard {
                 </div>
             </div>
             `;
-    }
-
-    startGame() {
-        const overlay = document.getElementById('game-overlay');
-        if (overlay) overlay.style.display = 'none';
-
-        const canvas = document.getElementById('bg-canvas');
-        if (!canvas) return;
-
-        this.width = canvas.parentElement.clientWidth;
-        this.height = canvas.parentElement.clientHeight;
-        canvas.width = this.width;
-        canvas.height = this.height;
-        this.ctx = canvas.getContext('2d');
-
-        // Reset State
-        this.gameState = {
-            active: true,
-            score: 0,
-            frame: 0,
-            nodes: []
-        };
-
-        this.canvasObj = canvas; // Save for touch handler
-
-        // Spawn Nodes
-        for (let i = 0; i < 15; i++) this.spawnNode();
-
-        // Start Loop
-        if (this.gameLoopId) clearInterval(this.gameLoopId);
-        this.gameLoopId = setInterval(() => this.loop(), 1000 / 30); // 30 FPS
-
-        // Timer
-        if (this.timerInterval) clearInterval(this.timerInterval);
-        this.timerInterval = setTimeout(() => this.endGame(), 15000); // 15s Game
-
-        // Input
-        canvas.onclick = (e) => {
-            const rect = canvas.getBoundingClientRect();
-            this.handleInput(e.clientX - rect.left, e.clientY - rect.top);
-        };
-    }
-
-    spawnNode() {
-        if (this.gameState.nodes.length > 30) return;
-        this.gameState.nodes.push({
-            x: Math.random() * this.width,
-            y: Math.random() * this.height,
-            vx: (Math.random() - 0.5) * 4,
-            vy: (Math.random() - 0.5) * 4,
-            radius: 8 + Math.random() * 8,
-            infected: Math.random() > 0.7 // 30% bad
-        });
-    }
-
-    handleInput(x, y) {
-        this.gameState.nodes.forEach(node => {
-            const dist = Math.hypot(node.x - x, node.y - y);
-            if (dist < node.radius + 10 && node.infected) {
-                // Remove/Quarantine
-                const idx = this.gameState.nodes.indexOf(node);
-                if (idx > -1) {
-                    this.gameState.nodes.splice(idx, 1);
-                    this.gameState.score++;
-                    document.getElementById('game-score').textContent = this.gameState.score;
-                }
-            }
-        });
-    }
-
-    loop() {
-        if (!this.gameState.active) return;
-        this.updateState();
-        this.draw();
-    }
-
-    updateState() {
-        this.gameState.frame++;
-        if (this.gameState.frame % 50 === 0) this.spawnNode();
-
-        this.gameState.nodes.forEach(node => {
-            node.x += node.vx;
-            node.y += node.vy;
-
-            // Bounce
-            if (node.x < 0 || node.x > this.width) node.vx *= -1;
-            if (node.y < 0 || node.y > this.height) node.vy *= -1;
-        });
-    }
-
-    draw() {
-        const ctx = this.ctx;
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, this.width, this.height);
-
-        this.gameState.nodes.forEach(node => {
-            this.drawNode(node);
-        });
-    }
-
-    drawNode(node) {
-        const ctx = this.ctx;
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-
-        if (node.infected) {
-            ctx.fillStyle = '#dc2626';
-            ctx.strokeStyle = '#991b1b';
-            ctx.lineWidth = 2;
-        } else {
-            ctx.fillStyle = '#2563eb';
-            ctx.strokeStyle = '#1e40af';
-            ctx.lineWidth = 2;
         }
 
-        ctx.fill();
-        ctx.stroke();
-        ctx.closePath();
-    }
+        startGame() {
+            const overlay = document.getElementById('game-overlay');
+            if (overlay) overlay.style.display = 'none';
 
-    endGame() {
-        this.gameState.active = false;
-        clearInterval(this.gameLoopId);
-        clearInterval(this.timerInterval);
+            const canvas = document.getElementById('bg-canvas');
+            if (!canvas) return;
 
-        const oldHigh = localStorage.getItem('epi_game_highscore') || 0;
-        if (this.gameState.score > oldHigh) localStorage.setItem('epi_game_highscore', this.gameState.score);
+            this.width = canvas.parentElement.clientWidth;
+            this.height = canvas.parentElement.clientHeight;
+            canvas.width = this.width;
+            canvas.height = this.height;
+            this.ctx = canvas.getContext('2d');
 
-        const overlay = document.getElementById('game-overlay');
-        if (overlay) {
-            overlay.style.display = 'flex';
-            overlay.innerHTML = `
+            // Reset State
+            this.gameState = {
+                active: true,
+                score: 0,
+                frame: 0,
+                nodes: []
+            };
+
+            this.canvasObj = canvas; // Save for touch handler
+
+            // Spawn Nodes
+            for (let i = 0; i < 15; i++) this.spawnNode();
+
+            // Start Loop
+            if (this.gameLoopId) clearInterval(this.gameLoopId);
+            this.gameLoopId = setInterval(() => this.loop(), 1000 / 30); // 30 FPS
+
+            // Timer
+            if (this.timerInterval) clearInterval(this.timerInterval);
+            this.timerInterval = setTimeout(() => this.endGame(), 15000); // 15s Game
+
+            // Input
+            canvas.onclick = (e) => {
+                const rect = canvas.getBoundingClientRect();
+                this.handleInput(e.clientX - rect.left, e.clientY - rect.top);
+            };
+        }
+
+        spawnNode() {
+            if (this.gameState.nodes.length > 30) return;
+            this.gameState.nodes.push({
+                x: Math.random() * this.width,
+                y: Math.random() * this.height,
+                vx: (Math.random() - 0.5) * 4,
+                vy: (Math.random() - 0.5) * 4,
+                radius: 8 + Math.random() * 8,
+                infected: Math.random() > 0.7 // 30% bad
+            });
+        }
+
+        handleInput(x, y) {
+            this.gameState.nodes.forEach(node => {
+                const dist = Math.hypot(node.x - x, node.y - y);
+                if (dist < node.radius + 10 && node.infected) {
+                    // Remove/Quarantine
+                    const idx = this.gameState.nodes.indexOf(node);
+                    if (idx > -1) {
+                        this.gameState.nodes.splice(idx, 1);
+                        this.gameState.score++;
+                        document.getElementById('game-score').textContent = this.gameState.score;
+                    }
+                }
+            });
+        }
+
+        loop() {
+            if (!this.gameState.active) return;
+            this.updateState();
+            this.draw();
+        }
+
+        updateState() {
+            this.gameState.frame++;
+            if (this.gameState.frame % 50 === 0) this.spawnNode();
+
+            this.gameState.nodes.forEach(node => {
+                node.x += node.vx;
+                node.y += node.vy;
+
+                // Bounce
+                if (node.x < 0 || node.x > this.width) node.vx *= -1;
+                if (node.y < 0 || node.y > this.height) node.vy *= -1;
+            });
+        }
+
+        draw() {
+            const ctx = this.ctx;
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, this.width, this.height);
+
+            this.gameState.nodes.forEach(node => {
+                this.drawNode(node);
+            });
+        }
+
+        drawNode(node) {
+            const ctx = this.ctx;
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+
+            if (node.infected) {
+                ctx.fillStyle = '#dc2626';
+                ctx.strokeStyle = '#991b1b';
+                ctx.lineWidth = 2;
+            } else {
+                ctx.fillStyle = '#2563eb';
+                ctx.strokeStyle = '#1e40af';
+                ctx.lineWidth = 2;
+            }
+
+            ctx.fill();
+            ctx.stroke();
+            ctx.closePath();
+        }
+
+        endGame() {
+            this.gameState.active = false;
+            clearInterval(this.gameLoopId);
+            clearInterval(this.timerInterval);
+
+            const oldHigh = localStorage.getItem('epi_game_highscore') || 0;
+            if (this.gameState.score > oldHigh) localStorage.setItem('epi_game_highscore', this.gameState.score);
+
+            const overlay = document.getElementById('game-overlay');
+            if (overlay) {
+                overlay.style.display = 'flex';
+                overlay.innerHTML = `
             <div style="text-align: center;">
                     <h2 style="color: #16a34a; font-size: 2rem; margin-bottom: 0.5rem;">SUCCESS</h2>
                     <p style="color: #000; margin-bottom: 1.5rem;">Threats Neutralized: ${this.gameState.score}</p>
                     <button class="neo-btn primary" onclick="window.HomeDashboard.startGame()">Re-Deploy</button>
                 </div>
             `;
-        }
-    }
-
-    performSearch(query) {
-        const resultsContainer = document.getElementById('search-results');
-        if (!query || query.length < 2) {
-            resultsContainer.style.display = 'none';
-            return;
+            }
         }
 
-        const q = query.toLowerCase();
-        const matches = [];
+        performSearch(query) {
+            const resultsContainer = document.getElementById('search-results');
+            if (!query || query.length < 2) {
+                resultsContainer.style.display = 'none';
+                return;
+            }
 
-        // 1. Search Chapters (Nav Items)
-        const navItems = document.querySelectorAll('.nav-item');
-        navItems.forEach(item => {
-            const text = item.textContent.trim();
-            if (text.toLowerCase().includes(q)) {
-                matches.push({
-                    type: 'Chapter',
-                    label: text,
-                    action: () => { item.click(); }
+            const q = query.toLowerCase();
+            const matches = [];
+
+            // 1. Search Chapters (Nav Items)
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                const text = item.textContent.trim();
+                if (text.toLowerCase().includes(q)) {
+                    matches.push({
+                        type: 'Chapter',
+                        label: text,
+                        action: () => { item.click(); }
+                    });
+                }
+            });
+
+            // 2. Search Glossary (if available)
+            if (window.APPENDIX_DATA && window.APPENDIX_DATA.glossary) {
+                window.APPENDIX_DATA.glossary.forEach(g => {
+                    if (g.term.toLowerCase().includes(q)) {
+                        matches.push({
+                            type: 'Glossary',
+                            label: g.term,
+                            sub: g.definition.substring(0, 50) + '...',
+                            action: () => {
+                                loadChapter('appendix');
+                                setTimeout(() => {
+                                    window.showTab('glossary');
+                                    const input = document.getElementById('glossary-search');
+                                    if (input) {
+                                        input.value = g.term;
+                                        window.appendixEngine.filterGlossary();
+                                    }
+                                }, 300);
+                            }
+                        });
+                    }
                 });
             }
-        });
 
-        // 2. Search Glossary (if available)
-        if (window.APPENDIX_DATA && window.APPENDIX_DATA.glossary) {
-            window.APPENDIX_DATA.glossary.forEach(g => {
-                if (g.term.toLowerCase().includes(q)) {
-                    matches.push({
-                        type: 'Glossary',
-                        label: g.term,
-                        sub: g.definition.substring(0, 50) + '...',
-                        action: () => {
-                            loadChapter('appendix');
-                            setTimeout(() => {
-                                window.showTab('glossary');
-                                const input = document.getElementById('glossary-search');
-                                if (input) {
-                                    input.value = g.term;
-                                    window.appendixEngine.filterGlossary();
-                                }
-                            }, 300);
-                        }
-                    });
-                }
-            });
-        }
+            // 3. Search Cases (if available)
+            if (window.CASE_LIBRARY) {
+                window.CASE_LIBRARY.forEach((c, idx) => {
+                    if (c.title.toLowerCase().includes(q) || (c.disease && c.disease.toLowerCase().includes(q))) {
+                        matches.push({
+                            type: 'Case Study',
+                            label: c.title,
+                            sub: c.disease,
+                            action: () => {
+                                loadChapter('case_library');
+                                setTimeout(() => {
+                                    if (window.toggleCaseDetails) window.toggleCaseDetails(idx);
+                                }, 300);
+                            }
+                        });
+                    }
+                });
+            }
 
-        // 3. Search Cases (if available)
-        if (window.CASE_LIBRARY) {
-            window.CASE_LIBRARY.forEach((c, idx) => {
-                if (c.title.toLowerCase().includes(q) || (c.disease && c.disease.toLowerCase().includes(q))) {
-                    matches.push({
-                        type: 'Case Study',
-                        label: c.title,
-                        sub: c.disease,
-                        action: () => {
-                            loadChapter('case_library');
-                            setTimeout(() => {
-                                if (window.toggleCaseDetails) window.toggleCaseDetails(idx);
-                            }, 300);
-                        }
-                    });
-                }
-            });
-        }
+            // 4. Search Interactive Scenarios (Tier 2 Content)
+            if (window.SCENARIO_DB) {
+                Object.values(window.SCENARIO_DB).forEach(s => {
+                    const title = s.title || '';
+                    const desc = s.description || '';
+                    if (title.toLowerCase().includes(q) || desc.toLowerCase().includes(q)) {
+                        matches.push({
+                            type: 'Simulation',
+                            label: title,
+                            sub: (s.difficulty || 'Normal') + ' Mode',
+                            action: () => {
+                                loadChapter('interactive_scenarios');
+                            }
+                        });
+                    }
+                });
+            }
 
-        // 4. Search Interactive Scenarios (Tier 2 Content)
-        if (window.SCENARIO_DB) {
-            Object.values(window.SCENARIO_DB).forEach(s => {
-                const title = s.title || '';
-                const desc = s.description || '';
-                if (title.toLowerCase().includes(q) || desc.toLowerCase().includes(q)) {
-                    matches.push({
-                        type: 'Simulation',
-                        label: title,
-                        sub: (s.difficulty || 'Normal') + ' Mode',
-                        action: () => {
-                            loadChapter('interactive_scenarios');
-                        }
-                    });
-                }
-            });
-        }
+            // Render Results
+            if (matches.length === 0) {
+                resultsContainer.style.display = 'block';
+                resultsContainer.innerHTML = '<div style="padding: 0.5rem; color: #666; font-style: italic;">No results found.</div>';
+                return;
+            }
 
-        // Render Results
-        if (matches.length === 0) {
+            const topMatches = matches.slice(0, 8); // Limit to 8
             resultsContainer.style.display = 'block';
-            resultsContainer.innerHTML = '<div style="padding: 0.5rem; color: #666; font-style: italic;">No results found.</div>';
-            return;
-        }
-
-        const topMatches = matches.slice(0, 8); // Limit to 8
-        resultsContainer.style.display = 'block';
-        resultsContainer.innerHTML = topMatches.map((m, i) => `
+            resultsContainer.innerHTML = topMatches.map((m, i) => `
             <div class="search-result-item" onclick="window.HomeDashboard.results[${i}].action()"
         style = "padding: 0.75rem; border-bottom: 1px solid #eee; cursor: pointer; transition: background 0.1s;" >
             <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -547,16 +548,17 @@ class HomeDashboard {
             </div>
             `).join('');
 
-        // Store actions slightly differently to access them via index in HTML
-        this.results = topMatches;
+            // Store actions slightly differently to access them via index in HTML
+            this.results = topMatches;
 
-        // Add hover effect via JS since inline styles are messy for hover
-        const items = resultsContainer.querySelectorAll('.search-result-item');
-        items.forEach(item => {
-            item.onmouseover = () => item.style.background = '#f8fafc';
-            item.onmouseout = () => item.style.background = 'white';
-        });
+            // Add hover effect via JS since inline styles are messy for hover
+            const items = resultsContainer.querySelectorAll('.search-result-item');
+            items.forEach(item => {
+                item.onmouseover = () => item.style.background = '#f8fafc';
+                item.onmouseout = () => item.style.background = 'white';
+            });
+        }
     }
-}
 
-window.HomeDashboard = new HomeDashboard();
+    window.HomeDashboard = new HomeDashboard();
+})();

@@ -1,9 +1,9 @@
 /**
- * Quiz Engine Core v5.0.0 - Complete Rewrite
+ * Quiz Engine Core v6.0.0 - Complete Rewrite
  * A clean, simple quiz system with NO pause functionality.
  */
 
-console.log("QuizEngine v5.0.0 loading...");
+console.log("QuizEngine v6.0.0 loading...");
 
 // Override bundle's QuizEngine directly
 window.QuizEngine = class QuizEngine {
@@ -109,7 +109,7 @@ window.QuizEngine = class QuizEngine {
         // Show feedback only if instant feedback enabled AND user answered
         const showFeedback = this.enableInstantFeedback && userAns !== undefined;
 
-        let optionsHtml = q.options.map((opt, i) => {
+        const optionsHtml = q.options.map((opt, i) => {
             let cls = 'option-card';
             let style = '';
 
@@ -373,7 +373,7 @@ window.QuizEngine = class QuizEngine {
             </div>
         `;
     }
-}
+};
 
 // Static methods for generating quiz data
 QuizEngine.getQuestionsForPart = function (partId, difficulty = 'balanced') {
@@ -410,8 +410,8 @@ QuizEngine.generateSimulation = function (difficulty = 'balanced') {
 
     const selectRandom = (arr, n) => shuffle([...arr]).slice(0, n);
 
-    let allQuestions = [];
-    let boundaries = [];
+    const allQuestions = [];
+    const boundaries = [];
     let idx = 0;
 
     ['part1', 'part2', 'part3'].forEach(part => {
@@ -433,4 +433,4 @@ QuizEngine.generateSimulation = function (difficulty = 'balanced') {
 // Expose instance holder
 window.quizEngine = null;
 
-console.log("QuizEngine v5.0.0 loaded.");
+console.log("QuizEngine v6.0.0 loaded.");

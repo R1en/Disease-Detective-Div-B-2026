@@ -192,6 +192,6 @@ window.TOOLS_MANAGER = {
 
 // Hook into the content loader
 // This function is called by epidemic-engine-nav.js when a chapter loads
-function onToolsChapterLoaded() {
+function _onToolsChapterLoaded() {
     TOOLS_MANAGER.init();
 }

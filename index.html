@@ -4,19 +4,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Epidemic Engine: Disease Detectives Mastery Guide (v5.0.0)</title>
-    <meta property="og:title" content="Epidemic Engine - Disease Detectives Toolkit (v5.0.0)">
-    <meta property="og:description"
-        content="The ultimate offline training simulator for Science Olympiad. Features 50+ cases, Infinite Outbreak Generator, and precision calculators.">
-    <meta property="og:image" content="assets/og-image.png">
-    <meta name="twitter:card" content="summary_large_image">
+    <title>Epidemic Engine: Science Olympiad Disease Detectives Study Guide & Practice Tool</title>
 
-    <!-- SEO -->
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Epidemic Engine - Disease Detectives Study Guide & Practice Tool">
     <meta name="description"
-        content="Free offline study tool for Science Olympiad Disease Detectives (Div B). Includes outbreak simulations, epi curve tools, and 50+ practice cases.">
+        content="Free comprehensive study tool for Science Olympiad Disease Detectives (Division B & C). Features 21 chapters, 500+ quiz questions, interactive outbreak simulations, epi curve tools, and 50+ practice cases. Offline-capable PWA.">
     <meta name="keywords"
-        content="Science Olympiad, Disease Detectives, Epidemiology, STEM, Public Health, CDC, Outbreak Simulation">
-    <meta name="author" content="Epidemic Engine Team">
+        content="Science Olympiad, Disease Detectives, Epidemiology, STEM, Public Health, CDC, Outbreak Simulation, Study Guide, Division B, Division C, Epi Curve, 2x2 Table Calculator, Attack Rate, Odds Ratio, Relative Risk, Sensitivity, Specificity">
+    <meta name="author" content="Rishi Reddy">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="7 days">
+    <meta name="rating" content="General">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://epidemic-engine.vercel.app/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://epidemic-engine.vercel.app/">
+    <meta property="og:title" content="Epidemic Engine - Disease Detectives Mastery Guide v6.0">
+    <meta property="og:description"
+        content="The ultimate free training simulator for Science Olympiad Disease Detectives. 21 chapters, 500+ questions, interactive tools, and offline capability.">
+    <meta property="og:image" content="https://epidemic-engine.vercel.app/assets/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Epidemic Engine">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://epidemic-engine.vercel.app/">
+    <meta name="twitter:title" content="Epidemic Engine - Disease Detectives Study Tool">
+    <meta name="twitter:description"
+        content="Free Science Olympiad Disease Detectives study guide with interactive simulations, calculators, and 50+ practice cases.">
+    <meta name="twitter:image" content="https://epidemic-engine.vercel.app/assets/og-image.png">
+
+    <!-- Structured Data (JSON-LD) for Rich Results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Epidemic Engine",
+      "alternateName": "Disease Detectives Study Guide",
+      "description": "Comprehensive study tool for Science Olympiad Disease Detectives featuring interactive epidemiology simulations, calculators, and practice questions.",
+      "url": "https://epidemic-engine.vercel.app/",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Rishi Reddy"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "ratingCount": "1"
+      },
+      "keywords": "Science Olympiad, Disease Detectives, Epidemiology, Study Guide, Division B, Division C",
+      "educationalLevel": "Middle School, High School",
+      "inLanguage": "en",
+      "isAccessibleForFree": true
+    }
+    </script>
 
     <!-- iOS / PWA -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,9 +80,10 @@
     <link rel="apple-touch-icon" href="assets/logo.png">
 
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#ff5c00">
+    <meta name="theme-color" content="#003d6b">
     <link rel="icon" type="image/png" href="assets/logo.png">
     <script src="js/vendor/phosphor-icons.js"></script>
+
 
     <meta http-equiv="Content-Security-Policy"
         content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data:; connect-src 'self';">
@@ -44,10 +100,13 @@
 </head>
 
 <body>
+    <!-- Accessibility: Skip link for keyboard navigation -->
+    <a href="#content-container" class="skip-link">Skip to main content</a>
+
     <div class="app-container">
         <!-- Accessibility: Overlay is now a button-like interactor -->
         <div class="sidebar-overlay" role="button" aria-label="Close Menu" tabindex="0"></div>
-        <aside class="sidebar" id="sidebar">
+        <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main Navigation">
             <div class="sidebar-header">
                 <div class="brand" style="display: flex; align-items: center; gap: 0.75rem;">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style="height: 32px; width: 32px;"
@@ -181,19 +240,19 @@
                 </div>
             </nav>
         </aside>
-        <main class="main-content">
+        <main class="main-content" role="main">
             <button id="mobile-menu-toggle" class="neo-btn small hidden-desktop" aria-label="Toggle Navigation"
                 aria-expanded="false">
                 <i class="ph ph-list"></i> Menu
             </button>
-            <div id="content-container">
+            <div id="content-container" tabindex="-1">
                 <!-- Content loaded dynamically -->
             </div>
 
             <footer class="site-footer"
                 style="margin-top: 6rem; padding: 3rem 0; border-top: 2px solid var(--border-color); text-align: center; color: var(--text-color); font-family: var(--font-heading); opacity: 0.8;">
                 <p style="margin-bottom: 1rem; line-height: 1.6;">
-                    <strong>The Epidemic Engine</strong> v5.0.0 • © 2026 Science Olympiad Mastery Guide<br>
+                    <strong>The Epidemic Engine</strong> v6.0.0 • © 2026 Science Olympiad Mastery Guide<br>
                     <span
                         style="display: block; margin-top: 0.75rem; font-size: 1rem; color: var(--navy-primary);">Designed,
                         Created, & Conceived by <strong>Rishi Reddy</strong></span>
@@ -232,12 +291,17 @@
     <script src="js/home-dashboard.js"></script>
     <script src="js/quiz-engine-core.js"></script>
     <script src="js/epidemic-engine-nav.js"></script>
+    <script src="js/appendix-data.js"></script>
+    <script src="js/appendix-engine.js"></script>
     <script src="js/epidemic-engine-content.js"></script>
     <script src="js/chapter-reference.js"></script>
     <script src="js/quiz_bank_enhanced.js"></script>
 
     <!-- App Init: Service Worker and UI Logic (CSP Safe) -->
     <script src="js/app-init.js"></script>
+
+    <!-- Flashcards Data -->
+    <script src="js/flashcards.js"></script>
 
     <!-- Extensions: Consolidated features and updates -->
     <script src="js/epidemic-engine-extensions.js"></script>
@@ -251,6 +315,14 @@
     <!-- Quick Quiz module -->
     <script src="js/quick_quiz.js"></script>
 
+    <!-- Enhanced Exam-Style Questions (v6.0.0) -->
+    <script src="js/quiz_exam_style.js"></script>
+    <script src="js/quiz_parts_enhanced.js"></script>
+    <script src="js/quiz_advanced_topics.js"></script>
+    <script src="js/quiz_special_formats.js"></script>
+    <script src="js/quiz_rewording.js"></script>
+    <script src="js/quiz_explanation_upgrades.js"></script>
+    <script src="js/quiz_professional_transform.js"></script>
 
     <!-- Phase 8: diagnostic tools page definition -->
     <script src="js/diagnostic_tools.js"></script>
@@ -265,6 +337,10 @@
     <!-- Phase 14: Mega Cases (Tier 2 Enhancements) -->
     <script src="js/mega-cases-data.js"></script>
     <script src="js/mega-scenarios-data.js"></script>
+    <script src="js/case-interactive.js"></script>
+    <script src="js/case-library-enhanced.js"></script>
+    <script src="js/interactive-scenarios-mega.js"></script>
+
 
     <!-- Phase 15: Herd Immunity Tool -->
     <script src="js/tool-herd-immunity.js"></script>

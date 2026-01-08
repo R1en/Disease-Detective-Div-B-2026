@@ -40,12 +40,12 @@ const PREVENTION_DATA = [
         "explain": "Primary Prevention: Personal hygiene to prevent disease."
     },
     {
-        "q": "A healthy lifestyle, including diet and exercise (as per source text)",
-        "answer": 4,
+        "q": "A healthy lifestyle, including diet and exercise",
+        "answer": 1,
         "type": "mc",
         "topic": "Prevention",
         "options": ["Primordial", "Primary", "Secondary", "Tertiary", "Quaternary"],
-        "explain": "Quaternary Prevention: (Note: Source text classifies this as Quaternary, though often considered Primary)."
+        "explain": "Primary Prevention: Actions taken to prevent the onset of disease (e.g., diet, exercise)."
     },
     {
         "q": "Changing the socio-economic status of society and public attitudes to improve life style patterns",
@@ -53,7 +53,7 @@ const PREVENTION_DATA = [
         "type": "mc",
         "topic": "Prevention",
         "options": ["Primordial", "Primary", "Secondary", "Tertiary", "Quaternary"],
-        "explain": "Primordial Prevention: Broad societal changes."
+        "explain": "Primordial Prevention: Broad societal changes to underlying environmental/social conditions."
     },
     {
         "q": "Immunization against infectious diseases",
@@ -61,7 +61,7 @@ const PREVENTION_DATA = [
         "type": "mc",
         "topic": "Prevention",
         "options": ["Primordial", "Primary", "Secondary", "Tertiary", "Quaternary"],
-        "explain": "Primary Prevention: Vaccination."
+        "explain": "Primary Prevention: Vaccination prevents infection."
     },
     {
         "q": "Support groups that allow members to share strategies for living with limitations",
@@ -69,15 +69,15 @@ const PREVENTION_DATA = [
         "type": "mc",
         "topic": "Prevention",
         "options": ["Primordial", "Primary", "Secondary", "Tertiary", "Quaternary"],
-        "explain": "Tertiary Prevention: Managing long-term conditions."
+        "explain": "Tertiary Prevention: Managing long-term conditions and quality of life."
     },
     {
         "q": "Suitable modified work so injured or ill workers can return safely to their jobs",
-        "answer": 2,
+        "answer": 3,
         "type": "mc",
         "topic": "Prevention",
         "options": ["Primordial", "Primary", "Secondary", "Tertiary", "Quaternary"],
-        "explain": "Secondary Prevention: (Source text classifies as Secondary, likely due to early intervention/return to work)."
+        "explain": "Tertiary Prevention: Rehabilitation and reducing disability."
     },
     {
         "q": "Cardiac or stroke rehabilitation programs, chronic disease management programs",
@@ -97,11 +97,11 @@ const PREVENTION_DATA = [
     },
     {
         "q": "Daily, low-dose aspirins and/or diet & exercise to prevent further heart attacks or stroke",
-        "answer": 2,
+        "answer": 3,
         "type": "mc",
         "topic": "Prevention",
         "options": ["Primordial", "Primary", "Secondary", "Tertiary", "Quaternary"],
-        "explain": "Secondary Prevention: Preventing recurrence (Secondary prevention)."
+        "explain": "Tertiary Prevention: Managing an existing condition to prevent recurrence/complications."
     }
 ];
 

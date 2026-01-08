@@ -119,7 +119,7 @@ class ScenarioEngine {
 
         html += `</div>`;
         container.innerHTML = html;
-        return;
+        
     }
 
     startScenario(id) {

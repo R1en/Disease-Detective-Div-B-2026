@@ -1,4 +1,4 @@
-class ExposureCalculator {
+class _ExposureCalculator {
     constructor(containerId) {
         this.containerId = containerId;
         this.scale = 24; // Default zoom scale (hours +/- around window)
@@ -187,7 +187,7 @@ class ExposureCalculator {
         this.graphState = { viewStart, totalMs, onset };
 
         const getPercent = (dt) => {
-            let pct = ((dt.getTime() - viewStart.getTime()) / totalMs) * 100;
+            const pct = ((dt.getTime() - viewStart.getTime()) / totalMs) * 100;
             return Math.max(0, Math.min(100, pct));
         };
 
@@ -375,8 +375,8 @@ class ExposureCalculator {
                 // Earlier time (timeStart) = Higher Incubation (Max)
                 // Later time (timeEnd) = Lower Incubation (Min)
 
-                let curMax = (onset.getTime() - timeStart) / 3600000;
-                let curMin = (onset.getTime() - timeEnd) / 3600000;
+                const curMax = (onset.getTime() - timeStart) / 3600000;
+                const curMin = (onset.getTime() - timeEnd) / 3600000;
 
                 updateVisuals(Math.max(0, curMin), Math.max(0, curMax));
             };
@@ -489,7 +489,7 @@ class ExposureCalculator {
                 if (!ex) return;
                 const now = new Date();
                 now.setHours(now.getHours() + ex.onsetOffsetH);
-                const iso = now.toISOString(); // UTC
+                const _iso = now.toISOString(); // UTC
                 // Simple local iso trick
                 const local = new Date(now.getTime() - (now.getTimezoneOffset() * 60000)).toISOString().substring(0, 16);
                 document.getElementById('exposure-onset').value = local;
@@ -519,4 +519,4 @@ class ExposureCalculator {
 
 
 // Global variable for Tools Manager to instantiate
-let exposureCalc = null;
+const _exposureCalc = null;

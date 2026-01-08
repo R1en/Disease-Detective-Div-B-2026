@@ -745,7 +745,7 @@
   ];
 
   // Internal state to track progress through cases and questions
-  let state = {
+  const state = {
     caseOrder: [],
     caseIdx: 0,
     questionIdx: 0,

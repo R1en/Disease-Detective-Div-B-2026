@@ -1508,3 +1508,93 @@ a:hover {
     transform-origin: top left;
     white-space: nowrap;
 }
+
+/* ========================================
+   EXAM-STYLE DATA TABLES (for quiz questions)
+   ======================================== */
+
+.exam-table,
+.table,
+table.data-table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    margin: 1rem auto;
+    font-size: 0.9rem;
+    background: white;
+    border: 2px solid #333;
+}
+
+.exam-table th,
+.table th,
+table.data-table th {
+    background: #1e293b;
+    color: white;
+    padding: 0.5rem;
+    text-align: center;
+    font-weight: 700;
+    border: 1px solid #333;
+}
+
+.exam-table td,
+.table td,
+table.data-table td {
+    padding: 0.5rem;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+
+.exam-table tr:nth-child(even),
+.table tr:nth-child(even) {
+    background: #f8fafc;
+}
+
+.exam-table tr:hover,
+.table tr:hover {
+    background: #e0f2fe;
+}
+
+/* Row header styling */
+.exam-table td:first-child,
+.table td:first-child {
+    background: #f1f5f9;
+    font-weight: 600;
+    text-align: left;
+}
+
+/* Line List styling for interactive cases */
+.line-list-table {
+    width: 100%;
+    font-size: 0.85rem;
+    margin: 1rem 0;
+}
+
+.line-list-table th {
+    background: var(--navy-primary);
+    color: white;
+    padding: 0.4rem 0.6rem;
+    text-align: left;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.line-list-table td {
+    padding: 0.4rem 0.6rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.line-list-table tr:nth-child(even) {
+    background: #fafafa;
+}
+
+.line-list-table tr.flagged {
+    background: #fef3c7 !important;
+    border-left: 3px solid #f59e0b;
+}
+
+.line-list-table tr.excluded {
+    background: #fecaca !important;
+    text-decoration: line-through;
+    opacity: 0.7;
+}

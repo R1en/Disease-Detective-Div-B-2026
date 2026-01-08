@@ -462,6 +462,37 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 </div>
             </div>
 
+            <h2>2.2.1 Modern Heroes of Epidemiology</h2>
+            <p>Beyond the classical pioneers, these modern scientists shaped contemporary public health:</p>
+
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+                <div class="neo-card small" style="border-left: 4px solid var(--accent-blue);">
+                    <h4 style="margin-top: 0; color: var(--accent-blue);"><i class="ph-bold ph-cigarette-slash"></i> Richard Doll (1912-2005)</h4>
+                    <p style="margin: 0; font-size: 0.9rem;">British epidemiologist who definitively linked <strong>smoking to lung cancer</strong> (1950). His cohort study of British doctors is a landmark in chronic disease epidemiology.</p>
+                </div>
+
+                <div class="neo-card small" style="border-left: 4px solid var(--accent-orange);">
+                    <h4 style="margin-top: 0; color: var(--accent-orange);"><i class="ph-bold ph-shield-check"></i> Alexander Langmuir (1910-1993)</h4>
+                    <p style="margin: 0; font-size: 0.9rem;">Founded the CDC's <strong>Epidemic Intelligence Service (EIS)</strong> in 1951. Established modern disease surveillance and outbreak investigation methods.</p>
+                </div>
+
+                <div class="neo-card small" style="border-left: 4px solid var(--accent-green);">
+                    <h4 style="margin-top: 0; color: var(--accent-green);"><i class="ph-bold ph-trophy"></i> D.A. Henderson (1928-2016)</h4>
+                    <p style="margin: 0; font-size: 0.9rem;">Led the WHO <strong>Smallpox Eradication Program</strong> (1966-1977). Only human disease to be completely eradicated.</p>
+                </div>
+
+                <div class="neo-card small" style="border-left: 4px solid var(--accent-purple);">
+                    <h4 style="margin-top: 0; color: var(--accent-purple);"><i class="ph-bold ph-dna"></i> Katalin Karikó & Drew Weissman</h4>
+                    <p style="margin: 0; font-size: 0.9rem;">Pioneered <strong>mRNA vaccine technology</strong>. Their decades of work enabled the rapid development of COVID-19 vaccines (Pfizer, Moderna). Nobel Prize 2023.</p>
+                </div>
+
+                <div class="neo-card small" style="border-left: 4px solid var(--accent-pink);">
+                    <h4 style="margin-top: 0; color: var(--accent-pink);"><i class="ph-bold ph-first-aid-kit"></i> Anthony Fauci (1940-)</h4>
+                    <p style="margin: 0; font-size: 0.9rem;">Directed NIAID for 38 years. Led US response to <strong>HIV/AIDS, Ebola, and COVID-19</strong>. Transformed HIV from death sentence to manageable condition.</p>
+                </div>
+            </div>
+
+
             <div class="study-tip">
                 <div class="callout-header">
                     <i class="ph ph-lightbulb"></i>
@@ -591,7 +622,6 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 <div class="callout-content">
                     <p><strong>Mary Mallon (1869-1938)</strong> was the first identified healthy carrier of typhoid fever in the US. Working as a cook, she infected at least 53 people (3 died). She refused to believe she was the source because she felt healthy, illustrating the danger of the <strong>asymptomatic carrier</strong> state. She was forcibly quarantined for the last 23 years of her life.</p>
                 </div>
-            </div>
             </div>
 
             <div class="neo-card" style="background: #f0fdf4; border-left: 4px solid #22c55e; margin: 1.5rem 0;">
@@ -874,7 +904,6 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                         </tr>
                     </tbody>
                 </table></div>
-            </div>
 
             <div class="exam-trap">
                 <div class="callout-header">
@@ -1843,40 +1872,76 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 </tbody>
             </table></div>
 
-            <h2>6.3 Carriers</h2>
-            <p>A <strong>Carrier</strong> is a person who harbors the infectious agent without showing symptoms but can still infect others.</p>
+            <h2>6.3 Levels of Prevention (National Level)</h2>
+            <div class="callout-header" style="background: var(--gold-accent); color: var(--navy-primary);">
+                <i class="ph ph-star"></i> National Level Concept
+            </div>
+            <p>Public health interventions are classified by <strong>when</strong> they occur in the natural history timeline.</p>
 
             <div class="table-container"><table class="table">
-                 <thead style="background: var(--navy-primary); color: white;">
-                    <tr><th style="padding: 1rem;">Type</th><th style="padding: 1rem;">Example Scenario</th></tr>
-                 </thead>
-                 <tbody>
-                    <tr><td style="padding: 1rem;"><strong>Symptomatic Carrier</strong></td><td style="padding: 1rem;">A person with mild flu who goes to work.</td></tr>
-                    <tr style="background: var(--gray-bg);"><td style="padding: 1rem;"><strong>Asymptomatic (Healthy) Carrier</strong></td><td style="padding: 1rem;">"Typhoid Mary" - never felt sick but shed bacteria.</td></tr>
-                    <tr><td style="padding: 1rem;"><strong>Convalescent Carrier</strong></td><td style="padding: 1rem;">Recovering from Salmonella but still infectious for weeks.</td></tr>
-                    <tr style="background: var(--gray-bg);"><td style="padding: 1rem;"><strong>Incubatory Carrier</strong></td><td style="padding: 1rem;">Spreading Chickenpox before the rash appears.</td></tr>
-                 </tbody>
+                <thead style="background: var(--navy-primary); color: white;">
+                    <tr>
+                        <th style="padding: 1rem; text-align: left;">Level</th>
+                        <th style="padding: 1rem; text-align: left;">Timing (Stage)</th>
+                        <th style="padding: 1rem; text-align: left;">Goal</th>
+                        <th style="padding: 1rem; text-align: left;">Examples</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: var(--gray-bg);">
+                        <td style="padding: 1rem;"><strong>Primary</strong></td>
+                        <td style="padding: 1rem;">Before disease occurs (Susceptibility)</td>
+                        <td style="padding: 1rem;">Prevent exposure or onset</td>
+                        <td style="padding: 1rem;">Vaccination, Condoms, Handwashing, Health Education</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem;"><strong>Secondary</strong></td>
+                        <td style="padding: 1rem;">Early disease (Subclinical)</td>
+                        <td style="padding: 1rem;">Detect and treat <strong>early</strong></td>
+                        <td style="padding: 1rem;">Screening tests (Mammograms, Pap smears), Contact Tracing</td>
+                    </tr>
+                    <tr style="background: var(--gray-bg);">
+                        <td style="padding: 1rem;"><strong>Tertiary</strong></td>
+                        <td style="padding: 1rem;">Late disease (Clinical/Recovery)</td>
+                        <td style="padding: 1rem;">Limit disability and rehab</td>
+                        <td style="padding: 1rem;">Physical Therapy, Chemotherapy, Support Groups</td>
+                    </tr>
+                </tbody>
             </table></div>
 
-            <div class="champion-concept">
+            <div class="study-tip">
                 <div class="callout-header">
-                    <i class="ph ph-trophy"></i>
-                    Champion Concept: Generation Time
+                    <i class="ph ph-lightbulb"></i>
+                    Mnemonic: P-S-T
                 </div>
                 <div class="callout-content">
-                    <p><strong>Generation Time:</strong> The time interval between infection of host A and infection of host B.</p>
-                    <p>If Generation Time &lt; Incubation Period, the disease spreads <em>before</em> it is detected (hard to control!).</p>
+                    <ul>
+                        <li><strong>P</strong>rimary = <strong>P</strong>revent (No disease yet)</li>
+                        <li><strong>S</strong>econdary = <strong>S</strong>creen (Hidden disease)</li>
+                        <li><strong>T</strong>ertiary = <strong>T</strong>reat (Obvious disease)</li>
+                    </ul>
                 </div>
             </div>
 
-            <h2>6.4 Carrier Drill</h2>
             <div class="drill-box">
-                <div class="callout-header"><i class="ph ph-calculator"></i> Identify the Carrier Type</div>
+                <div class="callout-header"><i class="ph ph-calculator"></i> Identify the Level</div>
                 <div class="callout-content">
-                    <p><strong>Scenario 1:</strong> "Typhoid Mary" felt perfectly healthy but spread Typhoid Fever.</p>
+                    <p><strong>Scenario 1:</strong> A city adds fluoride to the water supply to prevent cavities.</p>
                     <div class="accordion">
                         <div class="accordion-header">Show Answer</div>
-                        <div class="accordion-content"><p><strong>Answer: Chronic/Asymptomatic Carrier</strong></p></div>
+                        <div class="accordion-content"><p><strong>Answer: Primary Prevention</strong> (Prevents onset).</p></div>
+                    </div>
+
+                    <p style="margin-top: 1rem;"><strong>Scenario 2:</strong> A doctor checks a patient's blood pressure during a checkup.</p>
+                    <div class="accordion">
+                        <div class="accordion-header">Show Answer</div>
+                        <div class="accordion-content"><p><strong>Answer: Secondary Prevention</strong> (Screening for asymptomatic hypertension).</p></div>
+                    </div>
+
+                    <p style="margin-top: 1rem;"><strong>Scenario 3:</strong> A stroke survivor attends speech therapy.</p>
+                    <div class="accordion">
+                        <div class="accordion-header">Show Answer</div>
+                        <div class="accordion-content"><p><strong>Answer: Tertiary Prevention</strong> (Rehab/Limiting disability).</p></div>
                     </div>
                 </div>
             </div>
@@ -1885,16 +1950,17 @@ window.EPIDEMIC_ENGINE_CONTENT = {
             <ul>
                 <li><strong>Incubation:</strong> Exposure to Symptoms (Infectious).</li>
                 <li><strong>Latency:</strong> Exposure to Disease (Chronic).</li>
-                <li><strong>Timeline:</strong> Susceptible -> Subclinical -> Clinical -> Outcome.</li>
+                <li><strong>Prevention:</strong> Primary (Vaccine), Secondary (Screening), Tertiary (Rehab).</li>
             </ul>
 
-            <h2>6.5 Exam Focus & Tips</h2>
+            <h2>6.4 Exam Focus & Tips</h2>
             <div class="exam-trap">
                 <div class="callout-header"><i class="ph ph-lightning"></i> High Yield Topics</div>
                 <div class="callout-content">
                     <ul>
                         <li><strong>Terms:</strong> Don't swap Incubation and Latency.</li>
-                        <li><strong>Carriers:</strong> Know the difference between Incubatory (before symptoms) and Convalescent (after symptoms).</li>
+                        <li><strong>Prevention Levels:</strong> Classify interventions by timing (Before, Early, Late).</li>
+                        <li><strong>Mnemonic:</strong> P-S-T (Prevent, Screen, Treat).</li>
                     </ul>
                 </div>
             </div>
@@ -2475,7 +2541,6 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 <div class="callout-content">
                     <p>It is standard practice to <strong>change</strong> the case definition during an investigation.</p>
                     <p>Start <strong>Sensitive</strong> (Loose) to find everyone. Then become more <strong>Specific</strong> (Strict) as you get lab results to avoid analyzing non-cases.</p>
-                </div>
                 </div>
             </div>
 
@@ -3281,24 +3346,90 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 </div>
             </div>
 
-            <h3>Decision Tree: "RARE-TIME-COST"</h3>
-            <div style="background: #fef3c7; border: 2px solid #f59e0b; border-radius: 8px; padding: 1.5rem; margin: 1rem 0;">
-                <h4 style="margin-top: 0; color: #92400e;">Step 1: Is the outcome RARE?</h4>
-                <ul style="margin-bottom: 0.5rem;">
-                    <li><strong>YES (Rare disease/outcome):</strong> → <span style="color: #dc2626; font-weight: bold;">Case-Control Study</span></li>
-                    <li><strong>NO (Common outcome):</strong> → Go to Step 2</li>
-                </ul>
-                <h4 style="color: #92400e;">Step 2: Do you have TIME to follow people?</h4>
-                <ul style="margin-bottom: 0.5rem;">
-                    <li><strong>YES (Can wait for outcomes):</strong> → <span style="color: #2563eb; font-weight: bold;">Cohort Study</span></li>
-                    <li><strong>NO (Need quick snapshot):</strong> → <span style="color: #16a34a; font-weight: bold;">Cross-Sectional Study</span></li>
-                </ul>
-                <h4 style="color: #92400e;">Step 3: Is COST a major concern?</h4>
-                <ul style="margin-bottom: 0;">
-                    <li><strong>YES (Limited budget):</strong> → <span style="color: #dc2626; font-weight: bold;">Case-Control</span> (cheaper)</li>
-                    <li><strong>NO (Well-funded):</strong> → <span style="color: #2563eb; font-weight: bold;">Cohort</span> (gold standard)</li>
-                </ul>
+            <h3>Decision Tree: Choosing a Study Design</h3>
+            <div style="background: white; border: 2px solid #e2e8f0; border-radius: 8px; padding: 1.5rem; margin: 1rem 0; overflow-x: auto; text-align: center;">
+                <svg viewBox="0 0 800 450" style="width: 100%; max-width: 800px; font-family: 'Inter', sans-serif; height: auto;">
+                    <defs>
+                        <marker id="arrowHead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/>
+                        </marker>
+                    </defs>
+
+                    <!-- Root Question -->
+                    <g transform="translate(400, 40)">
+                        <rect x="-140" y="-25" width="280" height="50" rx="25" fill="#1e40af" stroke="#1e3a8a" stroke-width="2"/>
+                        <text x="0" y="5" text-anchor="middle" font-weight="bold" fill="white" font-size="16">Did Investigator Assign Exposure?</text>
+                    </g>
+                    
+                    <!-- Branch 1: YES -->
+                    <line x1="400" y1="65" x2="400" y2="90" stroke="#64748b" stroke-width="2"/>
+                    <line x1="400" y1="90" x2="180" y2="90" stroke="#64748b" stroke-width="2"/>
+                    <line x1="180" y1="90" x2="180" y2="130" stroke="#64748b" stroke-width="2" marker-end="url(#arrowHead)"/>
+                    <text x="290" y="85" text-anchor="middle" fill="#dc2626" font-weight="bold" font-size="14">YES</text>
+
+                    <!-- Result: Experimental -->
+                    <g transform="translate(180, 160)">
+                        <rect x="-100" y="-30" width="200" height="60" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+                        <text x="0" y="-5" text-anchor="middle" font-weight="bold" fill="#991b1b" font-size="16">Experimental / RCT</text>
+                        <text x="0" y="15" text-anchor="middle" fill="#7f1d1d" font-size="12">Gold Standard for Causation</text>
+                    </g>
+
+                    <!-- Branch 2: NO -->
+                    <line x1="400" y1="90" x2="620" y2="90" stroke="#64748b" stroke-width="2"/>
+                    <line x1="620" y1="90" x2="620" y2="130" stroke="#64748b" stroke-width="2" marker-end="url(#arrowHead)"/>
+                    <text x="510" y="85" text-anchor="middle" fill="#15803d" font-weight="bold" font-size="14">NO</text>
+
+                    <!-- Question 2: Direction -->
+                    <g transform="translate(620, 160)">
+                        <circle cx="0" cy="0" r="50" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+                        <text x="0" y="-12" text-anchor="middle" font-weight="bold" fill="#14532d" font-size="14">Obs.</text>
+                        <text x="0" y="5" text-anchor="middle" font-weight="bold" fill="#14532d" font-size="12">Time</text>
+                        <text x="0" y="20" text-anchor="middle" font-weight="bold" fill="#14532d" font-size="12">Direction?</text>
+                    </g>
+
+                    <!-- Directions Branches -->
+                    
+                    <!-- Forward (Cohort) -->
+                    <line x1="620" y1="210" x2="620" y2="240" stroke="#64748b" stroke-width="2"/>
+                    <line x1="620" y1="240" x2="450" y2="240" stroke="#64748b" stroke-width="2"/>
+                    <line x1="450" y1="240" x2="450" y2="280" stroke="#64748b" stroke-width="2" marker-end="url(#arrowHead)"/>
+                    <text x="500" y="235" text-anchor="middle" fill="#2563eb" font-weight="bold" font-size="12">Forward</text>
+
+                    <g transform="translate(450, 310)">
+                        <rect x="-80" y="-25" width="160" height="50" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+                        <text x="0" y="-5" text-anchor="middle" font-weight="bold" fill="#1e40af" font-size="15">Cohort</text>
+                        <text x="0" y="15" text-anchor="middle" fill="#1e3a8a" font-size="11">Exp. → Disease</text>
+                    </g>
+
+                    <!-- Backward (Case-Control) -->
+                    <line x1="620" y1="240" x2="620" y2="280" stroke="#64748b" stroke-width="2" marker-end="url(#arrowHead)"/>
+                    <text x="660" y="260" text-anchor="middle" fill="#d97706" font-weight="bold" font-size="12">Backward</text>
+
+                    <g transform="translate(620, 310)">
+                        <rect x="-80" y="-25" width="160" height="50" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+                        <text x="0" y="-5" text-anchor="middle" font-weight="bold" fill="#92400e" font-size="15">Case-Control</text>
+                        <text x="0" y="15" text-anchor="middle" fill="#78350f" font-size="11">Disease → Exp.</text>
+                    </g>
+
+                    <!-- Snapshot (Cross-Sectional) -->
+                    <line x1="620" y1="240" x2="790" y2="240" stroke="#64748b" stroke-width="2"/>
+                    <line x1="790" y1="240" x2="790" y2="280" stroke="#64748b" stroke-width="2" marker-end="url(#arrowHead)"/>
+                    <text x="750" y="235" text-anchor="middle" fill="#059669" font-weight="bold" font-size="12">Snapshot</text>
+
+                    <g transform="translate(790, 310)">
+                        <rect x="-80" y="-25" width="160" height="50" rx="8" fill="#ecfdf5" stroke="#059669" stroke-width="2"/>
+                        <text x="0" y="-5" text-anchor="middle" font-weight="bold" fill="#065f46" font-size="15">Cross-Sectional</text>
+                        <text x="0" y="15" text-anchor="middle" fill="#064e3b" font-size="11">All at once</text>
+                    </g>
+                    
+                    <!-- Tips Text -->
+                    <text x="80" y="420" text-anchor="start" fill="#64748b" font-size="12" font-style="italic">Rare Disease? Use Case-Control</text>
+                    <text x="80" y="440" text-anchor="start" fill="#64748b" font-size="12" font-style="italic">Determine Incidence? Use Cohort</text>
+
+                </svg>
             </div>
+
+
 
             <h3>The Three Main Study Designs</h3>
 
@@ -3503,50 +3634,7 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 </div>
             </div>
 
-                        <text x="0" y="18" text-anchor="middle" font-size="7" fill="#dc2626" font-weight="bold">Use: OR</text>
-                        <text x="0" y="30" text-anchor="middle" font-size="7" fill="#6b7280" font-style="italic">Ex: Lung cancer</text>
-                        <text x="0" y="40" text-anchor="middle" font-size="7" fill="#6b7280">& smoking study</text>
-                    </g>
 
-                    <!-- NO -> Cross-Sectional -->
-                    <line x1="300" y1="313" x2="300" y2="350" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow-flow)"/>
-                    <text x="310" y="333" font-size="8" font-weight="bold" fill="#6b7280">NO</text>
-                    
-                    <g transform="translate(300, 385)">
-                        <rect x="-75" y="-24" width="150" height="68" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="3"/>
-                        <text x="0" y="-6" text-anchor="middle" font-size="10" font-weight="bold" fill="#1e40af">CROSS-SECTIONAL</text>
-                        <text x="0" y="6" text-anchor="middle" font-size="8" fill="#3b82f6">Snapshot in time</text>
-                        <text x="0" y="18" text-anchor="middle" font-size="7" fill="#3b82f6" font-weight="bold">Prevalence</text>
-                        <text x="0" y="30" text-anchor="middle" font-size="7" fill="#6b7280" font-style="italic">Ex: NHANES</text>
-                        <text x="0" y="40" text-anchor="middle" font-size="7" fill="#6b7280">survey</text>
-                    </g>
-
-                    <!-- Exam Tips Box -->
-                    <g transform="translate(300, 485)">
-                        <rect x="-280" y="-50" width="560" height="130" rx="8" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
-                        <text x="0" y="-32" text-anchor="middle" font-size="11" font-weight="bold" fill="#92400e">🎯 EXAM QUICK GUIDE</text>
-                        
-                        <g transform="translate(-250, -12)">
-                            <text x="0" y="0" text-anchor="start" font-size="9" fill="#78350f" font-weight="bold">When to Choose:</text>
-                            <text x="0" y="14" text-anchor="start" font-size="8" fill="#78350f">✓ RCT: Testing intervention, ethical</text>
-                            <text x="0" y="26" text-anchor="start" font-size="8" fill="#78350f">✓ Cohort: Common disease, $ available</text>
-                            <text x="0" y="38" text-anchor="start" font-size="8" fill="#78350f">✓ Case-Control: RARE disease, fast</text>
-                            <text x="0" y="50" text-anchor="start" font-size="8" fill="#78350f">✓ Cross-Sect: Prevalence, hypothesis</text>
-                            <text x="0" y="62" text-anchor="start" font-size="8" fill="#78350f">✓ Ecological: Population trends</text>
-                        </g>
-
-                        <g transform="translate(30, -12)">
-                            <text x="0" y="0" text-anchor="start" font-size="9" fill="#78350f" font-weight="bold">Key Clues:</text>
-                            <text x="0" y="14" text-anchor="start" font-size="8" fill="#78350f">• "Randomized" → RCT</text>
-                            <text x="0" y="26" text-anchor="start" font-size="8" fill="#78350f">• "Followed over time" → Cohort</text>
-                            <text x="0" y="38" text-anchor="start" font-size="8" fill="#78350f">• "Cases and controls" → Case-Control</text>
-                            <text x="0" y="50" text-anchor="start" font-size="8" fill="#78350f">• "Survey at one time" → Cross-Sect</text>
-                            <text x="0" y="62" text-anchor="start" font-size="8" fill="#78350f">• "Country-level data" → Ecological</text>
-                        </g>
-
-                        <text x="0" y="85" text-anchor="middle" font-size="8" fill="#92400e" font-style="italic">Memory Trick: "Really Cool Cohorts Create Cross-Sectional Ecological Evidence"</text>
-                    </g>
-                </svg>
             </div>
 
             <div class="exam-trap" style="margin: 2rem 0;">
@@ -3627,49 +3715,7 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 </div>
             </div>
 
-            <div style="margin: 2rem 0;">
-                <h3 style="color: var(--navy-primary);">Study Design Cheat Sheet</h3>
-                <div class="table-container"><table class="table">
-                             <th style="padding: 1rem; border: 1px solid white;">Feature</th>
-                             <th style="padding: 1rem; border: 1px solid white;">Cohort</th>
-                             <th style="padding: 1rem; border: 1px solid white;">Case-Control</th>
-                             <th style="padding: 1rem; border: 1px solid white;">Cross-Sectional</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="padding: 1rem; font-weight: bold; background: #eee;">Direction</td>
-                            <td style="padding: 1rem;">Forward (Exposure -> Disease)</td>
-                            <td style="padding: 1rem;">Backward (Disease -> Exposure)</td>
-                            <td style="padding: 1rem;">Snapshot (Present)</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 1rem; font-weight: bold; background: #eee;">Starting Group</td>
-                            <td style="padding: 1rem;">Exposed vs Unexposed</td>
-                            <td style="padding: 1rem;">Sick (Case) vs Well (Control)</td>
-                            <td style="padding: 1rem;">Total Sample</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 1rem; font-weight: bold; background: #eee;">Measure</td>
-                            <td style="padding: 1rem;">Relative Risk (RR) / AR</td>
-                            <td style="padding: 1rem;">Odds Ratio (OR)</td>
-                            <td style="padding: 1rem;">Prevalence Ratio</td>
-                        </tr>
-                         <tr>
-                            <td style="padding: 1rem; font-weight: bold; background: #eee;">Best For</td>
-                            <td style="padding: 1rem;">Rare Exposures</td>
-                            <td style="padding: 1rem;">Rare Diseases, Outbreaks</td>
-                            <td style="padding: 1rem;">Surveys, Burden of Disease</td>
-                        </tr>
-                         <tr>
-                            <td style="padding: 1rem; font-weight: bold; background: #eee;">Cost/Time</td>
-                            <td style="padding: 1rem;">High / Long</td>
-                            <td style="padding: 1rem;">Low / Fast</td>
-                            <td style="padding: 1rem;">Medium</td>
-                        </tr>
-                    </tbody>
-                </table></div>
-            </div>
+
 
             <p class="lead">In Case-Control studies (where you start with sick people and look back), you cannot calculate Attack Rates because you don't know the total population. Instead, you calculate the <strong>Odds Ratio (OR)</strong>.</p>
 
@@ -3821,7 +3867,6 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                         <li><strong>Cross‑Sectional = Prevalence:</strong> Measures existing disease; cannot infer causality.</li>
                     </ul>
                 </div>
-                </div>
             </div>
 
             <h2>12.5 Advanced Study Designs & Pitfalls (ADVANCED)</h2>
@@ -3850,7 +3895,45 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 <li><strong>Significance:</strong> CI must NOT cross 1.0.</li>
             </ul>
 
-            <!-- Practice tip for case-control math -->
+            <h2>12.6 Bias and Error (National Level)</h2>
+            <div class="callout-header" style="background: var(--gold-accent); color: var(--navy-primary);">
+                <i class="ph ph-star"></i> National Level Concept
+            </div>
+            <p>Errors in epidemiology are classified as either **Random Error** (Chance) or **Systematic Error** (Bias). Bias ruins studies because increasing sample size does NOT fix it.</p>
+
+            <div class="table-container"><table class="table">
+                <thead style="background: var(--navy-primary); color: white;">
+                    <tr>
+                        <th style="padding: 0.75rem;">Type of Bias</th>
+                        <th style="padding: 0.75rem;">Definition</th>
+                        <th style="padding: 0.75rem;">Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: var(--gray-bg);">
+                        <td style="padding: 0.75rem;"><strong>Selection Bias</strong></td>
+                        <td style="padding: 0.75rem;">Error in choosing participants. The study population doesn't represent the target population.</td>
+                        <td style="padding: 0.75rem;"><em>Healthy Worker Effect:</em> Comparing workers (who must be healthy to work) to the general public (includes sick people).</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.75rem;"><strong>Information Bias</strong></td>
+                        <td style="padding: 0.75rem;">Error in measuring exposure or disease.</td>
+                        <td style="padding: 0.75rem;"><em>Recall Bias:</em> Sick people remember what they ate better than healthy people.</td>
+                    </tr>
+                    <tr style="background: var(--gray-bg);">
+                        <td style="padding: 0.75rem;"><strong>Confounding</strong></td>
+                        <td style="padding: 0.75rem;">A third variable distorts the association.</td>
+                        <td style="padding: 0.75rem;">Coffee drinking is linked to Lung Cancer... but mainly because coffee drinkers smoke more! (Smoking is the confounder).</td>
+                    </tr>
+                </tbody>
+            </table></div>
+
+            <h3>Internal vs External Validity</h3>
+            <ul>
+                <li><strong>Internal Validity:</strong> Did the study measure what it set out to measure? (Is it free of bias/confounding?)</li>
+                <li><strong>External Validity (Generalizability):</strong> Can the results be applied to the real world?</li>
+            </ul>
+
             <div class="study-tip">
                 <div class="callout-header">
                     <i class="ph ph-lightbulb"></i>
@@ -4139,6 +4222,91 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                  </ul>
             </div>
 
+            <h2>13.5 Establishing Causation (National Level)</h2>
+            <div class="callout-header" style="background: var(--gold-accent); color: var(--navy-primary);">
+                <i class="ph ph-star"></i> National Level Concept
+            </div>
+            <p> Finding a statistical association (p < 0.05) is NOT enough to prove that X <em>caused</em> Y. Correlation ≠ Causation. You need to apply specific criteria.</p>
+
+            <h3>1. Hill's Criteria for Causation</h3>
+            <p>Austin Bradford Hill (1965) proposed 9 criteria. "Strength", "Consistency", and "Temporality" are the most tested.</p>
+            <div class="neo-card small" style="background: #fffbeb; border-left: 4px solid #f59e0b;">
+                 <ol>
+                    <li><strong>Strength of Association:</strong> High RR or OR (e.g., RR = 10 is stronger than RR = 1.2).</li>
+                    <li><strong>Consistency:</strong> Repeatedly observed by different persons, in different places, circumstances, and times.</li>
+                    <li><strong>Specificity:</strong> One cause leads to one effect (Weakest criterion, as many diseases have multiple causes).</li>
+                    <li><strong>Temporality:</strong> The cause MUST precede the effect. (The only <strong>essential</strong> criterion).</li>
+                    <li><strong>Biological Gradient (Dose-Response):</strong> More exposure = More disease.</li>
+                    <li><strong>Plausibility:</strong> Biologically possible given current knowledge.</li>
+                    <li><strong>Coherence:</strong> Doesn't conflict with natural history or biology.</li>
+                    <li><strong>Experiment:</strong> Intervention (removing the cause) prevents the disease.</li>
+                    <li><strong>Analogy:</strong> Similar to other known associations.</li>
+                 </ol>
+            </div>
+
+            <h3>2. Evan's Postulates (Modern Causation)</h3>
+            <p>Alfred Evans (1976) updated Koch's Postulates for the modern era, acknowledging that not all diseases are infectious or have a single agent.</p>
+            <div class="accordion">
+                <div class="accordion-header"><i class="ph-bold ph-list"></i> View Evan's Key Postulates</div>
+                <div class="accordion-content">
+                    <ol>
+                        <li>Prevalence of disease should be higher in the exposed.</li>
+                        <li>Exposure should be more frequent in cases than controls.</li>
+                        <li>Incidence should be higher in exposed (cohort study).</li>
+                        <li>Disease should follow a normal incubation period bell curve.</li>
+                        <li>Host response (e.g., antibodies) should follow exposure.</li>
+                        <li>Experimental reproduction of disease should occur (mostly in animals/ethical human trials).</li>
+                        <li>Eliminating the exposure decreases incidence.</li>
+                        <li>The whole story should make biological and epidemiological sense.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <h2>13.6 Advanced Statistical Tests (National Level)</h2>
+            <p>At the National level, you enter the realm of "Biostatistics". You must know <em>which</em> test to use for different data types.</p>
+            
+            <div class="table-container"><table class="table">
+                <thead style="background: var(--navy-primary); color: white;">
+                    <tr>
+                        <th style="padding: 0.75rem;">Test Name</th>
+                        <th style="padding: 0.75rem;">When to Use It</th>
+                        <th style="padding: 0.75rem;">Key Keyword/Hint</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: var(--gray-bg);">
+                        <td style="padding: 0.75rem;"><strong>Chi-Square (χ²)</strong></td>
+                        <td style="padding: 0.75rem;">Comparing clear Categories (e.g., Sick/Not Sick vs. Ate/Didn't Eat).</td>
+                        <td style="padding: 0.75rem;">"Categorical Data", "Large Sample"</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.75rem;"><strong>Fisher's Exact Test</strong></td>
+                        <td style="padding: 0.75rem;">Same as Chi-Square, but for <strong>Small Samples</strong> (Expected value < 5 in any cell).</td>
+                        <td style="padding: 0.75rem;">"Small Sample Size"</td>
+                    </tr>
+                    <tr style="background: var(--gray-bg);">
+                        <td style="padding: 0.75rem;"><strong>McNemar's Test</strong></td>
+                        <td style="padding: 0.75rem;">For <strong>Paired/Matched</strong> categorical data (e.g., Twins, Pre/Post test).</td>
+                        <td style="padding: 0.75rem;">"Matched Pairs"</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.75rem;"><strong>T-Test</strong></td>
+                        <td style="padding: 0.75rem;">Comparing <strong>Means</strong> (Averages) of 2 groups (e.g., Average height of Men vs Women).</td>
+                        <td style="padding: 0.75rem;">"Continuous Data", "Two Groups"</td>
+                    </tr>
+                    <tr style="background: var(--gray-bg);">
+                        <td style="padding: 0.75rem;"><strong>ANOVA</strong></td>
+                        <td style="padding: 0.75rem;">Comparing Means of <strong>3 or more</strong> groups (Analysis of Variance).</td>
+                        <td style="padding: 0.75rem;">"More than 2 groups"</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.75rem;"><strong>Mantel-Haenszel</strong></td>
+                        <td style="padding: 0.75rem;">Stratified analysis to control for <strong>Confounding</strong>.</td>
+                        <td style="padding: 0.75rem;">"Stratification", "Confounding"</td>
+                    </tr>
+                </tbody>
+            </table></div>
+
             <div class="study-tip">
                 <div class="callout-header">
                     <i class="ph ph-lightbulb"></i>
@@ -4157,7 +4325,7 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 </div>
             </div>
 
-            <h2>13.6 Hypothesis Drill</h2>
+            <h2>13.7 Hypothesis Drill</h2>
 
             <div class="drill-box">
                 <div class="callout-header">
@@ -4200,9 +4368,10 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 <li><strong>p < 0.05:</strong> Significant.</li>
                 <li><strong>Type I:</strong> False Positive.</li>
                 <li><strong>Type II:</strong> False Negative.</li>
+                <li><strong>Hill's Criteria:</strong> Use Strength, Consistency, and Temporality to prove causation.</li>
             </ul>
 
-            <h2>13.7 Exam Focus & Tips</h2>
+            <h2>13.8 Exam Focus & Tips</h2>
             <div class="exam-trap">
                 <div class="callout-header"><i class="ph ph-lightning"></i> High Yield Topics</div>
                 <div class="callout-content">
@@ -4210,6 +4379,7 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                         <li><strong>Null Hypothesis (H₀):</strong> "No association" (Boring).</li>
                         <li><strong>P-Value:</strong> < 0.05 means Significant (Reject H₀).</li>
                         <li><strong>Errors:</strong> Type I (False Positive - Man Pregnant), Type II (False Negative - Missed it).</li>
+                        <li><strong>Causation:</strong> Temporality is the only essential Hill's Criterion.</li>
                     </ul>
                 </div>
             </div>
@@ -5069,7 +5239,157 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                 </div>
             </div>
 
-            <h2>17.3 Classification Drill</h2>
+            <h2>17.3 Legal Framework</h2>
+            <div class="neo-card small" style="background: #f0f9ff; border-left: 4px solid #0284c7; margin-bottom: 1.5rem;">
+                <h4 style="margin-top: 0;"><i class="ph-bold ph-scales"></i> Police Powers Doctrine</h4>
+                <p>States have the authority to enact laws and regulations to protect public health, safety, and welfare. This includes:</p>
+                <ul>
+                    <li><strong>Mandatory Vaccination:</strong> Schools can require vaccines (with exemptions).</li>
+                    <li><strong>Quarantine Orders:</strong> Health officers can order isolation/quarantine.</li>
+                    <li><strong>Contact Tracing:</strong> Authority to investigate and track exposures.</li>
+                </ul>
+                <p style="margin-bottom: 0;"><strong>Key Limit:</strong> Must provide <em>due process</em> - notice, hearing, and right to appeal.</p>
+            </div>
+
+            <h3>17.3.1 Levels of Restriction</h3>
+            <div class="table-container">
+                <table class="table" style="width: 100%;">
+                    <thead>
+                        <tr style="background: var(--navy-primary); color: white;">
+                            <th style="padding: 0.75rem;">Level</th>
+                            <th style="padding: 0.75rem;">Description</th>
+                            <th style="padding: 0.75rem;">Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #f8fafc;">
+                            <td style="padding: 0.75rem; font-weight: bold;">Advisory</td>
+                            <td style="padding: 0.75rem;">Voluntary recommendations</td>
+                            <td style="padding: 0.75rem;">"We recommend staying home"</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.75rem; font-weight: bold;">Monitoring</td>
+                            <td style="padding: 0.75rem;">Check-ins required, but can leave home</td>
+                            <td style="padding: 0.75rem;">Daily temperature checks</td>
+                        </tr>
+                        <tr style="background: #f8fafc;">
+                            <td style="padding: 0.75rem; font-weight: bold;">Home Quarantine</td>
+                            <td style="padding: 0.75rem;">Must stay home; legal order</td>
+                            <td style="padding: 0.75rem;">COVID-19 exposure quarantine</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.75rem; font-weight: bold;">Facility Quarantine</td>
+                            <td style="padding: 0.75rem;">Must stay in designated facility</td>
+                            <td style="padding: 0.75rem;">Cruise ship quarantine</td>
+                        </tr>
+                        <tr style="background: #fef2f2;">
+                            <td style="padding: 0.75rem; font-weight: bold;">Involuntary Detention</td>
+                            <td style="padding: 0.75rem;">Last resort; requires court order</td>
+                            <td style="padding: 0.75rem;">Non-compliant TB patient</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>17.4 Historical Cases</h2>
+            <div class="champion-concept">
+                <div class="callout-header">
+                    <i class="ph ph-trophy"></i>
+                    Champion Concept: Typhoid Mary (1907)
+                </div>
+                <div class="callout-content">
+                    <p><strong>Mary Mallon</strong> was an asymptomatic carrier of typhoid fever who worked as a cook. She infected at least 53 people (3 deaths). After refusing to stop working as a cook, she was forcibly quarantined for 23 years until her death.</p>
+                    <p><strong>Exam Relevance:</strong> Classic example of an <em>asymptomatic carrier</em> and the ethical tension between individual liberty and public safety.</p>
+                </div>
+            </div>
+
+            <div class="neo-card small" style="margin: 1.5rem 0;">
+                <h4 style="margin-top: 0;"><i class="ph-bold ph-clock-counter-clockwise"></i> Other Notable Quarantine Events</h4>
+                <ul>
+                    <li><strong>1918 Flu Pandemic:</strong> Cities that implemented early quarantine had lower mortality (St. Louis vs Philadelphia).</li>
+                    <li><strong>2003 SARS:</strong> Toronto hospitals quarantined thousands; contained outbreak.</li>
+                    <li><strong>2014 Ebola:</strong> Nurse Kaci Hickox challenged mandatory quarantine in Maine (won in court).</li>
+                    <li><strong>2020 COVID-19:</strong> Diamond Princess cruise ship quarantine; Wuhan lockdown.</li>
+                </ul>
+            </div>
+
+            <h2>17.5 Transmission Precautions & PPE</h2>
+            <p>Healthcare workers use different precautions based on transmission route:</p>
+            
+            <div class="table-container">
+                <table class="table" style="width: 100%;">
+                    <thead>
+                        <tr style="background: var(--navy-primary); color: white;">
+                            <th style="padding: 0.75rem;">Precaution Type</th>
+                            <th style="padding: 0.75rem;">Transmission Route</th>
+                            <th style="padding: 0.75rem;">PPE Required</th>
+                            <th style="padding: 0.75rem;">Example Diseases</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #f8fafc;">
+                            <td style="padding: 0.75rem; font-weight: bold;">Standard</td>
+                            <td style="padding: 0.75rem;">All patients</td>
+                            <td style="padding: 0.75rem;">Gloves, hand hygiene</td>
+                            <td style="padding: 0.75rem;">Baseline for everyone</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.75rem; font-weight: bold;">Contact</td>
+                            <td style="padding: 0.75rem;">Touch/fomites</td>
+                            <td style="padding: 0.75rem;">Gown, gloves</td>
+                            <td style="padding: 0.75rem;">C. diff, MRSA, Scabies</td>
+                        </tr>
+                        <tr style="background: #fef9c3;">
+                            <td style="padding: 0.75rem; font-weight: bold;">Droplet</td>
+                            <td style="padding: 0.75rem;">Large droplets (&gt;5μm)</td>
+                            <td style="padding: 0.75rem;">Surgical mask, eye protection</td>
+                            <td style="padding: 0.75rem;">Flu, Pertussis, Meningococcus</td>
+                        </tr>
+                        <tr style="background: #fef2f2;">
+                            <td style="padding: 0.75rem; font-weight: bold;">Airborne</td>
+                            <td style="padding: 0.75rem;">Small particles (&lt;5μm)</td>
+                            <td style="padding: 0.75rem;">N95 respirator, negative pressure room</td>
+                            <td style="padding: 0.75rem;">TB, Measles, Chickenpox</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="study-tip">
+                <div class="callout-header">
+                    <i class="ph ph-lightbulb"></i>
+                    Memory Trick: "My Chicken Has TB"
+                </div>
+                <div class="callout-content">
+                    <p>Airborne precautions for: <strong>M</strong>easles, <strong>C</strong>hickenpox, <strong>H</strong>erpes zoster (disseminated), <strong>TB</strong></p>
+                </div>
+            </div>
+
+            <h3>17.5.1 PPE Hierarchy</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+                <div style="background: #fef3c7; padding: 1rem; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2rem;">🧤</div>
+                    <strong>Gloves</strong>
+                    <div style="font-size: 0.85rem; color: #666;">First on, last off</div>
+                </div>
+                <div style="background: #e0f2fe; padding: 1rem; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2rem;">🥼</div>
+                    <strong>Gown</strong>
+                    <div style="font-size: 0.85rem; color: #666;">Body protection</div>
+                </div>
+                <div style="background: #f0fdf4; padding: 1rem; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2rem;">😷</div>
+                    <strong>Mask</strong>
+                    <div style="font-size: 0.85rem; color: #666;">Surgical or N95</div>
+                </div>
+                <div style="background: #faf5ff; padding: 1rem; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2rem;">🥽</div>
+                    <strong>Eye Protection</strong>
+                    <div style="font-size: 0.85rem; color: #666;">Goggles/face shield</div>
+                </div>
+            </div>
+
+            <h2>17.6 Classification Drill</h2>
 
             <div class="drill-box">
                 <div class="callout-header">
@@ -5103,17 +5423,28 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                             <p>This is a broader measure to reduce contact, often called "Reverse Quarantine" or "Shelter in Place" depending on context, but technically a form of mass quarantine/distancing.</p>
                         </div>
                     </div>
+
+                    <p style="margin-top: 1rem;"><strong>Scenario 4:</strong> A nurse who treated an Ebola patient is asked to monitor her temperature twice daily but can go to work.</p>
+                    <div class="accordion">
+                        <div class="accordion-header">Show Answer</div>
+                        <div class="accordion-content">
+                            <p><strong>Answer: Active Monitoring</strong></p>
+                            <p>Less restrictive than quarantine; allows movement with reporting requirements.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <h2>Summary</h2>
             <ul>
-                <li><strong>Isolation:</strong> Sick people.</li>
-                <li><strong>Quarantine:</strong> Exposed people.</li>
-                <li><strong>Ethics:</strong> Balance rights vs. safety.</li>
+                <li><strong>Isolation:</strong> Sick people (separating the ILL).</li>
+                <li><strong>Quarantine:</strong> Exposed people (separating the QUESTIONABLE).</li>
+                <li><strong>Legal Basis:</strong> Police powers; must use least restrictive means.</li>
+                <li><strong>PPE:</strong> Standard → Contact → Droplet → Airborne (escalating protection).</li>
+                <li><strong>Ethics:</strong> Balance individual rights vs. community safety.</li>
             </ul>
 
-            <h2>17.4 Exam Focus & Tips</h2>
+            <h2>17.7 Exam Focus & Tips</h2>
             <div class="exam-trap">
                 <div class="callout-header"><i class="ph ph-lightning"></i> High Yield Topics</div>
                 <div class="callout-content">
@@ -5121,6 +5452,8 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                         <li><strong>Isolation:</strong> For SICK people (Ill).</li>
                         <li><strong>Quarantine:</strong> For EXPOSED people (Questionable).</li>
                         <li><strong>Least Restrictive Means:</strong> Don't use a hammer when a scalpel will do.</li>
+                        <li><strong>Airborne Precautions:</strong> Measles, Chickenpox, TB (N95 + negative pressure).</li>
+                        <li><strong>Typhoid Mary:</strong> Asymptomatic carrier example.</li>
                     </ul>
                 </div>
             </div>
@@ -6376,33 +6709,6 @@ window.EPIDEMIC_ENGINE_CONTENT = {
             </div>
     `
     },
-    simulation: {
-        title: "Simulation Exams",
-        content: `
-    <div class="comprehensive-quiz-container">
-                <h1>National Simulation Exams</h1>
-                <p class="lead">Full-length, timed practice exams generated from our 300+ question bank.</p>
-                <div id="exam-container"></div>
-                <div style="text-align: center; margin-top: 2rem;">
-                    <p>Select one of the four simulation exams:</p>
-                    <div style="display:flex; justify-content:center; flex-wrap: wrap; gap: 1rem;">
-                        <button class="neo-btn" onclick="window.startSimulationExam(1)">
-                            <i class="ph-bold ph-play"></i> Exam&nbsp;1
-                        </button>
-                        <button class="neo-btn" onclick="window.startSimulationExam(2)">
-                            <i class="ph-bold ph-play"></i> Exam&nbsp;2
-                        </button>
-                        <button class="neo-btn" onclick="window.startSimulationExam(3)">
-                            <i class="ph-bold ph-play"></i> Exam&nbsp;3
-                        </button>
-                        <button class="neo-btn" onclick="window.startSimulationExam(4)">
-                            <i class="ph-bold ph-play"></i> Exam&nbsp;4
-                        </button>
-                    </div>
-                </div>
-            </div>
-    `
-    },
     case_library: {
         title: "Disease Case Library",
         content: `
@@ -6431,6 +6737,50 @@ window.EPIDEMIC_ENGINE_CONTENT = {
             </div>
     `
     },
+    'appendix-p': {
+        title: "Pathogen Quick Reference",
+        content: `
+        <div class="comprehensive-quiz-container">
+            <h1><i class="ph-bold ph-virus"></i> Pathogen Quick Reference</h1>
+            <p class="lead">30+ common pathogens with incubation periods, symptoms, transmission routes, and key facts for rapid exam lookup.</p>
+            <div class="neo-card small" style="background: #fef3c7; border-left: 4px solid #f59e0b; margin-bottom: 2rem;">
+                <p style="margin: 0;"><strong><i class="ph-bold ph-lightbulb"></i> Study Tip:</strong> Click any pathogen to expand its full details. Use the search to quickly filter by name, symptom, or transmission route.</p>
+            </div>
+            <div id="pathogen-root"></div>
+        </div>
+        <script>
+            setTimeout(() => {
+                if (window.appendixEngine && typeof window.appendixEngine.initPathogens === 'function') {
+                    window.appendixEngine.initPathogens('pathogen-root');
+                }
+            }, 100);
+        </script>
+    `
+    },
+    'appendix-curves': {
+        title: "Outbreak Curve Types",
+        content: `
+        <div class="comprehensive-quiz-container">
+            <h1><i class="ph-bold ph-chart-bar"></i> Outbreak Curve Types</h1>
+            <p class="lead">Visual patterns that help identify the source and nature of an outbreak.</p>
+            <div class="study-tip" style="margin-bottom: 2rem;">
+                <div class="callout-header"><i class="ph ph-lightbulb"></i> Exam Strategy</div>
+                <div class="callout-content">
+                    <p>When shown an epi curve, immediately identify: <strong>1)</strong> Number of peaks, <strong>2)</strong> Width of peaks, <strong>3)</strong> Time between peaks. These clues reveal the source type!</p>
+                </div>
+            </div>
+            <div id="curve-types-root"></div>
+        </div>
+        <script>
+            setTimeout(() => {
+                if (window.appendixEngine && typeof window.appendixEngine.initCurveTypes === 'function') {
+                    window.appendixEngine.initCurveTypes('curve-types-root');
+                }
+            }, 100);
+        </script>
+    `
+    },
+
     'appendix-f': {
         title: "Flashcards",
         content: `
@@ -6549,17 +6899,20 @@ window.EPIDEMIC_ENGINE_CONTENT = {
         content: `
     <div class="neo-card">
                 <h2>Appendix & Resources</h2>
-                <div class="tabs" style="margin-bottom: 1rem;">
-                    <button class="neo-btn small active" onclick="showTab('rules')">A: Rules</button>
-                    <button class="neo-btn small" onclick="showTab('strategy')">B: Strategy</button>
-                    <button class="neo-btn small" onclick="showTab('diagnostic')">C: Diagnostics</button>
-                    <button class="neo-btn small" onclick="showTab('biases')">D: Biases</button>
-                    <button class="neo-btn small" onclick="showTab('mnemonics')">E: Mnemonics</button>
-                    <button class="neo-btn small" onclick="showTab('formulas')">F: Formulas</button>
-                    <button class="neo-btn small" onclick="showTab('tables')">G: Tables</button>
-                    <button class="neo-btn small" onclick="showTab('flashcards')">H: Flashcards</button>
-                    <button class="neo-btn small" onclick="showTab('glossary')">I: Glossary</button>
+                <div class="tabs" style="margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 0.25rem;">
+                    <button class="neo-btn small active" onclick="showTab('rules')" style="background: #eff6ff; border-color: #bfdbfe; color: #1e3a8a;">A: Rules</button>
+                    <button class="neo-btn small" onclick="showTab('strategy')" style="background: #fff7ed; border-color: #fed7aa; color: #9a3412;">B: Strategy</button>
+                    <button class="neo-btn small" onclick="showTab('diagnostic')" style="background: #f0fdf4; border-color: #bbf7d0; color: #166534;">C: Diagnostics</button>
+                    <button class="neo-btn small" onclick="showTab('biases')" style="background: #faf5ff; border-color: #e9d5ff; color: #6b21a8;">D: Biases</button>
+                    <button class="neo-btn small" onclick="showTab('mnemonics')" style="background: #fdf2f8; border-color: #fbcfe8; color: #9d174d;">E: Mnemonics</button>
+                    <button class="neo-btn small" onclick="showTab('formulas')" style="background: #ecfeff; border-color: #a5f3fc; color: #155e75;">F: Formulas</button>
+                    <button class="neo-btn small" onclick="showTab('tables')" style="background: #fff1f2; border-color: #fecdd3; color: #9f1239;">G: Tables</button>
+                    <button class="neo-btn small" onclick="showTab('flashcards')" style="background: #fefce8; border-color: #fef08a; color: #854d0e;">H: Flashcards</button>
+                    <button class="neo-btn small" onclick="showTab('glossary')" style="background: #f5f3ff; border-color: #ddd6fe; color: #5b21b6;">I: Glossary</button>
+                    <button class="neo-btn small" onclick="showTab('pathogens')" style="background: #fffbeb; border-color: #fde68a; color: #92400e;">J: Pathogens</button>
+                    <button class="neo-btn small" onclick="showTab('curves')" style="background: #f0f9ff; border-color: #bae6fd; color: #075985;">K: Curves</button>
                 </div>
+
                 
                 <div id="rules" class="tab-content active">
                     <h3>Competition Rules</h3>
@@ -6598,6 +6951,18 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                     <h3>Epidemiology Glossary</h3>
                     <p class="lead">Searchable definitions of epidemiological terms.</p>
                     <div id="glossary-root"></div>
+                </div>
+
+                <div id="pathogens" class="tab-content" style="display:none;">
+                    <h3><i class="ph-bold ph-virus"></i> Pathogen Quick Reference</h3>
+                    <p class="lead">30+ common pathogens with incubation periods, symptoms, transmission routes, and key facts.</p>
+                    <div id="pathogen-root"></div>
+                </div>
+
+                <div id="curves" class="tab-content" style="display:none;">
+                    <h3><i class="ph-bold ph-chart-bar"></i> Outbreak Curve Types</h3>
+                    <p class="lead">Visual patterns that help identify the source and nature of an outbreak.</p>
+                    <div id="curve-types-root"></div>
                 </div>
 
                 <div id="strategy" class="tab-content" style="display:none;">
@@ -6730,6 +7095,18 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                     margin: 0.25rem;
                     box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.1);
                 }
+                .resource-list li {
+                    margin-bottom: 0.5rem;
+                }
+                .resource-list a {
+                    text-decoration: none;
+                    color: var(--navy-primary);
+                    font-weight: 500;
+                }
+                .resource-list a:hover {
+                    text-decoration: underline;
+                    color: var(--accent-orange);
+                }
             </style>
 
             <!-- Hero Section -->
@@ -6739,133 +7116,132 @@ window.EPIDEMIC_ENGINE_CONTENT = {
                     <h1 style="margin: 1.5rem 0 0.5rem; font-size: 3rem; font-weight: 800; letter-spacing: -0.025em; color: white;">Epidemic Engine</h1>
                     <div style="display: inline-flex; align-items: center; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); padding: 0.5rem 1rem; border-radius: 9999px; border: 1px solid rgba(255,255,255,0.3);">
                         <span style="width: 8px; height: 8px; background: #4ade80; border-radius: 50%; margin-right: 0.5rem; box-shadow: 0 0 8px #4ade80;"></span>
-                        <span style="font-weight: 600; font-size: 0.9rem; letter-spacing: 0.5px;">v5.0.0 MASTERY GUIDE</span>
+                        <span style="font-weight: 600; font-size: 0.9rem; letter-spacing: 0.5px;">v6.0.0 NATIONAL LEVEL EDITION</span>
                     </div>
                 </div>
             </div>
 
             <!-- Mission -->
             <div style="max-width: 800px; margin: 0 auto 4rem; text-align: center;">
-                <h2 style="font-size: 2rem; color: var(--navy-primary); margin-bottom: 1rem;">Democratizing Epidemiology</h2>
-                <p style="font-size: 1.25rem; color: #64748b; line-height: 1.6;">
-                    The Epidemic Engine is built on a single belief: <strong style="color: var(--navy-primary);">Every student deserves National-level training tools.</strong> By combining medical expertise with advanced simulation technology, we are leveling the playing field for future Disease Detectives.
+                <h2 style="font-size: 2rem; color: var(--navy-primary); margin-bottom: 1rem;">Welcome to Disease Detectives!</h2>
+                <p style="font-size: 1.15rem; color: #64748b; line-height: 1.6;">
+                    In this event, participants will use their investigative skills in the scientific study of disease, injury, health, and disability in populations or groups of people. This event is presented in partnership with the <strong>Centers for Disease Control and Prevention (CDC)</strong>.
+                </p>
+                <p style="font-size: 0.95rem; color: #94a3b8; margin-top: 1rem;">
+                    <em>Note: The information here is a study resource. The official rules in the current Rules Manual take precedence.</em>
                 </p>
             </div>
 
-            <!-- Credits Grid -->
-            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
+            <!-- 2026 Resource Compendium -->
+            <h2 style="text-align: center; margin-bottom: 2rem;">2026 Resource Compendium</h2>
+            
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
                 
+                <!-- New 2026 -->
+                <div class="neo-card small" style="border-left: 4px solid #10b981;">
+                    <h3 style="color: #047857; margin-top:0;"><i class="ph-bold ph-star"></i> New for 2026</h3>
+                    <ul class="resource-list">
+                        <li><a href="https://www.soinc.org/disease-detectives-b" target="_blank">2026 Disease Detectives Presentation</a></li>
+                        <li><a href="https://www.soinc.org/disease-detectives-b" target="_blank">Overview of Disease Detectives Event</a></li>
+                        <li><a href="https://www.cdc.gov/nerd-academy" target="_blank">CDC NERD Academy Curriculum</a></li>
+                    </ul>
+                </div>
+
+                <!-- Handouts -->
+                <div class="neo-card small" style="border-left: 4px solid var(--navy-primary);">
+                    <h3 style="color: var(--navy-primary); margin-top:0;"><i class="ph-bold ph-file-text"></i> Essential Handouts</h3>
+                    <ul class="resource-list">
+                        <li><a href="https://www.soinc.org/disease-detectives-b" target="_blank">Part 1 - Background & Surveillance</a></li>
+                        <li><a href="https://www.soinc.org/disease-detectives-b" target="_blank">Part 2 - Outbreak Investigation</a></li>
+                        <li><a href="https://www.soinc.org/disease-detectives-b" target="_blank">Part 3 - Patterns, Control, Prevention</a></li>
+                        <li><a href="https://www.cdc.gov/csels/dsepd/ss1978/index.html" target="_blank">Principles of Epidemiology (CDC)</a></li>
+                    </ul>
+                </div>
+
+                <!-- Internet Tools -->
+                 <div class="neo-card small" style="border-left: 4px solid var(--accent-orange);">
+                    <h3 style="color: var(--accent-orange); margin-top:0;"><i class="ph-bold ph-globe"></i> Internet Tools</h3>
+                    <ul class="resource-list">
+                        <li><a href="https://scioly.org/wiki/Disease_Detectives" target="_blank">📚 Scioly.org Wiki (Community Guide)</a></li>
+                        <li><a href="https://www.cdc.gov/mmwr/index.html" target="_blank">Morbidity & Mortality Weekly Report</a></li>
+                        <li><a href="https://epiville.ccnmtl.columbia.edu/" target="_blank">Epiville (Outbreak Simulation)</a></li>
+                        <li><a href="https://www.fda.gov/food/outbreaks-foodborne-illness/investigations-foodborne-illness-outbreaks" target="_blank">Food-Borne Illness Chart (FDA)</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Practice Test Archive -->
+            <div class="neo-card" style="margin-bottom: 4rem;">
+                <h3 style="margin-top: 0; display: flex; align-items: center; justify-content: space-between;">
+                    <span><i class="ph-bold ph-archive"></i> Practice Test Archive</span>
+                    <span style="font-size: 0.8rem; background: #e2e8f0; padding: 2px 8px; border-radius: 12px; color: #64748b;">30+ Exams</span>
+                </h3>
+                <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 1rem;">
+                    The following exams are recommended practices. Full PDF packets are available on the Science Olympiad website or the Scioly.org Test Exchange.
+                </p>
+                <div style="height: 300px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 6px; padding: 1rem; background: #f8fafc;">
+                    <ul style="list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem;">
+                        <li style="border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem;">📚 2026 Northview Invitational</li>
+                        <li style="border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem;">📚 2026 Hawk & Hornet Invitational</li>
+                        <li style="border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem;">📚 2025 Bulls SO Invitational</li>
+                        <li style="border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem;">📚 2025 UW River Falls Border Battle</li>
+                        <li style="border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem;">📚 2025 Purdue Invitational</li>
+                        <li style="border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem;">📚 2025 USC Invitational</li>
+                        <li style="border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem;">📚 2025 UT Austin Invitational</li>
+                        <li style="border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem;">📚 2025 Mira Loma Invitational</li>
+                        <li style="border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem;">📚 2025 Mason High School Invit.</li>
+                        <li style="border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem;">📚 2024 Brown University Invit.</li>
+                        <li style="border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem;">📚 2024 Case Western Reserve Invit.</li>
+                        <li style="border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem;">📚 2024 GullSO Invitational</li>
+                        <li style="border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem;">📚 2023 University of Michigan Invit.</li>
+                        <li style="border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem;">📚 2023 MIT Invitational</li>
+                        <li style="border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem;">📚 2023 Ohio State University Invit.</li>
+                        <li style="border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem;">📚 2022 National Invitational</li>
+                        <li style="border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem;">📚 2022 MIT Invitational</li>
+                        <li style="border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem;">📚 2022 UChicago Invitational</li>
+                        <li style="border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem;">📚 2019 Sample Test</li>
+                        <li style="border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem;">📚 2018 Sample Test</li>
+                    </ul>
+                </div>
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <a href="https://scioly.org/tests" target="_blank" class="neo-btn" style="text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;">
+                        <i class="ph-bold ph-download-simple"></i> Download Tests from Scioly.org Exchange
+                    </a>
+                </div>
+            </div>
+
+            <!-- Credits Grid -->
+            <h2 style="text-align: center; margin-bottom: 2rem;">Development Team</h2>
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
                 <!-- Architect Profile -->
                 <div class="profile-card">
                     <div style="width: 80px; height: 80px; background: var(--navy-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 2rem;">
                         <i class="ph-bold ph-user"></i>
                     </div>
                     <h3 style="margin: 0; font-size: 1.5rem; color: var(--navy-primary);">Rishi Reddy</h3>
-                    <div style="color: var(--accent-orange); font-weight: 600; font-size: 0.9rem; letter-spacing: 1px; margin-top: 0.25rem; text-transform: uppercase;">Designed, Created & Conceived</div>
+                    <div style="color: var(--accent-orange); font-weight: 600; font-size: 0.9rem; letter-spacing: 1px; margin-top: 0.25rem; text-transform: uppercase;">Creator & Lead Developer</div>
                     <p style="color: #64748b; margin: 1.5rem 0; font-size: 0.95rem;">
                         Bringing high-fidelity outbreak simulations to Science Olympiad competition preparation.
                     </p>
-                    <div style="display: flex; gap: 0.5rem; justify-content: center;">
-                        <a href="mailto:contact@epidemicengine.com" class="neo-btn small outline"><i class="ph-bold ph-envelope"></i> Contact</a>
-                    </div>
                 </div>
-
-                <!-- Technology Stack -->
-                <div class="profile-card" style="text-align: left;">
+                <!-- Tech Stack -->
+                 <div class="profile-card" style="text-align: left;">
                     <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
-                        <div style="width: 48px; height: 48px; background: #f8fafc; color: var(--navy-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                         <div style="width: 48px; height: 48px; background: #f8fafc; color: var(--navy-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
                             <i class="ph-bold ph-code"></i>
                         </div>
                         <div>
                             <h3 style="margin: 0; font-size: 1.25rem;">Technology Stack</h3>
-                            <div style="color: #64748b; font-size: 0.9rem;">Powered by Antigravity</div>
+                             <div style="color: #64748b; font-size: 0.9rem;">Modern Web Architecture</div>
                         </div>
                     </div>
-                    
-                    <div style="margin-bottom: 1rem;">
-                        <strong style="display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">Core Engine</strong>
-                        <span class="tech-badge">Vanilla JS (ES6+)</span>
-                        <span class="tech-badge">Service Workers</span>
-                        <span class="tech-badge">Canvas API</span>
-                    </div>
-
-                    <div style="margin-bottom: 1rem;">
-                        <strong style="display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">Design System</strong>
-                        <span class="tech-badge">Neo-Brutalist UI</span>
-                        <span class="tech-badge">CSS Grid</span>
-                        <span class="tech-badge">Phosphor Icons</span>
-                    </div>
-
                     <div>
-                        <strong style="display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">Infrastructure</strong>
-                        <span class="tech-badge">Vercel Edge</span>
-                        <span class="tech-badge">PWA Standards</span>
+                         <span class="tech-badge">Vanilla JS</span>
+                         <span class="tech-badge">PWA</span>
+                         <span class="tech-badge">Vercel</span>
+                         <span class="tech-badge">Interactive</span>
                     </div>
                 </div>
-            </div>
-
-            <!-- Version History (Timeline) -->
-            <div class="neo-card" style="margin-bottom: 4rem;">
-                <h3 style="border-bottom: 2px solid #eee; padding-bottom: 1rem; margin-top: 0;">
-                    <i class="ph-bold ph-git-commit"></i> Release History
-                </h3>
-                <div style="display: grid; gap: 1.5rem;">
-                    <div style="display: flex; gap: 1rem;">
-                        <div style="font-weight: 700; color: var(--navy-primary); min-width: 80px;">v5.0.0</div>
-                        <div>
-                            <strong style="display: block; color: #0f172a;">Mastery Guide</strong>
-                            <div style="color: #64748b; font-size: 0.95rem;">Coach Mode, UI Overhaul, Refined Content, and Tools Integration.</div>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 1rem;">
-                        <div style="font-weight: 700; color: #64748b; min-width: 80px;">v4.0.0</div>
-                        <div>
-                            <strong style="display: block; color: #334155;">Gold Standard</strong>
-                            <div style="color: #64748b; font-size: 0.95rem;">Complete Content Verification, Offline Architecture, Mobile enhancements.</div>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 1rem;">
-                        <div style="font-weight: 700; color: #64748b; min-width: 80px;">v3.0.0</div>
-                        <div>
-                            <strong style="display: block; color: #334155;">Grandmaster Edition</strong>
-                            <div style="color: #64748b; font-size: 0.95rem;">Added "Infinite Outbreak" Procedural Engine. Optimized for Vercel deployment.</div>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 1rem;">
-                        <div style="font-weight: 700; color: #64748b; min-width: 80px;">v2.6.0</div>
-                        <div>
-                            <strong style="display: block; color: #334155;">Tier 2 Enhancements</strong>
-                            <div style="color: #64748b; font-size: 0.95rem;">Herd Immunity Calculator, Environmental Toxins (Ch 21), Mega Scenarios (Potluck, Wedding, Cruise).</div>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 1rem;">
-                        <div style="font-weight: 700; color: #64748b; min-width: 80px;">v2.5.3</div>
-                        <div>
-                            <strong style="display: block; color: #334155;">Mega Cases</strong>
-                            <div style="color: #64748b; font-size: 0.95rem;">Introduced complex multi-step case studies (C1-C50) with line lists using the Case Library engine.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Resources Footer -->
-            <h2 style="text-align: center; margin-bottom: 2rem;">Official Resources</h2>
-            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 4rem;">
-                <a href="https://www.soinc.org" target="_blank" class="neo-card small action-card" style="text-decoration:none; color:inherit; text-align: center; display:block; transition:transform 0.2s;">
-                    <div style="color:var(--navy-primary); font-size:2.5rem; margin-bottom:0.5rem;"><i class="ph-bold ph-student"></i></div>
-                    <div style="font-weight:700; font-size:1.1rem;">Science Olympiad</div>
-                    <div style="color:#64748b; font-size:0.9rem;">Official Rules</div>
-                </a>
-                <a href="https://www.cdc.gov/eis/field-epi-manual/index.html" target="_blank" class="neo-card small action-card" style="text-decoration:none; color:inherit; text-align: center; display:block; transition:transform 0.2s;">
-                    <div style="color:var(--accent-blue); font-size:2.5rem; margin-bottom:0.5rem;"><i class="ph-bold ph-book-open"></i></div>
-                    <div style="font-weight:700; font-size:1.1rem;">CDC Field Manual</div>
-                    <div style="color:#64748b; font-size:0.9rem;">The "Bible" of Epi</div>
-                </a>
-                <a href="https://www.who.int" target="_blank" class="neo-card small action-card" style="text-decoration:none; color:inherit; text-align: center; display:block; transition:transform 0.2s;">
-                    <div style="color:var(--accent-orange); font-size:2.5rem; margin-bottom:0.5rem;"><i class="ph-bold ph-globe"></i></div>
-                    <div style="font-weight:700; font-size:1.1rem;">WHO Global</div>
-                    <div style="color:#64748b; font-size:0.9rem;">Outbreak News</div>
-                </a>
             </div>
 
             <div style="text-align: center; margin-bottom: 2rem;">

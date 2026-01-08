@@ -1,7 +1,7 @@
 // 2x2 TABLE CALCULATOR
 // Auto-calculates RR, OR, AR, and other epidemiological measures
 
-class Calculator2x2 {
+class _Calculator2x2 {
     constructor(containerId) {
         this.container = document.getElementById(containerId);
         if (!this.container) return; // Silent return if container doesn't exist
@@ -234,7 +234,7 @@ Attributable Risk: ${rd}
                 });
                 // Enforce on blur
                 input.addEventListener('blur', (e) => {
-                    let val = parseInt(e.target.value);
+                    const val = parseInt(e.target.value);
                     if (isNaN(val) || val < 0) {
                         e.target.value = 0;
                         this.values[cell] = 0;
@@ -743,4 +743,4 @@ Attributable Risk: ${rd}
 }
 
 // Global instance
-let calc2x2 = null;
+const _calc2x2 = null;

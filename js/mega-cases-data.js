@@ -159,7 +159,7 @@ const MEGA_CASES = [
         ]
     },
     {
-        id: "C12",
+        id: "C26_MEGA",  // Links to C26 Measles in main library
         isMegaCase: true,
         mega_title: "Mega Case: Measles & Vaccine Efficacy",
         description: "A measles outbreak in a school with mixed vaccination status. Use the line list data to calculate Vaccine Efficacy (VE).",
@@ -199,7 +199,7 @@ const MEGA_CASES = [
         ]
     },
     {
-        id: "C13",
+        id: "C52",  // New ID - Salmonella hypothesis case doesn't match C13 (Staph)
         isMegaCase: true,
         mega_title: "Mega Case: Salmonella (Hypothesis Generation)",
         description: "You have food history data for Ill vs Well people. Calculate the Attack Rate Difference to generate a hypothesis.",
@@ -226,7 +226,7 @@ const MEGA_CASES = [
         ]
     },
     {
-        id: "C15",
+        id: "C29_MEGA",  // Links to C29 Legionella in main library
         isMegaCase: true,
         mega_title: "Mega Case: Legionella (Spatial Analysis)",
         description: "A cluster of pneumonia cases in a nursing home. Use the Line List to calculate Attack Rates by Floor and identify the source.",
@@ -264,7 +264,7 @@ const MEGA_CASES = [
         ]
     },
     {
-        id: "C22",
+        id: "C12_MEGA",  // Links to C12 Botulism in main library
         isMegaCase: true,
         mega_title: "Mega Case: Botulism (Relative Risk)",
         description: "A home canning party. Everyone ate the peas. Calculate the Relative Risk (RR).",
@@ -337,7 +337,7 @@ const MEGA_CASES = [
         ]
     },
     {
-        id: "C50",
+        id: "C51",  // Changed from C50 to avoid overwriting Zika case
         isMegaCase: true,
         mega_title: "Mastery Case: The Wedding Disaster",
         description: "The ultimate challenge. Analyze the Line List AND the 2x2 Table to solve the multi-modal outbreak.",
@@ -381,27 +381,77 @@ if (typeof window !== 'undefined') {
             if (typeof window.CASE_LIBRARY !== 'undefined') {
                 console.log('[MEGA CASES] Injecting Tier 2 Content...');
 
+                // ID mapping for cases that link to different base IDs
+                const idMapping = {
+                    'C26_MEGA': 'C26',  // Measles VE links to C26 Measles
+                    'C29_MEGA': 'C29',  // Legionella Spatial links to C29 Legionella
+                    'C12_MEGA': 'C12',  // Botulism RR links to C12 Botulism
+                    'C51': null,        // Wedding Disaster is standalone
+                    'C52': null         // Salmonella Hypothesis is standalone
+                };
+
                 MEGA_CASES.forEach(mega => {
-                    const idx = window.CASE_LIBRARY.findIndex(c => c.id === mega.id);
+                    // Check if this ID has a mapping to a base case
+                    const baseId = idMapping[mega.id] || mega.id;
+                    const idx = window.CASE_LIBRARY.findIndex(c => c.id === baseId);
+
                     if (idx !== -1) {
-                        // Merge strategies for existing cases
+                        // Merge with existing base case
+                        const baseCase = window.CASE_LIBRARY[idx];
                         window.CASE_LIBRARY[idx] = {
-                            ...window.CASE_LIBRARY[idx],
+                            ...baseCase,
                             ...mega,
-                            title: mega.mega_title, // Override title
-                            description: mega.description // Override description
+                            id: baseCase.id,  // Keep original ID
+                            title: mega.mega_title || baseCase.title,
+                            disease: baseCase.disease,  // Keep base disease
+                            agent: baseCase.agent,      // Keep base agent
+                            incubation: baseCase.incubation,
+                            curve: baseCase.curve,
+                            transmission: baseCase.transmission,
+                            description: mega.description || baseCase.scenario_text
                         };
-                        // console.log(`[MEGA CASES] Upgraded Case ${mega.id}`);
-                    } else {
-                        // Insert new case (like C40)
-                        window.CASE_LIBRARY.push(mega);
+                        // console.log(`[MEGA CASES] Upgraded Case ${baseCase.id}`);
+                    } else if (idMapping[mega.id] === null) {
+                        // Standalone new case - add required fields
+                        const newCase = {
+                            ...mega,
+                            title: mega.mega_title || mega.title || 'Advanced Case',
+                            disease: mega.disease || 'Multi-Modal Analysis',
+                            agent: mega.agent || 'Various',
+                            incubation: mega.incubation || 'Variable',
+                            curve: mega.curve || 'Analysis',
+                            transmission: mega.transmission || 'Various',
+                            scenario_text: mega.description,
+                            learning_objectives: mega.learning_objectives || ['Advanced analytical skills'],
+                            controls: mega.controls || ['Complete analysis'],
+                            counterfactual: mega.counterfactual || 'Varies by scenario'
+                        };
+                        window.CASE_LIBRARY.push(newCase);
                         // console.log(`[MEGA CASES] Added New Case ${mega.id}`);
+                    } else {
+                        // Fallback: add as new if base not found
+                        console.warn(`[MEGA CASES] Base case ${baseId} not found for ${mega.id}`);
+                        window.CASE_LIBRARY.push({
+                            ...mega,
+                            title: mega.mega_title || 'Advanced Case',
+                            disease: 'Analysis',
+                            agent: 'Various',
+                            incubation: 'Variable',
+                            curve: 'Analysis',
+                            transmission: 'Various'
+                        });
                     }
                 });
 
-                // Note: The UI for 'case_library' renders ONCE when the section is loaded.
-                // If the user navigates to it after this script runs (500ms), it will show correctly.
-                // If they are already there, they might need to refresh or switch tabs.
+                console.log('[MEGA CASES] Injection complete');
+
+                // Sort CASE_LIBRARY by ID to ensure proper display order
+                window.CASE_LIBRARY.sort((a, b) => {
+                    // Extract numeric portion of ID
+                    const numA = parseInt(a.id.replace(/[^\d]/g, '')) || 999;
+                    const numB = parseInt(b.id.replace(/[^\d]/g, '')) || 999;
+                    return numA - numB;
+                });
             }
         }, 500); // Run after main data load
     });

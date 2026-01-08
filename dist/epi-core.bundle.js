@@ -7399,7 +7399,7 @@ class PacketGenerator {
 }
 
 // Init immediately
-PacketGenerator.init();
+// PacketGenerator.init();
 
 /**
  * Epidemic Engine - Interactive Scenario Engine

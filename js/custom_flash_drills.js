@@ -13,14 +13,15 @@
  * question type property.
  */
 
-;(function () {
+ (function () {
   // Only proceed if the FlashDrills class exists and the quiz banks are
-  // available on the window. The compiled code attaches the banks to
-  // `window.QUIZ_BANKS`.
-  if (!window.FlashDrills || !window.QUIZ_BANKS) return;
+  // available. FlashDrills may be defined with const/let (not on window).
+  // Use typeof to detect its presence reliably.
+  if (typeof FlashDrills === 'undefined' || !window.QUIZ_BANKS) return;
 
   const banks = window.QUIZ_BANKS;
   const aggregated = [];
+
 
   // Flatten each chapter’s questions into a single array and attach as
   // bank.questions. This allows the compiled template to find them. At
@@ -60,7 +61,7 @@
   // Override getRandomQuestion. Instead of iterating over banks that may
   // lack a questions array, we draw directly from the aggregated pool.
   FlashDrills.prototype.getRandomQuestion = function () {
-    let pool = [];
+    const pool = [];
     aggregated.forEach(q => {
       if (!q) return;
       const math = isMathQuestion(q);

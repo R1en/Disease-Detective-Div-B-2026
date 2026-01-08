@@ -1,5 +1,5 @@
 (function () {
-    console.log("Forcing QuizEngine v5.0.0 override...");
+    console.log("Forcing QuizEngine v6.0.0 override...");
 
     // CRITICAL: Clear ALL old quiz progress from localStorage
     Object.keys(localStorage).filter(k => k.startsWith('quiz_progress') || k.startsWith('sim_exam')).forEach(k => localStorage.removeItem(k));
@@ -72,7 +72,7 @@
             const showFeedback = this.enableInstantFeedback && userAns !== undefined;
 
             // Build option cards with neo-brutalist styling
-            let optHtml = q.options.map((opt, i) => {
+            const optHtml = q.options.map((opt, i) => {
                 let cls = 'option-card-v2';
                 let extraStyle = '';
                 if (userAns === i) cls += ' selected';
@@ -127,7 +127,7 @@
                         'Chapter 19': 'ch19', 'Advanced Bias': 'ch19', 'Advanced Topics': 'ch19',
                         'Chapter 20': 'ch20', 'Case Studies': 'ch20',
                         // Fallback mappings
-                        'Mortality Metrics': 'ch7', 'Study Design': 'ch10',
+                        'Mortality Metrics': 'ch7',
                         'General': 'ch1'
                     };
                     chapterLink = topicToChapter[topic] || 'ch1';
@@ -291,7 +291,7 @@
             if (!c) return;
             const mins = Math.floor(r.timeSpent / 60);
             const secs = r.timeSpent % 60;
-            let topicHtml = Object.entries(r.byTopic).map(([t, s]) => {
+            const topicHtml = Object.entries(r.byTopic).map(([t, s]) => {
                 const pct = Math.round((s.correct / s.total) * 100);
                 const color = pct >= 80 ? '#22c55e' : pct >= 60 ? '#f59e0b' : '#ef4444';
                 return `<div style="display:flex;justify-content:space-between;padding:0.75rem 0;border-bottom:1px solid #e5e7eb;">
@@ -344,7 +344,7 @@
                 return arr;
             };
             const selectRandom = (arr, n) => shuffle([...arr]).slice(0, n);
-            let all = [], boundaries = [], idx = 0;
+            const { all, boundaries } = window.QuizEngine.generateSimulation(difficulty);
             ['part1', 'part2', 'part3'].forEach(part => {
                 const qs = window.QuizEngine.getQuestionsForPart(part, difficulty);
                 const sel = selectRandom(qs, Math.min(17, qs.length));
@@ -406,7 +406,7 @@
         window.quizEngine.start();
     };
 
-    console.log("QuizEngine v5.0.0 ready. startQuiz and startSimulationExam overridden.");
+    console.log("QuizEngine v6.0.0 ready. startQuiz and startSimulationExam overridden.");
 
     // Floating "Return to Quiz" button
     window._returnToQuiz = null;
@@ -489,7 +489,7 @@
 })();
 
 (function () {
-    console.log("Forcing HomeDashboard v5.0.0 override (Inlined IVFE)...");
+    console.log("Forcing HomeDashboard v6.0.0 override (Inlined IVFE)...");
     const HomeDashboardV5 = class {
         constructor(containerId = 'content-container') {
             this.containerId = containerId;
@@ -498,7 +498,7 @@
         }
         init(containerId) {
             if (containerId) this.containerId = containerId;
-            console.log("HomeDashboard v5.0.0 init called on", this.containerId);
+            console.log("HomeDashboard v6.0.0 init called on", this.containerId);
             this.render();
         }
         injectStyles() {
@@ -543,7 +543,7 @@
                         Epidemic Engine
                     </h1>
                     <p style="font-size: 1.25rem; opacity: 1; margin-bottom: 0.5rem; color: #334155; font-weight: 500;">
-                        Navigate outbreaks, visualize patterns, and master Disease Detectives (v5.0.0).
+                        Navigate outbreaks, visualize patterns, and master Disease Detectives (v6.0.0).
                     </p>
                     <p style="font-size: 0.9rem; margin-bottom: 1.5rem; color: #475569;">
                         Designed, Created, & Conceived by <strong style="color: var(--navy-primary);">Rishi Reddy</strong>
@@ -622,7 +622,7 @@
         }
         startGame() { /* ... (Game Logic Omitted for brevity, relies on existing or simple restart) ... */ }
         performSearch(query) { /* ... (Simple Search Logic) ... */ }
-    }
+    };
     // Simple mock for startGame and search if needed to avoid massive inline bloat, 
     // OR just rely on the fact that if they want the game they can use the button.
     // Actually, I'll add the minimal logic for startGame to clear the overlay.

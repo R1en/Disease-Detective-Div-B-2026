@@ -170,4 +170,39 @@
     .stat-value {
         font-size: 1.25rem !important;
     }
+
+    /* --- Interactive Tools Sidebar Fix --- */
+    /* On mobile, convert the vertical tool tabs sidebar to a horizontal scrolling strip */
+    .tools-container {
+        flex-direction: column !important;
+    }
+
+    .tool-tabs {
+        width: 100% !important;
+        flex-direction: row !important;
+        overflow-x: auto !important;
+        padding: 0.5rem !important;
+        gap: 0.5rem !important;
+        border-right: none !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        /* Smooth scrolling on iOS */
+    }
+
+    .tool-tabs .tab-category {
+        display: none !important;
+        /* Hide category labels on mobile */
+    }
+
+    .tool-tab {
+        flex-shrink: 0 !important;
+        /* Prevent tabs from shrinking */
+        padding: 0.5rem 0.75rem !important;
+        font-size: 0.85rem !important;
+    }
+
+    .tool-content-area {
+        padding: 1rem !important;
+    }
 }

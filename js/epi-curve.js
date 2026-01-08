@@ -1,4 +1,4 @@
-class EpiCurve {
+class _EpiCurve {
     constructor(containerId) {
         this.container = document.getElementById(containerId);
         this.cases = [];
@@ -150,8 +150,8 @@ class EpiCurve {
         if (this.cases.length === 0) return { labels: [], data: [], max: 0 };
 
         const counts = {};
-        let minDate = new Date(this.cases[0]);
-        let maxDate = new Date(this.cases[this.cases.length - 1]);
+        const minDate = new Date(this.cases[0]);
+        const maxDate = new Date(this.cases[this.cases.length - 1]);
 
         // Fill in gaps
         for (let d = new Date(minDate); d <= maxDate; d.setDate(d.getDate() + 1)) {
@@ -224,7 +224,7 @@ class EpiCurve {
         ctx.fillText('Time', canvas.width / 2 - 20, canvas.height - 10);
 
         // Generate data based on type
-        let data = [];
+        const data = [];
         const maxCases = 50;
 
         if (type === 'point') {
@@ -406,6 +406,7 @@ class EpiCurve {
                         <button class="btn btn-outline" onclick="epiCurve.loadIntermittent()">Load Intermittent</button>
                         <button class="btn btn-outline" onclick="epiCurve.loadPropagated()">Load Propagated</button>
                         <button class="btn btn-outline" onclick="epiCurve.downloadCSV()"><i class="ph-bold ph-download-simple"></i> CSV</button>
+                        <button class="btn btn-outline" onclick="epiCurve.downloadImage()" style="background: #f0fdf4; border-color: #22c55e;"><i class="ph-bold ph-image"></i> PNG</button>
                         <button class="btn btn-danger" onclick="epiCurve.clear()">Clear All</button>
                     </div>
                 </div>
@@ -552,6 +553,139 @@ class EpiCurve {
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);
     }
+
+    downloadImage() {
+        const { labels, data, max } = this.getHistogramData();
+        if (!labels || labels.length === 0) {
+            if (typeof window.UI !== 'undefined') window.UI.toast('No data to export', 'error');
+            else alert('No data to export');
+            return;
+        }
+
+        // Create an offscreen canvas
+        const canvas = document.createElement('canvas');
+        const width = Math.max(800, labels.length * 40);
+        const height = 450;
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+
+        // Background
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, width, height);
+
+        // Padding
+        const padding = { top: 60, right: 40, bottom: 80, left: 60 };
+        const chartWidth = width - padding.left - padding.right;
+        const chartHeight = height - padding.top - padding.bottom;
+
+        // Title
+        ctx.fillStyle = '#1e293b';
+        ctx.font = 'bold 20px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('Epidemic Curve', width / 2, 30);
+
+        // Subtitle
+        ctx.font = '12px Inter, sans-serif';
+        ctx.fillStyle = '#64748b';
+        ctx.fillText(`Generated ${new Date().toLocaleDateString()} | Total Cases: ${this.cases.length}`, width / 2, 48);
+
+        // Draw axes
+        ctx.strokeStyle = '#64748b';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(padding.left, padding.top);
+        ctx.lineTo(padding.left, height - padding.bottom);
+        ctx.lineTo(width - padding.right, height - padding.bottom);
+        ctx.stroke();
+
+        // Y-axis labels
+        ctx.fillStyle = '#64748b';
+        ctx.font = '11px Inter, sans-serif';
+        ctx.textAlign = 'right';
+        for (let i = 0; i <= 5; i++) {
+            const y = padding.top + (chartHeight / 5) * (5 - i);
+            const val = Math.round((max / 5) * i);
+            ctx.fillText(val.toString(), padding.left - 8, y + 4);
+
+            // Grid line
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.beginPath();
+            ctx.moveTo(padding.left, y);
+            ctx.lineTo(width - padding.right, y);
+            ctx.stroke();
+        }
+
+        // Y-axis label
+        ctx.save();
+        ctx.translate(18, height / 2);
+        ctx.rotate(-Math.PI / 2);
+        ctx.fillStyle = '#64748b';
+        ctx.font = 'bold 12px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('Number of Cases', 0, 0);
+        ctx.restore();
+
+        // Draw bars
+        const barWidth = chartWidth / labels.length;
+        const barPadding = Math.max(2, barWidth * 0.15);
+        const peak = Math.max(...data);
+
+        data.forEach((count, i) => {
+            const barHeight = (count / max) * chartHeight;
+            const x = padding.left + i * barWidth + barPadding;
+            const y = height - padding.bottom - barHeight;
+            const bw = barWidth - barPadding * 2;
+
+            // Bar color - highlight peak
+            if (count === peak && count > 0) {
+                ctx.fillStyle = '#f97316'; // Orange for peak
+            } else {
+                ctx.fillStyle = '#3b82f6'; // Blue for others
+            }
+            ctx.fillRect(x, y, bw, barHeight);
+
+            // Bar value
+            if (count > 0) {
+                ctx.fillStyle = '#1e293b';
+                ctx.font = '10px Inter, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(count.toString(), x + bw / 2, y - 4);
+            }
+
+            // X-axis label (date)
+            ctx.fillStyle = '#64748b';
+            ctx.font = '10px Inter, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.save();
+            ctx.translate(x + bw / 2, height - padding.bottom + 12);
+            ctx.rotate(Math.PI / 4);
+            ctx.fillText(labels[i].slice(5), 0, 0); // Show MM-DD
+            ctx.restore();
+        });
+
+        // X-axis label
+        ctx.fillStyle = '#64748b';
+        ctx.font = 'bold 12px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('Date of Symptom Onset', width / 2, height - 10);
+
+        // Footer
+        ctx.font = '10px Inter, sans-serif';
+        ctx.fillStyle = '#94a3b8';
+        ctx.textAlign = 'right';
+        ctx.fillText('Epidemic Engine v5.0', width - 10, height - 10);
+
+        // Download
+        const link = document.createElement('a');
+        link.download = 'epi_curve.png';
+        link.href = canvas.toDataURL('image/png');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        if (typeof window.UI !== 'undefined') window.UI.toast('Image downloaded!', 'success');
+    }
 }
 // Global instance
-let epiCurve = null;
+const _epiCurve = null;

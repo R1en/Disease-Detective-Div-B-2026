@@ -99,7 +99,7 @@
   }
 
   // State for the current quiz session
-  let session = {
+  const session = {
     pool: [],
     index: 0,
     correct: 0,
@@ -107,7 +107,7 @@
   };
 
   // Render the start screen into the container
-  let config = {
+  const config = {
     count: 10,
     difficulty: 'C'
   };

@@ -13,7 +13,7 @@
  * mistakes.
  */
 
-; (function () {
+(function () {
   // Ensure global content container exists
   window.EPIDEMIC_ENGINE_CONTENT = window.EPIDEMIC_ENGINE_CONTENT || {};
 
@@ -215,7 +215,7 @@
     if (!container) return;
     // Generate and store new problem
     currentProblem = generateProblem();
-    const { counts, type, displayName } = currentProblem;
+    const { counts, type, displayName: _displayName } = currentProblem;
     const category = MEASURES[type].category;
 
     // Build table and prompt based on problem type

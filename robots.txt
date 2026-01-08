@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://epidemic-engine.vercel.app/sitemap.xml
+
+# Crawl-delay (optional, for polite crawling)
+Crawl-delay: 1
+
+# Disallow dev/build files
+Disallow: /build/
+Disallow: /dist/
+Disallow: /resources/
+Disallow: /*.zip$
+Disallow: /*.ps1$
+Disallow: /fix_quiz_bank.js
+Disallow: /cleanup_quiz.html

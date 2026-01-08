@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Wire up Mobile Toggle if not using inline onclick
-    const mobileToggle = document.getElementById('mobile-menu-toggle');
+    const _mobileToggle = document.getElementById('mobile-menu-toggle');
     // Division Toggle Logic
     window.currentDivision = 'B'; // Default
     function toggleDivision(div) {
@@ -86,3 +86,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     window.resetAppProgress = resetAppProgress;
+});

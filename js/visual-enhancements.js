@@ -643,78 +643,12 @@
                     <h3 style="text-align: center; color: var(--navy-primary); margin-bottom: 1.5rem;">
                         <i class="ph-bold ph-tree-structure"></i> Study Design Selection Flowchart
                     </h3>
-                    <svg width="100%" height="500" viewBox="0 0 600 500" style="max-width: 100%; height: auto;" role="img" aria-label="Study Design Decision Tree Flowchart">
-                        <title>Study Design Selection Flowchart</title>
-                        <defs>
-                            <marker id="arrowTree" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-                                <path d="M0,0 L0,6 L9,3 z" fill="#333" />
-                            </marker>
-                        </defs>
-                        
-                        <!-- Start -->
-                        <rect x="200" y="20" width="200" height="50" rx="25" fill="#3b82f6" stroke="#1e40af" stroke-width="2"/>
-                        <text x="300" y="50" text-anchor="middle" font-weight="bold" fill="white" font-size="16">START</text>
-                        
-                        <!-- Question 1: Outbreak Now? -->
-                        <line x1="300" y1="70" x2="300" y2="100" stroke="#333" stroke-width="2" marker-end="url(#arrowTree)"/>
-                        <rect x="150" y="100" width="300" height="60" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
-                        <text x="300" y="125" text-anchor="middle" font-weight="bold" font-size="14">Is there an outbreak</text>
-                        <text x="300" y="145" text-anchor="middle" font-weight="bold" font-size="14">happening NOW?</text>
-                        
-                        <!-- Yes Branch -->
-                        <line x1="250" y1="160" x2="150" y2="200" stroke="#333" stroke-width="2" marker-end="url(#arrowTree)"/>
-                        <text x="180" y="185" font-size="12" font-weight="bold" fill="#16a34a">YES</text>
-                        
-                        <!-- Question 2: Rare Disease? -->
-                        <rect x="20" y="200" width="260" height="60" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
-                        <text x="150" y="225" text-anchor="middle" font-weight="bold" font-size="14">Is the disease</text>
-                        <text x="150" y="245" text-anchor="middle" font-weight="bold" font-size="14">RARE?</text>
-                        
-                        <!-- Case-Control -->
-                        <line x1="80" y1="260" x2="80" y2="300" stroke="#333" stroke-width="2" marker-end="url(#arrowTree)"/>
-                        <text x="50" y="285" font-size="11" font-weight="bold" fill="#16a34a">YES</text>
-                        <rect x="10" y="300" width="140" height="80" rx="8" fill="#d1fae5" stroke="#10b981" stroke-width="3"/>
-                        <text x="80" y="330" text-anchor="middle" font-weight="bold" font-size="13" fill="#065f46">CASE-CONTROL</text>
-                        <text x="80" y="350" text-anchor="middle" font-size="10">Start with cases,</text>
-                        <text x="80" y="365" text-anchor="middle" font-size="10">find controls</text>
-                        
-                        <!-- Cohort -->
-                        <line x1="220" y1="260" x2="220" y2="300" stroke="#333" stroke-width="2" marker-end="url(#arrowTree)"/>
-                        <text x="240" y="285" font-size="11" font-weight="bold" fill="#dc2626">NO</text>
-                        <rect x="165" y="300" width="140" height="80" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="3"/>
-                        <text x="235" y="330" text-anchor="middle" font-weight="bold" font-size="13" fill="#075985">COHORT</text>
-                        <text x="235" y="350" text-anchor="middle" font-size="10">Follow exposed</text>
-                        <text x="235" y="365" text-anchor="middle" font-size="10">and unexposed</text>
-                        
-                        <!-- No Branch (No Outbreak) -->
-                        <line x1="350" y1="160" x2="450" y2="200" stroke="#333" stroke-width="2" marker-end="url(#arrowTree)"/>
-                        <text x="420" y="185" font-size="12" font-weight="bold" fill="#dc2626">NO</text>
-                        
-                        <!-- Cross-Sectional -->
-                        <rect x="320" y="200" width="260" height="60" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
-                        <text x="450" y="225" text-anchor="middle" font-weight="bold" font-size="14">Need quick snapshot?</text>
-                        
-                        <line x1="380" y1="260" x2="380" y2="300" stroke="#333" stroke-width="2" marker-end="url(#arrowTree)"/>
-                        <text x="350" y="285" font-size="11" font-weight="bold" fill="#16a34a">YES</text>
-                        <rect x="320" y="300" width="140" height="80" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="3"/>
-                        <text x="390" y="330" text-anchor="middle" font-weight="bold" font-size="13" fill="#78350f">CROSS-SECT.</text>
-                        <text x="390" y="350" text-anchor="middle" font-size="10">Survey at one</text>
-                        <text x="390" y="365" text-anchor="middle" font-size="10">point in time</text>
-                        
-                        <line x1="520" y1="260" x2="520" y2="300" stroke="#333" stroke-width="2" marker-end="url(#arrowTree)"/>
-                        <text x="540" y="285" font-size="11" font-weight="bold" fill="#dc2626">NO</text>
-                        <rect x="470" y="300" width="120" height="80" rx="8" fill="#e0e7ff" stroke="#6366f1" stroke-width="3"/>
-                        <text x="530" y="330" text-anchor="middle" font-weight="bold" font-size="13" fill="#3730a3">COHORT</text>
-                        <text x="530" y="350" text-anchor="middle" font-size="10">Long-term</text>
-                        <text x="530" y="365" text-anchor="middle" font-size="10">follow-up</text>
-                        
-                        <!-- Legend -->
-                        <rect x="20" y="420" width="560" height="70" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
-                        <text x="300" y="445" text-anchor="middle" font-weight="bold" font-size="14">Quick Reference</text>
-                        <text x="150" y="465" text-anchor="middle" font-size="11"><tspan font-weight="bold">Outbreak + Rare:</tspan> Case-Control</text>
-                        <text x="300" y="465" text-anchor="middle" font-size="11"><tspan font-weight="bold">Outbreak + Common:</tspan> Cohort</text>
-                        <text x="450" y="465" text-anchor="middle" font-size="11"><tspan font-weight="bold">No Outbreak:</tspan> Cross-Sectional or Cohort</text>
-                    </svg>
+                    <div style="text-align: center;">
+                        <img src="assets/study-design-flowchart.png" 
+                             alt="Epidemiological Study Design Selection Flowchart showing decision tree: START → Is there an outbreak? YES: Is disease rare? → Case-Control (rare) or Cohort (common). NO: Need quick snapshot? → Cross-Sectional (yes) or Cohort (no). Quick Reference: Outbreak + Rare = Case-Control, Outbreak + Common = Cohort, No Outbreak = Cross-Sectional or Cohort."
+                             style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"
+                             loading="lazy" />
+                    </div>
                 </div>
                 <div class="study-tip" style="margin-top: 1rem; background: #eff6ff; border-left: 4px solid #3b82f6; padding: 1rem;">
                     <strong><i class="ph-bold ph-lightbulb"></i> Exam Strategy:</strong> In Division B, you'll mostly see <strong>Case-Control</strong> (for outbreaks of rare diseases like Salmonella) and <strong>Cohort</strong> (for common exposures like food at a picnic).
@@ -865,7 +799,7 @@
                 // Y_control = 180 - ( (R / 4.0) * 160 * 1.5 )
                 // The *1.5 accentuates the height difference.
 
-                let heightFactor = R / 4.0;
+                const heightFactor = R / 4.0;
                 let peakY = 180 - (heightFactor * 160);
                 if (peakY < 10) peakY = 10;
                 if (peakY > 175) peakY = 175; // Even R=0.5 has some cases usually

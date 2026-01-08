@@ -1,100 +1,47 @@
-# Epidemic Engine v5.0.0
 
-**The Ultimate Offline Mastery Guide for Science Olympiad Disease Detectives**
+# Epidemic Engine (v6.0.0)
 
-## Overview
-Epidemic Engine is a comprehensive, offline-first web application designed to help students master the "Disease Detectives" event in Science Olympiad (Division B & C). It combines a digital textbook, interactive simulations, and precision calculators into a single portable tool.
+**The Ultimate Study Tool for Science Olympiad Disease Detectives (Div B & C)**
 
-## Features
-- **Comprehensive Curriculum:** 21 Chapters covering the entire 2026 Rules Manual.
-- **Offline Capable:** Runs without internet using Service Worker technology.
-- **Simulation Center:**
-  - **Infinite Outbreak Generator:** Practice mathematical problems with randomized data.
-  - **Mega Cases:** Complex multi-stage outbreaks requiring data cleaning and analysis.
-  - **Case Library:** 50+ real-world case studies with interactive Q&A.
-  - **Interactive Cases:** Gamified scenarios for engaging practice.
-- **Tools Suite:**
-  - 2x2 Contingency Table Calculator (Risk Ratio, Odds Ratio, Chi-Square).
-  - Epi Curve Generator.
-  - Exposure Window Calculator.
-  - Herd Immunity Threshold Calculator.
-- **Advanced Practice:**
-  - **Coach Resources:** Management tools and curriculum guides for coaches.
-  - **Practice Problems:** Dynamic problem generator for specific topics.
-  - **Quick Quiz:** Rapid-fire testing of key concepts.
-  - **Simulation Exams:** Full-length timed exams.
+Epidemic Engine is a comprehensive, offline-capable Progressive Web App (PWA) designed to help students master Epidemiology. It combines a textbook-quality summary of all 21 topics with interactive simulation tools and a massive quiz bank.
 
-## Installation & Usage
+**Live URL:** [https://epidemic-engine.vercel.app/](https://epidemic-engine.vercel.app/)
 
-### Online (Vercel)
-This project is configured for easy deployment on Vercel.
+---
 
-1.  **Push to GitHub:**
-    *   Initialize a git repository: `git init`
-    *   Add files: `git add .`
-    *   Commit: `git commit -m "Initial commit"`
-    *   Push to a new GitHub repository.
+## 🚀 Major Updates (v6.0 - National Level Edition)
 
-2.  **Connect to Vercel:**
-    *   Go to [Vercel](https://vercel.com).
-    *   Click "Add New..." -> "Project".
-    *   Import your GitHub repository.
-    *   Vercel will detect the static site configuration. Click **Deploy**.
+This release upgrades the application to a "National Level" preparation resource:
 
+*   **Professional Grammar Audit:** Over 300 quiz questions and scenarios have been professionally edited for tone, clarity, and precision (e.g., "ate" → "consumed", "sick" → "symptomatic").
+*   **Mega Scenarios:** Added deep-branching, multi-step scenarios (Potluck Panic, Wedding Crasher, High Seas Hazard) that mimic real-world outbreak investigations with time/budget constraints.
+*   **Enhanced Quiz Bank:** Questions now feature rich HTML formatting, data tables, and detailed feedback to mirror the complexity of National exams.
+*   **Improved UI:** Formalized language and cleaner presentation across all interactive modules.
 
-### Offline (Local Use)
-1. Download the `EpidemicEngine_v5.0.0_Vercel_Deploy.zip` file.
-2. Extract the contents to a folder.
-3. Open `index.html` in Google Chrome or Edge.
-4. **Recommended:** Click the "Install App" icon in the address bar to install it as a standalone app.
+---
 
-## Development
+## 📚 Features
 
-### Architecture
-The application is a Vanilla JS Single Page Application (SPA).
-- `index.html`: The main entry point. Loading logic for bundles and extensions.
-- `js/epidemic-engine-content.js`: Core content definition for all chapters.
-- `js/quiz_bank_enhanced.js`: Repository of 500+ quiz questions.
-- `js/mega-cases-data.js`: Data structures for advanced case studies.
-- `sw.js`: Service Worker configuration for offline caching.
+*   **Complete Curriculum:** Covers all 2025 Science Olympiad Rules topics (Hill's Criteria, Study Designs, Statistics, Outbreak Steps, etc.).
+*   **Interactive Tools:**
+    *   **2x2 Table Calculator:** Auto-calculates Odds Ratio, Relative Risk, Attack Rates, and Chi-Square.
+    *   **Epi Curve Generator:** Visualizes outbreak progression.
+    *   **Exposure Window Calculator:** Helps estimate incubation periods.
+*   **Scenario Simulation:** Step-by-step case studies where you act as the Disease Detective.
+*   **Practice Statistics:** Track your progress with a dashboard of "Cases Solved" and "Quiz Accuracy".
+*   **Offline Ready:** Installs as an app on Chrome/Edge/Mobile and works without internet.
 
-### File Structure
-```
-/
-├── index.html          # Main application shell
-├── sw.js               # Service Worker
-├── js/
-│   ├── epidemic-engine-content.js
-│   ├── quiz_bank_enhanced.js
-│   ├── mega-cases-data.js
-│   ├── coach_resources.js
-│   └── ...
-├── css/                # Stylesheets
-└── dist/               # Legacy bundled assets (core logic)
-```
+## 🛠 Deployment
 
-### Versioning
-- **v3.0**: Major content overhaul (Genomic Epi, Mortality Metrics).
-- **v4.0**: Architectural refactor, consolidation of patch files.
-- **v5.0.0**: **Current Release**.
-    - New Neo-Brutalist UI Design.
-    - Added "Coach Resources" portal.
-    - Introduced "Interactive Cases" and "Mega Cases".
-    - Enhanced Quiz Engine with "Return to Quiz" functionality.
-    - Updated sidebar organization for better navigation.
+This project is a static web application (HTML/CSS/JS). No build step is strictly required, but it is optimized for Vercel.
 
-### Building from Source
-Since this is a vanilla JS project, "building" simply means creating the distribution zip.
-1. Ensure `js/` and `css/` files are up to date.
-2. Run your preferred zip utility to archive `index.html`, `js/`, `css/`, `assets/`, `dist/`, and `sw.js`.
+**To Deploy:**
+1.  Upload this folder to GitHub.
+2.  Import the repo to Vercel.
+3.  Vercel will detect it as a static site.
+4.  Deploy!
 
-## References & Sources
-The content in this application is derived from publicly available epidemiological guidelines:
-*   **CDC Field Epidemiology Manual**: Primary source for investigation steps and case definitions.
-*   **Principles of Epidemiology in Public Health Practice (CDC 3rd Ed.)**: Mathematical formulas and statistical methods.
-*   **WHO Outbreak Investigation Guidelines**: Global health context and surveillance standards.
-*   **Science Olympiad Rules Manual (2025-2026)**: Curriculum scope and event parameters.
+## 🤝 Credits
 
-## Credits
-Designed, Created, and Conceived by **Rishi Reddy**.
-Content based on CDC Field Epidemiology Manual and WHO guidelines.
+Developed by **Rishi Reddy** for the Science Olympiad community.
+Content aligned with CDC "Principles of Epidemiology in Public Health Practice".

@@ -19,7 +19,7 @@ const MEGA_POTLUCK_SCENARIO = {
             ]
         },
         'principal_interview': {
-            text: "Principal: 'They ate around 1 PM. Kids started getting sick around 4 PM. Vomiting, some cramps. No fever reported yet.'",
+            text: "Principal: 'They consumed food around 1 PM. Students started becoming ill around 4 PM. Symptoms include vomiting and abdominal cramps. No fever reported yet.'",
             choices: [
                 { text: "Short Incubation (3h) -> Suspect Toxin", next: 'toxin_hypothesis', cost: 0, time: 0 },
                 { text: "Wait for Line List", next: 'line_list', cost: 0, time: 2 },
@@ -48,14 +48,14 @@ const MEGA_POTLUCK_SCENARIO = {
             ]
         },
         'toxin_hypothesis': {
-            text: "Hypothesis: Staph aureus or Bacillus cereus. Both fit the 3h incubation. Which food fits?",
+            text: "Hypothesis: <i>Staphylococcus aureus</i> or <i>Bacillus cereus</i>. Both fit the 3h incubation. Which food fits?",
             choices: [
-                { text: "Staph (Salty/Starchy foods)", next: 'focus_staph', cost: 0, time: 0 },
+                { text: "S. aureus (Salty/Starchy foods)", next: 'focus_staph', cost: 0, time: 0 },
                 { text: "B. cereus (Fried Rice)", next: 'focus_rice', cost: 0, time: 0 }
             ]
         },
         'focus_staph': {
-            text: "You suspect Staph. You look for Mac & Cheese, Potato Salad, or Ham.",
+            text: "You suspect <i>Staphylococcus aureus</i>. You look for Mac & Cheese, Potato Salad, or Ham.",
             choices: [
                 { text: "Examine Mac & Cheese leftovers", next: 'lab_test_mac', cost: 150, time: 4 },
                 { text: "Interview Mac & Cheese cook", next: 'interview_parent', cost: 20, time: 2 }
@@ -64,7 +64,7 @@ const MEGA_POTLUCK_SCENARIO = {
         'interview_parent': {
             text: "Mrs. G: 'I made the Mac & Cheese at 10 AM. It sat on the counter until 1 PM. I have a small cut on my finger.'",
             choices: [
-                { text: "Cut finger + Room Temp = Staph!", next: 'final_conclusion', cost: 0, time: 0 },
+                { text: "Cut finger + Room Temp = S. aureus!", next: 'final_conclusion', cost: 0, time: 0 },
                 { text: "It's fine, cheese is preserved", next: 'game_over_missed', cost: 0, time: 0 }
             ]
         },
@@ -81,7 +81,7 @@ const MEGA_POTLUCK_SCENARIO = {
             ]
         },
         'victory_screen': {
-            text: "🏆 EXCELLENT WORK! <br>Cause: Staph aureus (Enterotoxin). <br>Vehicle: Mac & Cheese. <br>Contributing Factor: Temperature Abuse.",
+            text: "🏆 EXCELLENT WORK! <br>Cause: <i>Staphylococcus aureus</i> (Enterotoxin). <br>Vehicle: Mac & Cheese. <br>Contributing Factor: Temperature Abuse.",
             end: true,
             win: true
         },
@@ -91,7 +91,7 @@ const MEGA_POTLUCK_SCENARIO = {
             win: false
         },
         'game_over_missed': {
-            text: "GAME OVER. You dismissed the critical clue (Temp Abuse). More kids got sick.",
+            text: "GAME OVER. You dismissed the critical clue (Temp Abuse). More students became ill.",
             end: true,
             win: false
         },
@@ -131,21 +131,21 @@ const MEGA_WEDDING_SCENARIO = {
             end: true, win: false
         },
         'case_control_setup': {
-            text: "You select 15 Cases (Sick) and 30 Controls (Well). You ask about the menu.",
+            text: "You select 15 Cases (Ill) and 30 Controls (Well). You ask about the menu.",
             choices: [
                 { text: "Analyze: Chicken Marsala", next: 'analyze_chicken', cost: 50, time: 2 },
                 { text: "Analyze: Wedding Cake", next: 'analyze_cake', cost: 50, time: 2 }
             ]
         },
         'analyze_chicken': {
-            text: "Chicken: <br>Cases: 14/15 ate. <br>Controls: 5/30 ate. <br>OR = (14*25)/(1*5) = 70.0. HIGH ASSOCIATION.",
+            text: "Chicken: <br>Cases: 14/15 consumed. <br>Controls: 5/30 consumed. <br>OR = (14*25)/(1*5) = 70.0. HIGH ASSOCIATION.",
             choices: [
                 { text: "Conclude Chicken is source", next: 'traceback', cost: 0, time: 0 },
                 { text: "Check the Cake too", next: 'analyze_cake', cost: 50, time: 2 }
             ]
         },
         'analyze_cake': {
-            text: "Cake: <br>Cases: 15/15 ate. <br>Controls: 29/30 ate. <br>Everyone ate cake. No significant difference.",
+            text: "Cake: <br>Cases: 15/15 consumed. <br>Controls: 29/30 consumed. <br>Everyone consumed cake. No significant difference.",
             choices: [
                 { text: "Go back to Chicken", next: 'analyze_chicken', cost: 0, time: 0 }
             ]
@@ -185,7 +185,7 @@ const MEGA_NORO_SCENARIO = {
         'start': {
             text: "Day 3 of Cruise. 5 passengers report projectile vomiting. Protocol Beta initiated.",
             choices: [
-                { text: "Isolate the sick passengers", next: 'isolation', cost: 0, time: 1 },
+                { text: "Isolate the symptomatic passengers", next: 'isolation', cost: 0, time: 1 },
                 { text: "Quarantine the ENTIRE ship", next: 'fail_panic', cost: 5000, time: 0 }
             ]
         },
@@ -194,7 +194,7 @@ const MEGA_NORO_SCENARIO = {
             end: true, win: false
         },
         'isolation': {
-            text: "Sick passengers isolated in cabins. But the virus is on surfaces.",
+            text: "Symptomatic passengers isolated in cabins. But the virus is on surfaces.",
             choices: [
                 { text: "Disinfect with Alcohol Wipes", next: 'fail_chem', cost: 100, time: 2 },
                 { text: "Disinfect with Bleach Solution", next: 'bleach_success', cost: 100, time: 2 }

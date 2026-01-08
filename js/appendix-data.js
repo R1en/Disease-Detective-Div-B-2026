@@ -194,7 +194,26 @@ window.APPENDIX_DATA = {
         { term: "Infant Mortality Rate", definition: "Deaths under 1 year of age per 1,000 live births." },
         { term: "Maternal Mortality Ratio", definition: "Maternal deaths per 100,000 live births." },
         { term: "Neonatal Mortality Rate", definition: "Deaths under 28 days of age per 1,000 live births." },
-        { term: "Infectivity", definition: "Capacity to enter, survive, and multiply in a host." }
+        { term: "Infectivity", definition: "Capacity to enter, survive, and multiply in a host." },
+        // Advanced Terms (added for completeness)
+        { term: "DALY (Disability-Adjusted Life Year)", definition: "Measure of overall disease burden; years of healthy life lost to illness, disability, or early death." },
+        { term: "QALY (Quality-Adjusted Life Year)", definition: "Measure of disease impact that includes quality of life; 1 QALY = 1 year of perfect health." },
+        { term: "YRBS (Youth Risk Behavior Survey)", definition: "CDC survey monitoring health-risk behaviors in high school students (e.g., tobacco, alcohol, diet)." },
+        { term: "BRFSS", definition: "Behavioral Risk Factor Surveillance System - nation's premier system of health surveys." },
+        { term: "One Health", definition: "Approach recognizing interconnection between human, animal, and environmental health." },
+        { term: "R₀ (Basic Reproduction Number)", definition: "Average number of secondary cases produced by one infectious individual in fully susceptible population." },
+        { term: "Herd Immunity Threshold", definition: "Proportion of population that must be immune to stop disease spread: (1 - 1/R₀)." },
+        { term: "NNT (Number Needed to Treat)", definition: "Number of patients needed to treat to prevent one adverse outcome: 1/ARR." },
+        { term: "NNH (Number Needed to Harm)", definition: "Number of patients exposed to risk factor for one additional adverse outcome: 1/ARI." },
+        { term: "ARR (Absolute Risk Reduction)", definition: "Difference in risk between control and treatment groups." },
+        { term: "Ecological Fallacy", definition: "Error of assuming group-level associations apply to individuals." },
+        { term: "Atomistic Fallacy", definition: "Error of assuming individual-level associations apply to groups." },
+        { term: "Lead Time Bias", definition: "Apparent survival improvement due to earlier detection, not actual treatment benefit." },
+        { term: "Length Bias", definition: "Screening preferentially detects slower-growing diseases, overestimating screening benefit." },
+        { term: "Berkson's Bias", definition: "Selection bias from using hospital patients as controls (they're there for a reason)." },
+        { term: "Hawthorne Effect", definition: "Participants modify behavior because they know they're being observed." },
+        { term: "Healthy Worker Effect", definition: "Employed people appear healthier than general population (sick people leave workforce)." },
+        { term: "Pandemic Preparedness", definition: "Planning and resources for rapid response to emerging infectious disease threats." }
     ],
     FORMULAS: [
         { name: "Attack Rate (AR)", calc: "(Ill / Total Exposed) × 100", use: "% of group that became ill", category: "Frequency" },
@@ -244,7 +263,53 @@ window.APPENDIX_DATA = {
             { category: "Foundation", items: ["Triad (Agent/Host/Env)", "Endemic vs Epidemic", "Surveillance Types"] },
             { category: "Math", items: ["2x2 Table Completion", "Sensitivity/Specificity Calc", "Epi Curve Interpretation"] }
         ]
-    }
+    },
+    PATHOGENS: [
+        // FOODBORNE / GASTROENTERITIS
+        { name: "Norovirus", disease: "Gastroenteritis", incubation: "12-48 hours", symptoms: "Vomiting (predominant), watery diarrhea, cramps", transmission: "Fecal-oral, fomites", keyFact: "Chlorine resistant; #1 cause of gastro outbreaks" },
+        { name: "Salmonella", disease: "Salmonellosis", incubation: "6-72 hours", symptoms: "Diarrhea, fever, cramps", transmission: "Foodborne (eggs, poultry)", keyFact: "Reptiles are carriers; no antibiotics unless invasive" },
+        { name: "E. coli O157:H7 (STEC)", disease: "E. coli Infection / HUS", incubation: "3-4 days", symptoms: "Bloody diarrhea, cramps, NO fever", transmission: "Foodborne (beef, lettuce)", keyFact: "NO ANTIBIOTICS - increases HUS risk" },
+        { name: "Campylobacter", disease: "Campylobacteriosis", incubation: "2-5 days", symptoms: "Bloody diarrhea, fever", transmission: "Poultry, raw milk", keyFact: "Can trigger Guillain-Barré Syndrome" },
+        { name: "Shigella", disease: "Shigellosis", incubation: "1-2 days", symptoms: "Bloody diarrhea, fever, tenesmus", transmission: "Fecal-oral (low dose: 10-100)", keyFact: "Very low infectious dose; daycare outbreaks" },
+        { name: "Staph aureus", disease: "Staphylococcal Food Poisoning", incubation: "1-6 hours", symptoms: "Sudden vomiting, cramps", transmission: "Pre-formed toxin in food", keyFact: "Intoxication, not infection; rapid onset" },
+        { name: "C. perfringens", disease: "C. perfringens Food Poisoning", incubation: "8-16 hours", symptoms: "Watery diarrhea, cramps, NO vomiting", transmission: "Meats held at warm temps", keyFact: "Cafeteria germ; improperly cooled food" },
+        { name: "Listeria", disease: "Listeriosis", incubation: "1-70 days", symptoms: "Fever, meningitis, miscarriage", transmission: "Deli meats, soft cheese", keyFact: "Grows at refrigerator temps; pregnancy danger" },
+        { name: "Botulism", disease: "Botulism", incubation: "12-36 hours", symptoms: "Descending paralysis, diplopia", transmission: "Canned food toxin", keyFact: "Blocks acetylcholine; antitoxin treatment" },
+        { name: "Hepatitis A", disease: "Hepatitis A", incubation: "15-50 days (avg 28)", symptoms: "Jaundice, dark urine, fatigue", transmission: "Fecal-oral", keyFact: "Long incubation; shellfish; vaccine available" },
+        { name: "Vibrio (parahaemolyticus)", disease: "Vibriosis", incubation: "24 hours", symptoms: "Watery diarrhea", transmission: "Raw shellfish", keyFact: "Halophilic; warm seawater risk" },
+        { name: "Cholera", disease: "Cholera", incubation: "2-3 days", symptoms: "Rice-water stool, severe dehydration", transmission: "Contaminated water", keyFact: "Death from dehydration; ORS is key" },
+        // WATERBORNE PARASITES
+        { name: "Giardia", disease: "Giardiasis", incubation: "1-2 weeks", symptoms: "Greasy, foul diarrhea (steatorrhea)", transmission: "Waterborne (beavers)", keyFact: "Cysts; filter or boil water" },
+        { name: "Cryptosporidium", disease: "Cryptosporidiosis", incubation: "2-10 days", symptoms: "Watery diarrhea x 1-2 weeks", transmission: "Pools, water", keyFact: "CHLORINE RESISTANT; need UV" },
+        // RESPIRATORY
+        { name: "Influenza", disease: "Influenza (Flu)", incubation: "1-4 days", symptoms: "Fever, cough, myalgia, sudden onset", transmission: "Droplet/Airborne", keyFact: "Antigenic drift (annual) vs shift (pandemic)" },
+        { name: "Measles", disease: "Measles (Rubeola)", incubation: "10-12 days", symptoms: "Fever, cough, rash, Koplik spots", transmission: "Airborne (R0 = 12-18)", keyFact: "Most contagious; MMR vaccine; Koplik spots pathognomonic" },
+        { name: "Pertussis", disease: "Whooping Cough", incubation: "7-10 days", symptoms: "Paroxysmal cough, whoop, apnea", transmission: "Droplet", keyFact: "100-day cough; waning immunity; Tdap boosters" },
+        { name: "Tuberculosis", disease: "Tuberculosis (TB)", incubation: "Weeks to years", symptoms: "Chronic cough, night sweats, hemoptysis", transmission: "Airborne", keyFact: "Latent vs Active; AFB stain; negative pressure isolation" },
+        { name: "Legionella", disease: "Legionnaires' Disease", incubation: "2-10 days", symptoms: "Severe pneumonia, no P2P spread", transmission: "Aerosol (cooling towers)", keyFact: "NOT person-to-person; urinary antigen test" },
+        { name: "COVID-19", disease: "COVID-19", incubation: "2-14 days", symptoms: "Fever, cough, loss of smell", transmission: "Airborne/Droplet", keyFact: "Asymptomatic spread; mRNA vaccines" },
+        // VECTOR-BORNE
+        { name: "Lyme Disease", disease: "Lyme Disease", incubation: "3-30 days", symptoms: "Erythema migrans (bullseye), arthritis", transmission: "Ixodes tick", keyFact: "Remove tick <24h; Northeast US endemic" },
+        { name: "RMSF", disease: "Rocky Mountain Spotted Fever", incubation: "2-14 days", symptoms: "Fever, petechial rash (palms/soles)", transmission: "Dog tick", keyFact: "Treat with doxycycline IMMEDIATELY; don't wait for rash" },
+        { name: "West Nile", disease: "West Nile Virus Disease", incubation: "2-6 days", symptoms: "Most asymptomatic; encephalitis in elderly", transmission: "Culex mosquito", keyFact: "Birds are reservoir; late summer peak" },
+        { name: "Malaria", disease: "Malaria", incubation: "7-30 days", symptoms: "Cyclical fever, chills, anemia", transmission: "Anopheles mosquito", keyFact: "P. falciparum is deadliest; chemoprophylaxis" },
+        { name: "Dengue", disease: "Dengue Fever", incubation: "4-10 days", symptoms: "Breakbone fever, hemorrhagic fever on reinfection", transmission: "Aedes mosquito (day-biter)", keyFact: "ADE makes 2nd infection worse" },
+        { name: "Zika", disease: "Zika Virus Disease", incubation: "3-14 days", symptoms: "Mild rash, conjunctivitis", transmission: "Aedes mosquito, sexual", keyFact: "Microcephaly in pregnancy" },
+        // ZOONOTIC
+        { name: "Rabies", disease: "Rabies", incubation: "Weeks to months", symptoms: "Hydrophobia, encephalitis", transmission: "Bite/scratch (bats)", keyFact: "100% fatal once symptomatic; PEP works" },
+        { name: "Hantavirus", disease: "Hantavirus Pulmonary Syndrome", incubation: "1-5 weeks", symptoms: "Pulmonary syndrome, rapidly fatal", transmission: "Rodent urine aerosol", keyFact: "SW USA; wet-mop, don't sweep" },
+        { name: "Plague", disease: "Plague", incubation: "2-6 days", symptoms: "Bubo (swollen lymph node), sepsis", transmission: "Flea bite", keyFact: "Prairie dogs; Yersinia pestis; bipolar staining" },
+        // OTHER
+        { name: "Meningococcus", disease: "Meningococcal Disease", incubation: "3-4 days", symptoms: "Stiff neck, petechiae, altered mental status", transmission: "Droplet (close contact)", keyFact: "Medical emergency; prophylaxis for contacts" },
+        { name: "Tetanus", disease: "Tetanus (Lockjaw)", incubation: "3-21 days", symptoms: "Lockjaw, muscle spasms", transmission: "Puncture wound (soil spores)", keyFact: "Toxin-mediated; Td booster every 10 years" }
+    ],
+    OUTBREAK_CURVES: [
+        { type: "Point Source", shape: "Single sharp peak", duration: "One incubation period", example: "Potluck foodborne outbreak" },
+        { type: "Continuous Common Source", shape: "Plateau pattern", duration: "Cases continue until source removed", example: "Contaminated water supply" },
+        { type: "Propagated", shape: "Multiple peaks, waves", duration: "Peaks separated by incubation period", example: "Measles in school" },
+        { type: "Intermittent", shape: "Irregular spikes", duration: "On/off exposure", example: "Intermittently contaminated food" },
+        { type: "Mixed", shape: "Point + propagated", duration: "Initial peak then waves", example: "Shigella at daycare" }
+    ]
 };
 
 // console.log('[APPENDIX DATA] Loaded successfully');

@@ -206,7 +206,17 @@
     ];
 
     if (!window.APPENDIX_DATA) window.APPENDIX_DATA = {};
-    window.APPENDIX_DATA.flashcards = newFlashcards;
+
+    // Prefer global source (flashcards.js) to avoid duplication/errors
+    if (window.FLASHCARDS_DATA && Array.isArray(window.FLASHCARDS_DATA)) {
+        window.APPENDIX_DATA.flashcards = window.FLASHCARDS_DATA.map(f => ({
+            front: f.question,
+            back: f.answer
+        }));
+        console.log(`[EXTENSIONS] Using ${window.APPENDIX_DATA.flashcards.length} flashcards from global source.`);
+    } else {
+        window.APPENDIX_DATA.flashcards = newFlashcards;
+    }
 
     // ==========================================
     // SECTION 2: Content Patches (Phase 1 & 6)
@@ -329,7 +339,9 @@
                             container.insertAdjacentHTML('beforeend', diagnosticHTML);
                         }
                     }
-                } catch (err) { }
+                } catch (err) {
+                    console.warn('[Extensions] Could not inject diagnostic content:', err.message);
+                }
             }
         }
     }

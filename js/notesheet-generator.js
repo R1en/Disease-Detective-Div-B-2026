@@ -1,4 +1,4 @@
-const NotesheetGenerator = {
+const _NotesheetGenerator = {
     render: function (containerId) {
         const container = document.getElementById(containerId);
         if (!container) return;
